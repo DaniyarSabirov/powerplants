@@ -1,0 +1,90 @@
+@startuml
+
+note as N1
+  publicNames are displayed to other Users
+  They should be unique
+
+  Names and Content are subject to change
+end note
+
+class User {
+  id: UUID
+  publicName: String
+}
+
+class Home {
+  id: UUID
+  publicName: String
+}
+
+class UserHome {
+  userId: UUID
+  homeId: UUID
+  joinedAt: Timestamp
+}
+note left: many-to-many relationship (User and Home) - PK (userId and homeId)
+
+class Group {
+  id: UUID
+  publicName: String
+}
+
+class Plant {
+  id: UUID
+  publicName: String
+  scientificName: String
+  metadata: PlantMetadata
+}
+
+class PlantCareDone {
+  id: UUID
+  rule: PlantCareRule
+  completedBy: User
+  completedAt: Timestamp
+  details: String
+}
+note left: user has taken care of a plant / history
+
+class WateringPlantCareDone {}
+
+class SunlightPlantCareDone {}
+
+class PruningPlantCareDone {}
+
+class PlantCareRule {
+  id: UUID
+  active: bool
+  cron: String
+  instructions: String
+}
+note right: cron defines the repetition interval
+
+class WateringPlantCareRule {
+  waterAmount: Amount
+}
+
+class SunlightPlantCareRule {
+  sunlightDuration: Duration
+}
+
+class PruningPlantCareRule {
+  amount: enum LITTLE, MORE, MUCH ???
+}
+
+User "1" -- "*" UserHome
+Home "1" -- "*" UserHome
+Home "1" *-- "1..*" Group : has
+Group "1" *-- "*" Plant : contains
+
+Plant "1" *-- "*" PlantCareDone
+Plant "1" *-- "*" PlantCareRule
+
+PlantCareDone <|-- WateringPlantCareDone
+PlantCareDone <|-- SunlightPlantCareDone
+PlantCareDone <|-- PruningPlantCareDone
+
+PlantCareRule <|-- WateringPlantCareRule
+PlantCareRule <|-- SunlightPlantCareRule
+PlantCareRule <|-- PruningPlantCareRule
+
+@enduml
