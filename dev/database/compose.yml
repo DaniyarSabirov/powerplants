@@ -1,0 +1,37 @@
+services:
+
+  powerplants-dev-database:
+    image: postgres:16-alpine
+    container_name: powerplants-dev-database
+    restart: unless-stopped
+    networks:
+      - powerplants_dev_net
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=powerplants-dev
+      - POSTGRES_USER=powerplants-dev
+      - POSTGRES_PASSWORD=powerplants-dev
+
+  powerplants-dev-pgadmin4:
+    image: dpage/pgadmin4:9.1
+    container_name: powerplants-dev-pgadmin4
+    restart: unless-stopped
+    depends_on:
+      - powerplants-dev-database
+    networks:
+      - powerplants_dev_net
+    ports:
+      - "8000:80"
+    volumes:
+      - ./pgadmin4:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+
+networks:
+  powerplants_dev_net:
+    name: powerplants_dev_net
+    external: false

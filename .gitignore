@@ -10,3 +10,6 @@ target/
 .classpath
 .project
 .settings/
+
+dev/database/database
+dev/database/pgadmin4
