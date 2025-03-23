@@ -1,13 +1,13 @@
 @startuml
 
 note as N1
-  publicNames are displayed to other Users
+  publicNames are displayed to other Accounts
   They should be unique
 
   Names and Content are subject to change
 end note
 
-class User {
+class Account {
   id: UUID
   publicName: String
 }
@@ -17,12 +17,12 @@ class Home {
   publicName: String
 }
 
-class UserHome {
-  userId: UUID
+class AccountHome {
+  accountId: UUID
   homeId: UUID
   joinedAt: Timestamp
 }
-note left: many-to-many relationship (User and Home) - PK (userId and homeId)
+note left: many-to-many relationship (Account and Home) - PK (accountId and homeId)
 
 class Group {
   id: UUID
@@ -39,11 +39,11 @@ class Plant {
 class PlantCareDone {
   id: UUID
   rule: PlantCareRule
-  completedBy: User
+  completedBy: Account
   completedAt: Timestamp
   details: String
 }
-note left: user has taken care of a plant / history
+note left: account has taken care of a plant / history
 
 class WateringPlantCareDone {}
 
@@ -71,8 +71,8 @@ class PruningPlantCareRule {
   amount: enum LITTLE, MORE, MUCH ???
 }
 
-User "1" -- "*" UserHome
-Home "1" -- "*" UserHome
+Account "1" -- "*" AccountHome
+Home "1" -- "*" AccountHome
 Home "1" *-- "1..*" Group : has
 Group "1" *-- "*" Plant : contains
 
