@@ -4,7 +4,7 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/api")
-public class PowerplantsServer extends Application {
+public class PowerplantsApplication extends Application {
 
-    public PowerplantsServer() {}
+    public PowerplantsApplication() {}
 }

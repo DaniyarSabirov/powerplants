@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class PowerplantsServerTest {
+public class PowerplantsApplicationTest {
 
     @Test
     void test() {

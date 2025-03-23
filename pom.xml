@@ -18,7 +18,7 @@
         <!-- project -->
         <encoding>UTF-8</encoding>
         <java.version>21</java.version>
-        <java.mainClass>de.thws.powerplants.infrastructure.Application</java.mainClass>
+        <java.mainClass>de.thws.powerplants.infrastructure.Program</java.mainClass>
         <!-- server dependencies -->
         <quarkus.version>3.19.4</quarkus.version>
         <guava.version>33.4.5-jre</guava.version>
