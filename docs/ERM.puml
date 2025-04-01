@@ -8,85 +8,87 @@ end note
 
 class Account {
   id: UUID
-  publicName: String
-  loginName: String
-  password: Hash
-  picture: Image
+  publicName: String not null
+  loginName: String not null
+  loginPassword: StringHash not null
+  picture: ImageURL
 }
 
 class Home {
   id: UUID
-  publicName: String
+  publicName: String not null
   description: String
 }
 
 class AccountHome {
-  accountId: UUID
-  homeId: UUID
-  joinedAt: Timestamp
+  --- FK ---
+  account: Account not null
+  home: Home not null
 }
 note left: many-to-many relationship (Account and Home) - PK (accountId and homeId)
 
 class Group {
   id: UUID
-  publicName: String
-  picture: Image
+  publicName: String not null
   description: String
+  picture: ImageURL
+  --- FK ---
+  home: Home not null
 }
 
 class Plant {
   id: UUID
-  publicName: String
-  scientificName: String
+  publicName: String not null
+  scientificName: String not null
   description: String
-  picture: Image
+  picture: ImageURL
   metadata: PlantMetadata
+  --- FK ---
+  group: Group not null
 }
 
 class PlantCareDone {
   id: UUID
-  rule: PlantCareRule
-  completedBy: Account
-  completedAt: Timestamp
+  completedAt: TimestampTZ not null
   details: String
+  --- FK ---
+  plant: Plant not null
+  rule: PlantCareRule not null
+  completedBy: Account not null
 }
 note left: account has taken care of a plant / history
 
-class WateringPlantCareDone {}
-
-class SunlightPlantCareDone {}
-
-class PruningPlantCareDone {}
-
-class CustomPlantCareDone {}
-
 class PlantCareRule {
   id: UUID
-  enabled: bool
-  cron: String
+  publicName: String not null
+  enabled: boolean not null
+  cron: String not null
   instructions: String
+  --- FK ---
+  plant: Plant not null
 }
 note right: cron defines the repetition interval
 
-class WateringPlantCareRule {
-  waterAmount: Amount
+class CustomPlantCareRule {
+  instructions: String not null
+}
+
+class WaterPlantCareRule {
+  amount: Long not null
 }
 
 class SunlightPlantCareRule {
-  sunlightDuration: Duration
+  duration: Long not null
 }
 
 class PruningPlantCareRule {
-  amount: enum LITTLE, MORE, MUCH ???
-}
-
-class CustomPlantCareRule {
-  instructions: String
+  amount: enum LESS, MORE, MUCH not null
 }
 
 class PlantCareRuleDisabled {
-  accountId: UUID
-  ruleId: UUID
+  --- FK ---
+  account: Account
+  rule: PlantCareRule
 }
 
 Account "1" -- "*" AccountHome
@@ -94,18 +96,13 @@ Home "1" -- "*" AccountHome
 Home "1" *-- "1..*" Group : has
 Group "1" *-- "*" Plant : contains
 
-Plant "1" *-- "*" PlantCareDone
-Plant "1" *-- "*" PlantCareRule
+Plant "1" *-- "*" PlantCareDone : has
+Plant "1" *-- "*" PlantCareRule : has
 
-PlantCareDone <|-- WateringPlantCareDone
-PlantCareDone <|-- SunlightPlantCareDone
-PlantCareDone <|-- PruningPlantCareDone
-PlantCareDone <|-- CustomPlantCareDone
-
-PlantCareRule <|-- WateringPlantCareRule
+PlantCareRule <|-- CustomPlantCareRule
+PlantCareRule <|-- WaterPlantCareRule
 PlantCareRule <|-- SunlightPlantCareRule
 PlantCareRule <|-- PruningPlantCareRule
-PlantCareRule <|-- CustomPlantCareRule
 
 Account "1" -- "*" PlantCareRuleDisabled
 PlantCareRule "1" -- "*" PlantCareRuleDisabled
