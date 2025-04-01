@@ -21,7 +21,7 @@ class Home {
 }
 
 class AccountHome {
-  --- FK ---
+  -- FK --
   account: Account not null
   home: Home not null
 }
@@ -32,7 +32,7 @@ class Group {
   publicName: String not null
   description: String
   picture: ImageURL
-  --- FK ---
+  -- FK --
   home: Home not null
 }
 
@@ -43,7 +43,7 @@ class Plant {
   description: String
   picture: ImageURL
   metadata: PlantMetadata
-  --- FK ---
+  -- FK --
   group: Group not null
 }
 
@@ -51,7 +51,7 @@ class PlantCareDone {
   id: UUID
   completedAt: TimestampTZ not null
   details: String
-  --- FK ---
+  -- FK --
   plant: Plant not null
   rule: PlantCareRule not null
   completedBy: Account not null
@@ -64,7 +64,7 @@ class PlantCareRule {
   enabled: boolean not null
   cron: String not null
   instructions: String
-  --- FK ---
+  -- FK --
   plant: Plant not null
 }
 note right: cron defines the repetition interval
@@ -86,7 +86,7 @@ class PruningPlantCareRule {
 }
 
 class PlantCareRuleDisabled {
-  --- FK ---
+  -- FK --
   account: Account
   rule: PlantCareRule
 }
