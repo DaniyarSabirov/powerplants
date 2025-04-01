@@ -1,5 +1,4 @@
 @startuml
-
 note as N1
   publicNames are displayed to other Accounts
   They should be unique
@@ -10,11 +9,15 @@ end note
 class Account {
   id: UUID
   publicName: String
+  loginName: String
+  password: Hash
+  picture: Image
 }
 
 class Home {
   id: UUID
   publicName: String
+  description: String
 }
 
 class AccountHome {
@@ -27,12 +30,16 @@ note left: many-to-many relationship (Account and Home) - PK (accountId and home
 class Group {
   id: UUID
   publicName: String
+  picture: Image
+  description: String
 }
 
 class Plant {
   id: UUID
   publicName: String
   scientificName: String
+  description: String
+  picture: Image
   metadata: PlantMetadata
 }
 
@@ -51,9 +58,11 @@ class SunlightPlantCareDone {}
 
 class PruningPlantCareDone {}
 
+class CustomPlantCareDone {}
+
 class PlantCareRule {
   id: UUID
-  active: bool
+  enabled: bool
   cron: String
   instructions: String
 }
@@ -71,6 +80,15 @@ class PruningPlantCareRule {
   amount: enum LITTLE, MORE, MUCH ???
 }
 
+class CustomPlantCareRule {
+  instructions: String
+}
+
+class PlantCareRuleDisabled {
+  accountId: UUID
+  ruleId: UUID
+}
+
 Account "1" -- "*" AccountHome
 Home "1" -- "*" AccountHome
 Home "1" *-- "1..*" Group : has
@@ -82,9 +100,13 @@ Plant "1" *-- "*" PlantCareRule
 PlantCareDone <|-- WateringPlantCareDone
 PlantCareDone <|-- SunlightPlantCareDone
 PlantCareDone <|-- PruningPlantCareDone
+PlantCareDone <|-- CustomPlantCareDone
 
 PlantCareRule <|-- WateringPlantCareRule
 PlantCareRule <|-- SunlightPlantCareRule
 PlantCareRule <|-- PruningPlantCareRule
+PlantCareRule <|-- CustomPlantCareRule
 
+Account "1" -- "*" PlantCareRuleDisabled
+PlantCareRule "1" -- "*" PlantCareRuleDisabled
 @enduml
