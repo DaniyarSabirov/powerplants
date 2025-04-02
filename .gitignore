@@ -11,5 +11,3 @@ target/
 .project
 .settings/
 
-dev/database/database
-dev/database/pgadmin4
