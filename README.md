@@ -1,6 +1,7 @@
 # powerplants
 
-An app to manage plants
+Eine intelligente Pflanzenpflege-App für den privaten Haushalt, die es den Nutzern ermöglicht, den Zustand und das Wachstum ihrer Pflanzen zu überwachen. Dabei werden zusätzliche Pflegeempfehlungen geliefert. Haushalte mit Pflanzen sollen damit von mehreren Benutzern gemeinsam koordiniert werden können. Dabei sollen auch soziale Aspekte (durch die Unterstützung von mehreren Benutzern) integriert werden, um den Austausch und die Pflege gemeinsamer Pflanzen zu fördern.
+
 
 ## Allgemeine Regeln
 - Kein force push!
@@ -13,16 +14,19 @@ An app to manage plants
 ## Branch-Richtlinien
 Für das Projekt werden 3 Typen von Branches verwendet:
 
-- **Main Branch**: Der Main Branch beinhaltet ausgeschlossen lauffähige und Versionen, die abegegeben werden könnten.
+- **Main Branch**: Der Main Branch beinhaltet ausgeschlossen lauffähige und Versionen, die abegegeben werden könnten. Merges in diesen Branch erfolgen nur nach gemeinsamer Absprache.
 
-- **Development Branch**: Jedes abgeschlossene Feature wird in den Development Branch gepusht.
+- **Development Branch**: Hauptentwicklungs-Branch. Hier werden nur abgeschlossene Feature-Branches gemerged. Der Branch muss stets lauffähig sein, auch wenn noch keine finale Version vorliegt.
 
-- **Feature Branch**: Hier werden einzelne Issues bearbeitet. Jedes Issue muss einen eigenen Branch haben. Nach Abschluss des Features wird dieses in den Development Branch gemerged.
+- **Feature Branches**: Werden aus dem aktuellen development-Branch automatisch über ein Issue/Merge-Request erstellt. Nach Abschluss des Issues erfolgt ein Merge-Request, der von einem anderen Gruppenmitglied geprüft und anschließend in development-Branch gemerged wird.
+
 
 Konventionen zu Branch-Namen: TBD
 
 ## Comitt Richtilinien
-Konventionen zu Comitt Nachrichten: TBD
+Comitt-Messages werden englisch und im Präsens verfasst. 
+
+z.B. "create flutter frontend", "update targets", "implement adaptive color theme"
 
 
 ## Figma Screens Mockup
