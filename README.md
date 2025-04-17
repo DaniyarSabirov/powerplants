@@ -21,10 +21,11 @@ Für das Projekt werden 3 Typen von Branches verwendet:
 - **Feature Branches**: Werden aus dem aktuellen development-Branch automatisch über ein Issue/Merge-Request erstellt. Nach Abschluss des Issues erfolgt ein Merge-Request, der von einem anderen Gruppenmitglied geprüft und anschließend in development-Branch gemerged wird.
 
 
-Konventionen zu Branch-Namen: TBD
+Konventionen zu Branch-Namen: <Issue-ID><Title>-<Of>-<The>-<Issue>
+Grundsätzlich werden die Branch-Namen automatisch erzeugt, indem man in einem Issue auf create Merge-Request klickt.
 
 ## Comitt Richtilinien
-Comitt-Messages werden englisch und im Präsens verfasst. 
+Comitt-Messages werden im englischen und im Präsens verfasst. 
 
 z.B. "create flutter frontend", "update targets", "implement adaptive color theme"
 
