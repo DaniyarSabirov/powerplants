@@ -16,5 +16,4 @@ public class PlantEntity {
     private String description;
 
     private String picture;
-
 }
