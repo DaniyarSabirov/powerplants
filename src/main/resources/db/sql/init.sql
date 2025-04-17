@@ -5,7 +5,8 @@ create table account (
     public_name varchar (255) not null,
     login_name varchar (255) not null,
     login_password varchar (255) not null,
-    picture_url varchar (255)
+    picture_url varchar (255),
+    unique (login_name)
 );
 
 create table home (
