@@ -1,7 +1,6 @@
 package de.thws.powerplants.adapters.in;
 
-import de.thws.powerplants.application.dto.PlantRequest;
-import de.thws.powerplants.infrastructure.persistence.entity.PlantEntity;
+import de.thws.powerplants.adapters.in.json.JsonPlant;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -14,14 +13,14 @@ import java.util.List;
 public class PlantsResource {
     // create plant
     @POST
-    public Response createPlant(PlantRequest plantRequest) {
+    public Response createPlant(JsonPlant plantRequest) {
         return Response.status(Response.Status.CREATED).build();
     }
 
     // get all the plants in group
     @GET
     @Path("/{groupId}")
-    public List<PlantEntity> getPlantsByGroup(@PathParam("groupId") Long groupId) {
+    public List<JsonPlant> getPlantsByGroup(@PathParam("groupId") Long groupId) {
         return new ArrayList<>();
     }
 
