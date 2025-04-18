@@ -49,6 +49,26 @@ create table plant_care_rule (
     unique (plant_id, public_name)
 );
 
+create table plant_care_rule_custom (
+    id uuid primary key references plant_care_rule (id),
+    custom_instructions varchar (255) not null
+);
+
+create table plant_care_rule_water (
+    id uuid primary key references plant_care_rule (id),
+    amount bigint not null
+);
+
+create table plant_care_rule_sunlight (
+    id uuid primary key references plant_care_rule (id),
+    duration bigint not null
+);
+
+create table plant_care_rule_pruning (
+    id uuid primary key references plant_care_rule (id),
+    amount varchar (255) not null
+);
+
 create table plant_care_rule_disabled (
     plant_care_rule_id uuid references plant_care_rule (id) not null,
     account_id uuid references account (id) not null,
@@ -62,28 +82,4 @@ create table plant_care_done (
     completed_by uuid references account (id) not null,
     completed_at timestamptz not null,
     details varchar (255)
-);
-
-create table plant_care_rule_custom (
-    id uuid primary key default gen_random_uuid(),
-    plant_care_rule_id uuid references plant_care_rule (id) not null,
-    instructions varchar (255) not null
-);
-
-create table plant_care_rule_water (
-    id uuid primary key default gen_random_uuid(),
-    plant_care_rule_id uuid references plant_care_rule (id) not null,
-    amount bigint not null
-);
-
-create table plant_care_rule_sunlight (
-    id uuid primary key default gen_random_uuid(),
-    plant_care_rule_id uuid references plant_care_rule (id) not null,
-    duration bigint not null
-);
-
-create table plant_care_rule_pruning (
-    id uuid primary key default gen_random_uuid(),
-    plant_care_rule_id uuid references plant_care_rule (id) not null,
-    amount varchar (255) not null
 );

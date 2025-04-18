@@ -5,6 +5,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "plant_care_rule")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PlantCareRuleEntity {
 
     @Id

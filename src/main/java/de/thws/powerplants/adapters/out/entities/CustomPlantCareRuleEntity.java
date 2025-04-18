@@ -8,18 +8,16 @@ import jakarta.persistence.Table;
 @Table(name = "plant_care_rule_custom")
 public class CustomPlantCareRuleEntity extends PlantCareRuleEntity {
 
-    @Column(name = "instructions", nullable = false)
-    private String instructions;
+    @Column(name = "custom_instructions", nullable = false)
+    private String customInstructions;
 
     public CustomPlantCareRuleEntity() {}
 
-    @Override
-    public String getInstructions() {
-        return instructions;
+    public String getCustomInstructions() {
+        return customInstructions;
     }
 
-    @Override
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
+    public void setCustomInstructions(String customInstructions) {
+        this.customInstructions = customInstructions;
     }
 }
