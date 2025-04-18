@@ -1,8 +1,8 @@
 package de.thws.powerplants.adapters.out.repositories;
 
-import de.thws.powerplants.adapters.out.entities.PlantCareRuleCustomEntity;
+import de.thws.powerplants.adapters.out.entities.SunlightPlantCareRuleEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class PlantCareRuleCustomRepository implements PanacheRepository<PlantCareRuleCustomEntity> {}
+public class SunlightPlantCareRuleRepository implements PanacheRepository<SunlightPlantCareRuleEntity> {}

@@ -6,10 +6,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "plant_care_rule_pruning")
-public class PlantCareRulePruningEntity extends PlantCareRuleEntity {
+public class PruningPlantCareRuleEntity extends PlantCareRuleEntity {
 
     @Column(name = "amount", nullable = false)
     private String amount;
+
+    public PruningPlantCareRuleEntity() {}
 
     public String getAmount() {
         return amount;
