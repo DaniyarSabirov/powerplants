@@ -63,9 +63,14 @@ class Plant {
   int get hashCode =>
       id.hashCode ^ groupId.hashCode;
 
-  // Debug print
   @override
   String toString() {
-    return 'Plant(id: $id, name: $name, scientificName: $scientificName, description: $description, imageUrl: $imageUrl, groupId: $groupId)';
+    return 'Plant('
+        'id: $id, '
+        'name: $name,'
+        'scientificName: $scientificName,'
+        'description: $description,'
+        'imageUrl: $imageUrl,'
+        'groupId: $groupId)';
   }
 }
