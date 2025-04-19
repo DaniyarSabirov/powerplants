@@ -5,7 +5,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "plant_care_rule")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PlantCareRuleEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -24,6 +26,7 @@ public abstract class PlantCareRuleEntity {
     private String instructions;
 
     // todo group foreign key
+
     public PlantCareRuleEntity() {}
 
     public UUID getId() {
