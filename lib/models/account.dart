@@ -5,6 +5,8 @@ class Account {
   final String loginPassword;
   final String? pictureUrl;
 
+  // TODO probably add List<Home> accountHome;
+
   Account({
     required this.id,
     required this.publicName,
