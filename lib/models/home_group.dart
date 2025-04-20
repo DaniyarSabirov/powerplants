@@ -32,4 +32,39 @@ class HomeGroup {
       'picture_url': pictureUrl,
     };
   }
+
+  HomeGroup copyWith({
+    String? id,
+    String? homeId,
+    String? publicName,
+    String? description,
+    String? pictureUrl,
+  }) {
+    return HomeGroup(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      publicName: publicName ?? this.publicName,
+      description: description ?? this.description,
+      pictureUrl: pictureUrl ?? this.pictureUrl,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! HomeGroup) return false;
+    return other.id == id &&
+        other.homeId == homeId;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+    homeId.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'HomeGroup{id: $id, homeId: $homeId, publicName: $publicName, description: $description, pictureUrl: $pictureUrl}';
+  }
 }
