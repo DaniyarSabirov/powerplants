@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/add_plant.dart';
 import 'package:frontend/screens/dashboard.dart';
 import 'package:frontend/screens/group_overview.dart';
 import 'package:frontend/screens/home_activity_history.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/taskoverview': (context) => const TaskOverview(),
         '/profile': (context) => const Profile(),
         '/homeactivityhistory': (context) => const HomeActivityHistory(),
+        '/addplant': (context) => const AddPlant(),
       },
       home: GroupOverview(),
     );
