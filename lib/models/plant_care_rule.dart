@@ -91,19 +91,13 @@ final class CustomRule extends PlantCareRule {
   final String customInstructions;
 
   const CustomRule({
-    required String id,
-    required String publicName,
-    required bool enabled,
-    required String cron,
-    required String instructions,
+    required super.id,
+    required super.publicName,
+    required super.enabled,
+    required super.cron,
+    required super.instructions,
     required this.customInstructions,
-  }) : super(
-    id: id,
-    publicName: publicName,
-    enabled: enabled,
-    cron: cron,
-    instructions: instructions
-  );
+  });
 
   @override
   Map<String, dynamic> toJson() => {
@@ -151,19 +145,13 @@ final class WaterRule extends PlantCareRule {
   final int amount;
 
   const WaterRule({
-    required String id,
-    required String publicName,
-    required bool enabled,
-    required String cron,
-    required String instructions,
+    required super.id,
+    required super.publicName,
+    required super.enabled,
+    required super.cron,
+    required super.instructions,
     required this.amount,
-  }) : super(
-    id: id,
-    publicName: publicName,
-    enabled: enabled,
-    cron: cron,
-    instructions: instructions
-  );
+  });
 
   @override
   Map<String, dynamic> toJson() => {
@@ -211,19 +199,13 @@ final class SunlightRule extends PlantCareRule {
   final int duration;
 
   const SunlightRule({
-    required String id,
-    required String publicName,
-    required bool enabled,
-    required String cron,
-    required String instructions,
+    required super.id,
+    required super.publicName,
+    required super.enabled,
+    required super.cron,
+    required super.instructions,
     required this.duration,
-  }) : super(
-    id: id,
-    publicName: publicName,
-    enabled: enabled,
-    cron: cron,
-    instructions: instructions,
-  );
+  });
 
   @override
   Map<String, dynamic> toJson() =>
@@ -272,19 +254,13 @@ final class PruningRule extends PlantCareRule {
   final String amount;
 
   const PruningRule({
-    required String id,
-    required String publicName,
-    required bool enabled,
-    required String cron,
-    required String instructions,
+    required super.id,
+    required super.publicName,
+    required super.enabled,
+    required super.cron,
+    required super.instructions,
     required this.amount,
-  }) : super(
-    id: id,
-    publicName: publicName,
-    enabled: enabled,
-    cron: cron,
-    instructions: instructions,
-  );
+  });
 
   @override
   Map<String, dynamic> toJson() =>
@@ -335,21 +311,15 @@ final class DoneRule extends PlantCareRule {
   final DateTime completedAt;
 
   const DoneRule({
-    required String id,
-    required String publicName,
-    required bool enabled,
-    required String cron,
-    required String instructions,
+    required super.id,
+    required super.publicName,
+    required super.enabled,
+    required super.cron,
+    required super.instructions,
     required this.completedBy,
     required this.details,
     required this.completedAt,
-  }) : super(
-    id: id,
-    publicName: publicName,
-    enabled: enabled,
-    cron: cron,
-    instructions: instructions,
-  );
+  });
 
   @override
   Map<String, dynamic> toJson() =>
@@ -407,20 +377,14 @@ final class DisabledRule extends PlantCareRule {
   final DateTime disabledAt;
 
   const DisabledRule({
-    required String id,
-    required String publicName,
-    required bool enabled,
-    required String cron,
-    required String instructions,
+    required super.id,
+    required super.publicName,
+    required super.enabled,
+    required super.cron,
+    required super.instructions,
     required this.disabledBy,
     required this.disabledAt,
-  }) : super(
-    id: id,
-    publicName: publicName,
-    enabled: enabled,
-    cron: cron,
-    instructions: instructions,
-  );
+  });
 
   @override
   Map<String, dynamic> toJson() =>
