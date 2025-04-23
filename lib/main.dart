@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Powerplants',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: 'Manrope',
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
