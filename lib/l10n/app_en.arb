@@ -1,0 +1,22 @@
+{
+  "cancel": "Cancel",
+  "exit": "Exit",
+  "ok": "OK",
+  "save": "Save",
+
+  "add_plant_plant": "Plant",
+  "add_plant_care": "Care",
+  "add_plant_confirm": "Confirm",
+  "add_plant_name": "Name",
+  "add_plant_name_hint": "Add plant name...",
+  "add_plant_name_description": "The plant will be saved under this name in the app",
+  "add_plant_scientific_name": "Scientific Name",
+  "add_plant_scientific_name_hint": "Select scientific name...",
+  "add_plant_scientific_name_description": "Additional information is loaded based on the scientific name",
+  "add_plant_group": "Group",
+  "add_plant_group_description": "The group determines where the plant can be found in the app",
+  "add_plant_description": "Description",
+  "add_plant_description_hint": "Add description...",
+  "add_plant_description_description": "The description allows you to include additional information about the plant",
+  "add_plant_care_schedule": "Configure care schedule"
+}

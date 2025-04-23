@@ -1,0 +1,22 @@
+{
+    "cancel": "Abbrechen",
+    "exit": "Verlassen",
+    "ok": "Ok",
+    "save": "Speichern",
+
+    "add_plant_plant": "Pflanze",
+    "add_plant_care": "Pflege",
+    "add_plant_confirm": "Bestätigen",
+    "add_plant_name": "Name",
+    "add_plant_name_hint": "Pflanzennamen hinzufügen...",
+    "add_plant_name_description": "Die Pflanze wird unter diesem Namen in der App gespeichert",
+    "add_plant_scientific_name": "Wissenschaftlicher Name",
+    "add_plant_scientific_name_hint": "Wissenschaftlichen Namen wählen...",
+    "add_plant_scientific_name_description": "Anhand des Wissenschaftlichen Namen werden zusätzliche Informationen geladen",
+    "add_plant_group": "Gruppe",
+    "add_plant_group_description": "Die Gruppe legt fest, wo die Pflanze in der App gefunden werden kann",
+    "add_plant_description": "Beschreibung",
+    "add_plant_description_hint": "Beschreibung hinzufügen...",
+    "add_plant_description_description": "Die Beschreibung bietet Ihnen die Möglichkeit zusätzliche Informationen der Pflanze beizulegen",
+    "add_plant_care_schedule": "Pflegeplan konfigurieren"
+}

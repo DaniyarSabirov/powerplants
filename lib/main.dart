@@ -10,7 +10,7 @@ import 'package:frontend/screens/sign_in.dart';
 import 'package:frontend/screens/sing_up.dart';
 import 'package:frontend/screens/start.dart';
 import 'package:frontend/screens/task_overview.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,11 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         fontFamily: 'Manrope',
       ),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: [Locale('en'), Locale('de')],
       routes: {
         '/start': (context) => const Start(),
