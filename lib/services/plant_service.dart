@@ -85,8 +85,40 @@ class PlantService {
     }
   }
 
-  //
-  // Future<void> updatePlant(String id, Plant plant) async {  }
-  //
-  // Future<void> deletePlant(String id) async {  }
+  Future<void> updatePlant(String id, Plant plant) async {
+    try {
+      final response = await _client.put(
+        '/plants/$id',
+        data: plant.toJson(),
+      ); // TODO check real endpoint
+
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception(
+          'Failed to update plant with id $id, status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error updating plant: $e');
+    }
+  }
+
+  Future<void> deletePlant(String id) async {
+    try {
+      final response = await _client.delete(
+        '/plants/$id',
+      ); // TODO check real endpoint
+
+      if (response.statusCode == 204 || response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception(
+          'Failed to delete plant with id $id, status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error deleting plant: $e');
+    }
+  }
 }
