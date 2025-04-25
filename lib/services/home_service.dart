@@ -1,4 +1,5 @@
 import 'package:frontend/services/api_client.dart';
+import '../models/account.dart';
 import '../models/home.dart';
 
 class HomeService {
@@ -38,6 +39,27 @@ class HomeService {
       }
     } catch (e) {
       throw Exception('Error fetching all homes: $e');
+    }
+  }
+
+  Future<List<Account>> getAccountsByHomeId(String homeId) async {
+    try {
+      final response = await _client.get(
+        '/homes/$homeId/accounts',
+      ); // TODO check real endpoint
+
+      if (response.statusCode == 200) {
+        final List<dynamic> accountsJson = response.data as List<dynamic>;
+        return accountsJson
+            .map((json) => Account.fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception(
+          'Failed to load accounts for home $homeId, status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error fetching accounts by home: $e');
     }
   }
 
