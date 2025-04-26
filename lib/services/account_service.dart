@@ -1,32 +1,10 @@
 import 'package:frontend/services/api_client.dart';
 import '../models/account.dart';
-import '../models/home.dart';
 
 class AccountService {
   final ApiClient _client;
 
   AccountService(this._client);
-
-  Future<List<Home>> getHomesByAccountId(String accountId) async {
-    try {
-      final response = await _client.get(
-        '/accounts/$accountId/homes',
-      ); // TODO check real endpoint
-
-      if (response.statusCode == 200) {
-        final List<dynamic> homesJson = response.data as List<dynamic>;
-        return homesJson
-            .map((json) => Home.fromJson(json as Map<String, dynamic>))
-            .toList();
-      } else {
-        throw Exception(
-          'Failed to load homes for account $accountId, status code: ${response.statusCode}',
-        );
-      }
-    } catch (e) {
-      throw Exception('Error fetching homes by account: $e');
-    }
-  }
 
   Future<List<Account>> getAllAccounts() async {
     try {
@@ -46,6 +24,27 @@ class AccountService {
       }
     } catch (e) {
       throw Exception('Error fetching all accounts: $e');
+    }
+  }
+
+  Future<List<Account>> getAccountsByHomeId(String homeId) async {
+    try {
+      final response = await _client.get(
+        '/homes/$homeId/accounts',
+      ); // TODO check real endpoint
+
+      if (response.statusCode == 200) {
+        final List<dynamic> accountsJson = response.data as List<dynamic>;
+        return accountsJson
+            .map((json) => Account.fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception(
+          'Failed to load accounts for home $homeId, status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error fetching accounts by home: $e');
     }
   }
 

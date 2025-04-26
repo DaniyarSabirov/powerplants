@@ -24,6 +24,24 @@ class PlantCareRuleService {
     }
   }
 
+  Future<List<PlantCareRule>> getAllRules() async {
+    try {
+      final response = await _client.get(
+        '/rules'
+      ); // TODO check real endpoint
+
+      if (response.statusCode != 200){
+        throw Exception ('Failed to load all rules: ${response.statusCode}');
+      }
+      final List<dynamic> data = response.data as List<dynamic>;
+      return data
+          .map((json) => PlantCareRule.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw Exception('Error fetching all rules: $e');
+    }
+  }
+
   Future<PlantCareRule> createRule(String plantId, PlantCareRule rule) async {
     try {
       final response = await _client.post(
@@ -87,7 +105,4 @@ class PlantCareRuleService {
       throw Exception('Error deleting rule $ruleId: $e');
     }
   }
-
-
-
 }
