@@ -1,6 +1,6 @@
 package de.thws.powerplants.application.dto;
 
-public class PlantRequest {
+public class PlantDTO {
 
     private String publicName;
     private String scientificName;
