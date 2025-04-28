@@ -6,4 +6,5 @@ import jakarta.enterprise.context.ApplicationScoped;
 import java.util.UUID;
 
 @ApplicationScoped
-public interface PlantRepository extends PanacheRepositoryBase<PlantEntity, UUID> {}
+public class PlantRepository implements PanacheRepositoryBase<PlantEntity, UUID> {}
+

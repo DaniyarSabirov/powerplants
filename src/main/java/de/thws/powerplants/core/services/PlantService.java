@@ -17,10 +17,6 @@ public class PlantService {
 
     public PlantService() {}
 
-    public List<PlantEntity> getAll() {
-        return plantRepository.listAll();
-    }
-
     public PlantEntity createPlant(PlantDTO plantDTO) {
         PlantEntity newPlant = new PlantEntity();
         newPlant.setPublicName(plantDTO.getPublicName());
