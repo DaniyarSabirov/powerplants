@@ -1,6 +1,6 @@
-package de.thws.powerplants.application.dto;
+package de.thws.powerplants.core.domain;
 
-public class PlantDTO {
+public class Plant {
 
     private String publicName;
     private String scientificName;

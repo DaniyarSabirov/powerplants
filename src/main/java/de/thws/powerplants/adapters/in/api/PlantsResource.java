@@ -2,7 +2,7 @@ package de.thws.powerplants.adapters.in.api;
 
 import de.thws.powerplants.adapters.in.api.json.JsonPlant;
 import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
-import de.thws.powerplants.application.dto.PlantDTO;
+import de.thws.powerplants.core.domain.Plant;
 import de.thws.powerplants.core.mappers.PlantMapper;
 import de.thws.powerplants.core.services.PlantService;
 import jakarta.inject.Inject;
@@ -23,8 +23,8 @@ public class PlantsResource {
 
     @POST // create plant
     public Response createPlant(JsonPlant jsonPlant) {
-        PlantDTO plantDTO = PlantMapper.toPlantDTO(jsonPlant);
-        PlantEntity entity = plantService.createPlant(plantDTO);
+        Plant plant = PlantMapper.toPlantDTO(jsonPlant);
+        PlantEntity entity = plantService.createPlant(plant);
         return Response.status(Response.Status.CREATED)
                 .entity(PlantMapper.toJsonPlant(entity))
                 .build();
@@ -57,7 +57,7 @@ public class PlantsResource {
 
     @PUT // update plant
     @Path("/{plantId}")
-    public Response updatePlant(@PathParam("plantId") UUID plantId, PlantDTO request) {
+    public Response updatePlant(@PathParam("plantId") UUID plantId, Plant request) {
         Optional<PlantEntity> updatedPlant = plantService.updatePlant(plantId, request);
         return updatedPlant
                 .map(plant -> Response.ok(plant).build())

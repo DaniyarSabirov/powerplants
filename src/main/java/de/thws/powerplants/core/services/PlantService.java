@@ -2,7 +2,7 @@ package de.thws.powerplants.core.services;
 
 import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
 import de.thws.powerplants.adapters.out.persistence.repositories.PlantRepository;
-import de.thws.powerplants.application.dto.PlantDTO;
+import de.thws.powerplants.core.domain.Plant;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -17,12 +17,12 @@ public class PlantService {
 
     public PlantService() {}
 
-    public PlantEntity createPlant(PlantDTO plantDTO) {
+    public PlantEntity createPlant(Plant plant) {
         PlantEntity newPlant = new PlantEntity();
-        newPlant.setPublicName(plantDTO.getPublicName());
-        newPlant.setScientificName(plantDTO.getScientificName());
-        newPlant.setDescription(plantDTO.getDescription());
-        newPlant.setPictureUrl(plantDTO.getPictureUrl());
+        newPlant.setPublicName(plant.getPublicName());
+        newPlant.setScientificName(plant.getScientificName());
+        newPlant.setDescription(plant.getDescription());
+        newPlant.setPictureUrl(plant.getPictureUrl());
 
         plantRepository.persist(newPlant);
 
@@ -41,7 +41,7 @@ public class PlantService {
         return plantRepository.findByIdOptional(plantId);
     }
 
-    public Optional<PlantEntity> updatePlant(UUID plantId, PlantDTO request) {
+    public Optional<PlantEntity> updatePlant(UUID plantId, Plant request) {
         Optional<PlantEntity> plantOpt = plantRepository.findByIdOptional(plantId);
         if (plantOpt.isEmpty()) {
             return Optional.empty();
