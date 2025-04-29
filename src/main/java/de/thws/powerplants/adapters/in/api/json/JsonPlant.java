@@ -5,7 +5,6 @@ import java.util.UUID;
 public class JsonPlant {
 
     private UUID id;
-    private UUID homeGroupId;
     private String publicName;
     private String scientificName;
     private String description;
@@ -17,14 +16,6 @@ public class JsonPlant {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getHomeGroupId() {
-        return homeGroupId;
-    }
-
-    public void setHomeGroupId(UUID homeGroupId) {
-        this.homeGroupId = homeGroupId;
     }
 
     public String getPublicName() {
