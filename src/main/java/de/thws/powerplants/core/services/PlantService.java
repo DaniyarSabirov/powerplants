@@ -1,10 +1,15 @@
 package de.thws.powerplants.core.services;
 
-import de.thws.powerplants.adapters.out.entities.PlantEntity;
-import de.thws.powerplants.adapters.out.repositories.PlantRepository;
+import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
+import de.thws.powerplants.adapters.out.persistence.repositories.PlantRepository;
+import de.thws.powerplants.core.domain.Plant;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class PlantService {
@@ -14,7 +19,56 @@ public class PlantService {
 
     public PlantService() {}
 
-    public List<PlantEntity> getAll() {
+    @Transactional
+    public PlantEntity createPlant(Plant plant) {
+
+        PlantEntity newPlant = new PlantEntity();
+
+        newPlant.setPublicName(plant.getPublicName());
+        newPlant.setScientificName(plant.getScientificName());
+        newPlant.setDescription(plant.getDescription());
+        newPlant.setPictureUrl(plant.getPictureUrl());
+
+        plantRepository.persist(newPlant);
+
+        return newPlant;
+    }
+
+    @Transactional
+    public List<PlantEntity> getPlantsByGroup(UUID groupId) {
+        return plantRepository.list("group.id", groupId);
+    }
+
+    @Transactional
+    public boolean deletePlant(UUID plantId) {
+        return plantRepository.deleteById(plantId);
+    }
+
+    @Transactional
+    public Optional<PlantEntity> getPlantById(UUID plantId) {
+        return plantRepository.findByIdOptional(plantId);
+    }
+
+    @Transactional
+    public Optional<PlantEntity> updatePlant(UUID plantId, Plant request) {
+        Optional<PlantEntity> plantOpt = plantRepository.findByIdOptional(plantId);
+        if (plantOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        PlantEntity plant = plantOpt.get();
+        plant.setPublicName(request.getPublicName());
+        plant.setScientificName(request.getScientificName());
+        plant.setDescription(request.getDescription());
+        plant.setPictureUrl(request.getPictureUrl());
+
+        plantRepository.persist(plant);
+
+        return Optional.of(plant);
+    }
+
+    @Transactional
+    public List<PlantEntity> getAllPlants() {
         return plantRepository.listAll();
     }
 }

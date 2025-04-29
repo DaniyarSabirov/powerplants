@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.out.entities;
+package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,40 +1,11 @@
-package de.thws.powerplants.adapters.out.entities;
+package de.thws.powerplants.core.domain;
 
-import jakarta.persistence.*;
-import java.util.UUID;
+public class Plant {
 
-@Entity
-@Table(name = "plant")
-public class PlantEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private UUID id;
-
-    @Column(name = "public_name", nullable = false)
     private String publicName;
-
-    @Column(name = "scientific_name", nullable = false)
     private String scientificName;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "picture_url")
     private String pictureUrl;
-
-    // todo group foreign key
-
-    public PlantEntity() {}
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getPublicName() {
         return publicName;
