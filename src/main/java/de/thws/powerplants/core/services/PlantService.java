@@ -1,7 +1,7 @@
 package de.thws.powerplants.core.services;
 
-import de.thws.powerplants.adapters.out.entities.PlantEntity;
-import de.thws.powerplants.adapters.out.repositories.PlantRepository;
+import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
+import de.thws.powerplants.adapters.out.persistence.repositories.PlantRepository;
 import de.thws.powerplants.application.dto.PlantDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

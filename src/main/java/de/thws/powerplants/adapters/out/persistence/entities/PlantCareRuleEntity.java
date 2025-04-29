@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.out.entities;
+package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.in.json;
+package de.thws.powerplants.adapters.in.api.json;
 
 import java.util.UUID;
 

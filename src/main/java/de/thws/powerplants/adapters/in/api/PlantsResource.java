@@ -1,7 +1,7 @@
-package de.thws.powerplants.adapters.in;
+package de.thws.powerplants.adapters.in.api;
 
-import de.thws.powerplants.adapters.in.json.JsonPlant;
-import de.thws.powerplants.adapters.out.entities.PlantEntity;
+import de.thws.powerplants.adapters.in.api.json.JsonPlant;
+import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
 import de.thws.powerplants.application.dto.PlantDTO;
 import de.thws.powerplants.core.mappers.PlantMapper;
 import de.thws.powerplants.core.services.PlantService;
@@ -17,8 +17,9 @@ import java.util.UUID;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PlantsResource {
+
     @Inject
-    PlantService plantService;
+    private PlantService plantService;
 
     @POST // create plant
     public Response createPlant(JsonPlant jsonPlant) {

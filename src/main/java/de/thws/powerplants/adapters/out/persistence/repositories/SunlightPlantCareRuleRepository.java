@@ -1,6 +1,6 @@
-package de.thws.powerplants.adapters.out.repositories;
+package de.thws.powerplants.adapters.out.persistence.repositories;
 
-import de.thws.powerplants.adapters.out.entities.SunlightPlantCareRuleEntity;
+import de.thws.powerplants.adapters.out.persistence.entities.SunlightPlantCareRuleEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

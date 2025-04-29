@@ -1,7 +1,7 @@
 package de.thws.powerplants.core.mappers;
 
-import de.thws.powerplants.adapters.in.json.JsonPlant;
-import de.thws.powerplants.adapters.out.entities.PlantEntity;
+import de.thws.powerplants.adapters.in.api.json.JsonPlant;
+import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
 import de.thws.powerplants.application.dto.PlantDTO;
 
 public class PlantMapper {
