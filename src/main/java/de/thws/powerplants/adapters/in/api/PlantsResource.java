@@ -23,22 +23,58 @@ public class PlantsResource {
 
     @POST // create plant
     public Response createPlant(JsonPlant jsonPlant) {
+
         Plant plant = PlantMapper.toPlantDTO(jsonPlant);
+
         PlantEntity entity = plantService.createPlant(plant);
+
         return Response.status(Response.Status.CREATED)
                 .entity(PlantMapper.toJsonPlant(entity))
                 .build();
     }
 
-    @GET // get all the plants in group
-    @Path("/{groupId}")
-    public List<PlantEntity> getPlantsByGroup(@PathParam("groupId") UUID groupId) {
-        return plantService.getPlantsByGroup(groupId);
+    @GET // get all the plants
+    @Path("")
+    public Response getAllPlants() {
+
+        List<JsonPlant> plants = plantService.getAllPlants().stream()
+                .map(PlantMapper::toJsonPlant)
+                .toList();
+
+        return Response.ok(plants).build();
+    }
+
+    @GET // get concrete plant with the help of ID
+    @Path("/{plantId}")
+    public Response getPlantById(@PathParam("plantId") UUID plantId) {
+
+        Optional<JsonPlant> plantOpt = plantService.getPlantById(plantId).map(PlantMapper::toJsonPlant);
+        if (plantOpt.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        return Response.ok(plantOpt.get()).build();
+    }
+
+    @PUT // update plant
+    @Path("/{plantId}")
+    public Response updatePlant(@PathParam("plantId") UUID plantId, JsonPlant jsonPlant) {
+
+        Plant plant = PlantMapper.toPlantDTO(jsonPlant);
+
+        Optional<JsonPlant> updatedPlant =
+                plantService.updatePlant(plantId, plant).map(PlantMapper::toJsonPlant);
+        if (updatedPlant.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        return Response.ok(updatedPlant.get()).build();
     }
 
     @DELETE // delete plant
     @Path("/{plantId}")
     public Response deletePlant(@PathParam("plantId") UUID plantId) {
+
         boolean deleted = plantService.deletePlant(plantId);
         if (deleted) {
             return Response.status(Response.Status.NO_CONTENT).build();
@@ -47,30 +83,9 @@ public class PlantsResource {
         }
     }
 
-    @GET // get concrete plant with the help of ID
-    @Path("/{plantId}")
-    public Response getPlantById(@PathParam("plantId") UUID plantId) {
-        Optional<PlantEntity> plantOpt = plantService.getPlantById(plantId);
-        return plantOpt.map(plant -> Response.ok(plant).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
-    }
-
-    @PUT // update plant
-    @Path("/{plantId}")
-    public Response updatePlant(@PathParam("plantId") UUID plantId, Plant request) {
-        Optional<PlantEntity> updatedPlant = plantService.updatePlant(plantId, request);
-        return updatedPlant
-                .map(plant -> Response.ok(plant).build())
-                .orElse(Response.status(Response.Status.NOT_FOUND).build());
-    }
-
-    @GET // get all the plants
-    @Path("")
-    public Response getAllPlants() {
-        List<PlantEntity> plants = plantService.getAllPlants();
-        if (plants.isEmpty()) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
-        return Response.ok(plants).build();
-    }
+    /*@GET // get all the plants in group
+    @Path("/{groupId}")
+    public List<PlantEntity> getPlantsByGroup(@PathParam("groupId") UUID groupId) {
+        return plantService.getPlantsByGroup(groupId);
+    }*/
 }
