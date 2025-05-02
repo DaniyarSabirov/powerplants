@@ -35,9 +35,9 @@ public class PlantResource {
 
     @GET // get all the plants
     @Path("")
-    public Response getAllPlants() {
+    public Response getPlantsByGroup(@PathParam("group_id") UUID groupId) {
 
-        List<JsonPlant> plants = plantService.getAllPlants().stream()
+        List<JsonPlant> plants = plantService.getPlantsByGroup(groupId).stream()
                 .map(PlantMapper::toJsonPlant)
                 .toList();
 
