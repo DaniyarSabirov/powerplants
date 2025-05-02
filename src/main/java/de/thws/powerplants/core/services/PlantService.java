@@ -1,6 +1,8 @@
 package de.thws.powerplants.core.services;
 
+import de.thws.powerplants.adapters.out.persistence.entities.GroupEntity;
 import de.thws.powerplants.adapters.out.persistence.entities.PlantEntity;
+import de.thws.powerplants.adapters.out.persistence.repositories.GroupRepository;
 import de.thws.powerplants.adapters.out.persistence.repositories.PlantRepository;
 import de.thws.powerplants.core.domain.Plant;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,12 +16,17 @@ import java.util.UUID;
 public class PlantService {
 
     @Inject
+    private GroupRepository groupRepository;
+
+    @Inject
     private PlantRepository plantRepository;
 
     public PlantService() {}
 
     @Transactional
-    public PlantEntity createPlant(Plant plant) {
+    public PlantEntity createPlant(UUID groupId, Plant plant) {
+
+        GroupEntity group = groupRepository.findById(groupId);
 
         PlantEntity newPlant = new PlantEntity();
 
@@ -27,6 +34,8 @@ public class PlantService {
         newPlant.setScientificName(plant.getScientificName());
         newPlant.setDescription(plant.getDescription());
         newPlant.setPictureUrl(plant.getPictureUrl());
+
+        newPlant.setGroup(group);
 
         plantRepository.persist(newPlant);
 
