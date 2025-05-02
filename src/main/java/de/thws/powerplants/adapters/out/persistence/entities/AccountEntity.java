@@ -1,6 +1,7 @@
 package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class AccountEntity {
             name = "account_home",
             joinColumns = @JoinColumn(name = "home_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id"))
-    private List<HomeEntity> homes;
+    private List<HomeEntity> homes = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
