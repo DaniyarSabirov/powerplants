@@ -6,11 +6,11 @@ class PlantService {
 
   PlantService(this._client);
 
-  Future<Plant> getPlantById(String id) async {
+  Future<Plant> getPlantById(String groupId, String plantId) async {
     try {
       final response = await _client.get(
-        '/plants/$id',
-      ); // TODO check real endpoint
+        'groups/$groupId/plants/$plantId',
+      );
 
       if (response.statusCode == 200) {
         return Plant.fromJson(response.data);
@@ -24,30 +24,11 @@ class PlantService {
     }
   }
 
-  Future<List<Plant>> getAllPlants() async {
-    try {
-      final response = await _client.get('/plants'); // TODO check real endpoint
-
-      if (response.statusCode == 200) {
-        final List<dynamic> plantsJson = response.data as List<dynamic>;
-        return plantsJson
-            .map((json) => Plant.fromJson(json as Map<String, dynamic>))
-            .toList();
-      } else {
-        throw Exception(
-          'Failed to load plants, error code: ${response.statusCode}',
-        );
-      }
-    } catch (e) {
-      throw Exception('Error fetching all plants: $e');
-    }
-  }
-
   Future<List<Plant>> getPlantsByGroupId(String groupId) async {
     try {
       final response = await _client.get(
         '/groups/$groupId/plants',
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         final List<dynamic> plantsJson = response.data as List<dynamic>;
@@ -68,9 +49,9 @@ class PlantService {
   Future<Plant> createPlant(Plant plant) async {
     try {
       final response = await _client.post(
-        '/plants',
+        'groups/${plant.groupId}/plants',
         data: plant.toJson(),
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         final Map<String, dynamic> json = response.data as Map<String, dynamic>;
@@ -85,18 +66,18 @@ class PlantService {
     }
   }
 
-  Future<void> updatePlant(String id, Plant plant) async {
+  Future<void> updatePlant(String groupId, String plantId, Plant plant) async {
     try {
       final response = await _client.put(
-        '/plants/$id',
+        'groups/$groupId/plants/$plantId',
         data: plant.toJson(),
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         return;
       } else {
         throw Exception(
-          'Failed to update plant with id $id, status code: ${response.statusCode}',
+          'Failed to update plant with id $plantId, status code: ${response.statusCode}',
         );
       }
     } catch (e) {
@@ -104,17 +85,17 @@ class PlantService {
     }
   }
 
-  Future<void> deletePlant(String id) async {
+  Future<void> deletePlant(String groupId, String plantId) async {
     try {
       final response = await _client.delete(
-        '/plants/$id',
-      ); // TODO check real endpoint
+        'groups/$groupId/plants/$plantId',
+      );
 
       if (response.statusCode == 204 || response.statusCode == 200) {
         return;
       } else {
         throw Exception(
-          'Failed to delete plant with id $id, status code: ${response.statusCode}',
+          'Failed to delete plant with id $plantId, status code: ${response.statusCode}',
         );
       }
     } catch (e) {
@@ -122,3 +103,25 @@ class PlantService {
     }
   }
 }
+
+//
+// Not implemented on Backend
+//
+// Future<List<Plant>> getAllPlants() async {
+//   try {
+//     final response = await _client.get('/plants');
+//
+//     if (response.statusCode == 200) {
+//       final List<dynamic> plantsJson = response.data as List<dynamic>;
+//       return plantsJson
+//           .map((json) => Plant.fromJson(json as Map<String, dynamic>))
+//           .toList();
+//     } else {
+//       throw Exception(
+//         'Failed to load plants, error code: ${response.statusCode}',
+//       );
+//     }
+//   } catch (e) {
+//     throw Exception('Error fetching all plants: $e');
+//   }
+// }
