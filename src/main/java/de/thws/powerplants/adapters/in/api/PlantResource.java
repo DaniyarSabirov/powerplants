@@ -13,20 +13,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Path("/plants")
+@Path("/groups/{group_id}/plants")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class PlantsResource {
+public class PlantResource {
 
     @Inject
     private PlantService plantService;
 
     @POST // create plant
-    public Response createPlant(JsonPlant jsonPlant) {
+    public Response createPlant(@PathParam("group_id") UUID groupId, JsonPlant jsonPlant) {
 
         Plant plant = PlantMapper.toPlantDTO(jsonPlant);
 
-        PlantEntity entity = plantService.createPlant(plant);
+        PlantEntity entity = plantService.createPlant(groupId, plant);
 
         return Response.status(Response.Status.CREATED)
                 .entity(PlantMapper.toJsonPlant(entity))
@@ -35,9 +35,9 @@ public class PlantsResource {
 
     @GET // get all the plants
     @Path("")
-    public Response getAllPlants() {
+    public Response getPlantsByGroup(@PathParam("group_id") UUID groupId) {
 
-        List<JsonPlant> plants = plantService.getAllPlants().stream()
+        List<JsonPlant> plants = plantService.getPlantsByGroup(groupId).stream()
                 .map(PlantMapper::toJsonPlant)
                 .toList();
 

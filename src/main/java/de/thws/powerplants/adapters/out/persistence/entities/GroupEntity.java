@@ -1,6 +1,7 @@
 package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class GroupEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "home_group_id")
-    private List<PlantEntity> plants;
+    private List<PlantEntity> plants = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)
     private String publicName;

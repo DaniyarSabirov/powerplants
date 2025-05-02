@@ -1,6 +1,7 @@
 package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,11 +15,11 @@ public class HomeEntity {
     private UUID id;
 
     @ManyToMany(mappedBy = "homes")
-    private List<AccountEntity> accounts;
+    private List<AccountEntity> accounts = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "home_id")
-    private List<GroupEntity> groups;
+    private List<GroupEntity> groups = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
