@@ -1,6 +1,7 @@
 package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +16,10 @@ public class GroupEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_id")
     private HomeEntity home;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "home_group_id")
+    private List<PlantEntity> plants;
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
@@ -41,6 +46,14 @@ public class GroupEntity {
 
     public void setHome(HomeEntity home) {
         this.home = home;
+    }
+
+    public List<PlantEntity> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<PlantEntity> plants) {
+        this.plants = plants;
     }
 
     public String getPublicName() {
