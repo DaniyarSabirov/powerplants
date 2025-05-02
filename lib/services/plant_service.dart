@@ -9,7 +9,7 @@ class PlantService {
   Future<Plant> getPlantById(String groupId, String plantId) async {
     try {
       final response = await _client.get(
-        'groups/$groupId/plants/$plantId',
+        '/groups/$groupId/plants/$plantId',
       );
 
       if (response.statusCode == 200) {
@@ -49,7 +49,7 @@ class PlantService {
   Future<Plant> createPlant(Plant plant) async {
     try {
       final response = await _client.post(
-        'groups/${plant.groupId}/plants',
+        '/groups/${plant.groupId}/plants',
         data: plant.toJson(),
       );
 
@@ -69,7 +69,7 @@ class PlantService {
   Future<void> updatePlant(String groupId, String plantId, Plant plant) async {
     try {
       final response = await _client.put(
-        'groups/$groupId/plants/$plantId',
+        '/groups/$groupId/plants/$plantId',
         data: plant.toJson(),
       );
 
@@ -88,7 +88,7 @@ class PlantService {
   Future<void> deletePlant(String groupId, String plantId) async {
     try {
       final response = await _client.delete(
-        'groups/$groupId/plants/$plantId',
+        '/groups/$groupId/plants/$plantId',
       );
 
       if (response.statusCode == 204 || response.statusCode == 200) {
