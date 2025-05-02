@@ -13,9 +13,9 @@ class AddPlant extends StatefulWidget {
 }
 
 class _AddPlantState extends State<AddPlant> {
-  File? _imageFile;
-  final _picker = ImagePicker();
-  int? _selectedIndex = 0;
+  File? imageFile;
+  final imagePicker = ImagePicker();
+  int? selectedGroupIndex = 0;
   final List<String> groups = [
     'Living Room',
     'Kitchen',
@@ -60,13 +60,13 @@ class _AddPlantState extends State<AddPlant> {
       TextEditingController();
 
   Future<void> _pickImage(ImageSource source) async {
-    final picked = await _picker.pickImage(
+    final picked = await imagePicker.pickImage(
       source: source,
       maxWidth: 800,
       imageQuality: 80,
     );
     if (picked != null) {
-      setState(() => _imageFile = File(picked.path));
+      setState(() => imageFile = File(picked.path));
     }
   }
 
@@ -89,9 +89,9 @@ class _AddPlantState extends State<AddPlant> {
                   width: double.infinity,
                   height: 350,
                   color: Color(0xFFE0E0E0),
-                  child: _imageFile == null
+                  child: imageFile == null
                       ? Icon(Icons.add_a_photo, size: 48, color: Colors.grey)
-                      : Image.file(_imageFile!, fit: BoxFit.cover),
+                      : Image.file(imageFile!, fit: BoxFit.cover),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 400, top: 250),
@@ -223,191 +223,7 @@ class _AddPlantState extends State<AddPlant> {
                                     : Color(0xFFF2F2F2),
                                 connectorThickness: 1,
                               ),
-                              content: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${AppLocalizations.of(context)!.add_plant_name}*',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 40,
-                                    width: double.infinity,
-                                    margin: EdgeInsets.only(bottom: 24, top: 4),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFF2F2F2),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 8,
-                                      ),
-                                      child: TextField(
-                                        controller: plantNameController,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                        decoration: InputDecoration(
-                                          isCollapsed: true,
-                                          border: InputBorder.none,
-                                          hintText:
-                                              AppLocalizations.of(context)!
-                                                  .add_plant_name_hint,
-                                          hintStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${AppLocalizations.of(context)!.add_plant_scientific_name}*',
-                                    style: TextStyle(
-                                      fontFamily: 'Manrope',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 40,
-                                    width: double.infinity,
-                                    margin: EdgeInsets.only(bottom: 24, top: 4),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFF2F2F2),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 8,
-                                      ),
-                                      child: TextField(
-                                        controller:
-                                            plantScientificNameController,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                        decoration: InputDecoration(
-                                          isCollapsed: true,
-                                          border: InputBorder.none,
-                                          hintText: AppLocalizations.of(
-                                            context,
-                                          )!
-                                              .add_plant_scientific_name_hint,
-                                          hintStyle: TextStyle(
-                                            fontFamily: 'Manrope',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${AppLocalizations.of(context)!.add_plant_group}*',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 24, top: 4),
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        spacing: 8,
-                                        children: List.generate(groups.length,
-                                            (index) {
-                                          final isSelected =
-                                              _selectedIndex == index;
-                                          return ChoiceChip(
-                                            label: Text(
-                                              groups[index],
-                                              style: TextStyle(
-                                                color: isSelected
-                                                    ? Color(0xFFFCFCFC)
-                                                    : Color(0xFF92A56E),
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            selected: isSelected,
-                                            shape: StadiumBorder(
-                                              side: BorderSide(
-                                                color: !isSelected
-                                                    ? Color(0xFFF2F2F2)
-                                                    : Color(0xFF92A56E),
-                                              ),
-                                            ),
-                                            backgroundColor: Color(0xFFFCFCFC),
-                                            selectedColor: Color(0xFF92A56E),
-                                            checkmarkColor: Color(0xFFFCFCFC),
-                                            onSelected: (selected) {
-                                              setState(() {
-                                                _selectedIndex =
-                                                    selected ? index : null;
-                                              });
-                                            },
-                                            showCheckmark: false,
-                                          );
-                                        }),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .add_plant_description,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    margin: EdgeInsets.only(bottom: 24, top: 4),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFF2F2F2),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 8,
-                                      ),
-                                      child: TextField(
-                                        controller: plantDescriptionController,
-                                        maxLength: 300,
-                                        minLines: 1,
-                                        maxLines: null,
-                                        style: TextStyle(
-                                          fontFamily: 'Manrope',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                        decoration: InputDecoration(
-                                          isCollapsed: true,
-                                          border: InputBorder.none,
-                                          hintText:
-                                              AppLocalizations.of(context)!
-                                                  .add_plant_description_hint,
-                                          hintStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              content: plantStep(),
                             ),
                             Step(
                               title: Text(
@@ -444,65 +260,7 @@ class _AddPlantState extends State<AddPlant> {
                                     : Color(0xFFF2F2F2),
                                 connectorThickness: 1,
                               ),
-                              content: Column(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: careRules.isEmpty
-                                        ? [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 4,
-                                              ),
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFFFCFCFC),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'No Care Rules set yet...',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ]
-                                        : List.generate(
-                                            careRules.length,
-                                            (index) => displayCareRules(index),
-                                          ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => {
-                                      setState(() {
-                                        showAddRuleDialog();
-                                      }),
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFFCFCFC),
-                                        border: Border.all(
-                                          color: Color(0xFFF2F2F2),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 64,
-                                        color: Color(0xFFF2F2F2),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              content: scheduleStep(),
                             ),
                             Step(
                               title: Text(
@@ -539,7 +297,7 @@ class _AddPlantState extends State<AddPlant> {
                                     : Color(0xFFF2F2F2),
                                 connectorThickness: 1,
                               ),
-                              content: Container(),
+                              content: confirmStep(),
                             ),
                           ],
                         ),
@@ -550,7 +308,13 @@ class _AddPlantState extends State<AddPlant> {
                       child: Center(
                         child: GestureDetector(
                           onTap: () => setState(() {
-                            _currentStep++;
+                            if (_currentStep < 2) {
+                              _currentStep++;
+                            } else {
+                              Navigator.of(context).pushReplacementNamed(
+                                '/groupoverview',
+                              );
+                            }
                           }),
                           child: Container(
                             margin: EdgeInsets.only(top: 8, bottom: 36),
@@ -585,7 +349,7 @@ class _AddPlantState extends State<AddPlant> {
     );
   }
 
-  Widget displayCareRules(final index) {
+  Widget displayCareRulesEditable(final index) {
     final indices = careRules[index].scheduleWeekDays.toList()..sort();
     final scheduledDays = indices.map((d) => weekDays[d]).join(', ');
 
@@ -644,7 +408,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                       Expanded(
                         child: Text(
-                          '$scheduledDays every ${careRules[index].scheduleIntervalWeeks} week${careRules[index].scheduleIntervalWeeks > 1 ? 's' : ''}',
+                          '$scheduledDays - every ${careRules[index].scheduleIntervalWeeks} week${careRules[index].scheduleIntervalWeeks > 1 ? 's' : ''}',
                           style: TextStyle(
                             fontFamily: 'Manrope',
                             fontSize: 14,
@@ -807,7 +571,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                     ),
                     Text(
-                      'Name',
+                      'Name*',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -850,7 +614,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                     ),
                     Text(
-                      'Instruction',
+                      'Instruction*',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -899,7 +663,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ruleTypes[_selectedRuleTypeIndex!].label,
+                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -969,7 +733,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ruleTypes[_selectedRuleTypeIndex!].label,
+                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -1065,7 +829,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ruleTypes[_selectedRuleTypeIndex!].label,
+                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -1115,7 +879,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ruleTypes[_selectedRuleTypeIndex!].label,
+                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -1396,5 +1160,377 @@ class _AddPlantState extends State<AddPlant> {
     }
 
     return 0;
+  }
+
+  Widget plantStep() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '${AppLocalizations.of(context)!.add_plant_name}*',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Container(
+          height: 40,
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 24, top: 4),
+          decoration: BoxDecoration(
+            color: Color(0xFFF2F2F2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
+            child: TextField(
+              controller: plantNameController,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+              ),
+              decoration: InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
+                hintText: AppLocalizations.of(context)!.add_plant_name_hint,
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Text(
+          '${AppLocalizations.of(context)!.add_plant_scientific_name}*',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Container(
+          height: 40,
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 24, top: 4),
+          decoration: BoxDecoration(
+            color: Color(0xFFF2F2F2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
+            child: TextField(
+              controller: plantScientificNameController,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+              ),
+              decoration: InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
+                hintText: AppLocalizations.of(
+                  context,
+                )!
+                    .add_plant_scientific_name_hint,
+                hintStyle: TextStyle(
+                  fontFamily: 'Manrope',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Text(
+          '${AppLocalizations.of(context)!.add_plant_group}*',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 24, top: 4),
+          height: 50,
+          width: double.infinity,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: 8,
+              children: List.generate(groups.length, (index) {
+                final isSelected = selectedGroupIndex == index;
+                return ChoiceChip(
+                  label: Text(
+                    groups[index],
+                    style: TextStyle(
+                      color: isSelected ? Color(0xFFFCFCFC) : Color(0xFF92A56E),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  selected: isSelected,
+                  shape: StadiumBorder(
+                    side: BorderSide(
+                      color:
+                          !isSelected ? Color(0xFFF2F2F2) : Color(0xFF92A56E),
+                    ),
+                  ),
+                  backgroundColor: Color(0xFFFCFCFC),
+                  selectedColor: Color(0xFF92A56E),
+                  checkmarkColor: Color(0xFFFCFCFC),
+                  onSelected: (selected) {
+                    setState(() {
+                      selectedGroupIndex = selected ? index : null;
+                    });
+                  },
+                  showCheckmark: false,
+                );
+              }),
+            ),
+          ),
+        ),
+        Text(
+          AppLocalizations.of(context)!.add_plant_description,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 24, top: 4),
+          decoration: BoxDecoration(
+            color: Color(0xFFF2F2F2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
+            child: TextField(
+              controller: plantDescriptionController,
+              maxLength: 300,
+              minLines: 1,
+              maxLines: null,
+              style: TextStyle(
+                fontFamily: 'Manrope',
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+              ),
+              decoration: InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
+                hintText:
+                    AppLocalizations.of(context)!.add_plant_description_hint,
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget scheduleStep() {
+    return Column(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: careRules.isEmpty
+              ? [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFCFCFC),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'No Care Rules set yet...',
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
+              : List.generate(
+                  careRules.length,
+                  (index) => displayCareRulesEditable(index),
+                ),
+        ),
+        GestureDetector(
+          onTap: () => {
+            setState(() {
+              showAddRuleDialog();
+            }),
+          },
+          child: Container(
+            width: double.infinity,
+            height: 150,
+            decoration: BoxDecoration(
+              color: Color(0xFFFCFCFC),
+              border: Border.all(
+                color: Color(0xFFF2F2F2),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Icon(
+              Icons.add,
+              size: 64,
+              color: Color(0xFFF2F2F2),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget confirmStep() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  plantNameController.text,
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Text(
+                  plantScientificNameController.text,
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  groups[selectedGroupIndex!],
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Text(
+          plantDescriptionController.text,
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 12,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Text(
+          'Schedule',
+          style: TextStyle(
+            fontFamily: 'Manrope',
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Column(
+          children: List.generate(
+            careRules.length,
+            (index) => displayCareRulesOverview(index),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget displayCareRulesOverview(final index) {
+    final indices = careRules[index].scheduleWeekDays.toList()..sort();
+    final scheduledDays = indices.map((d) => weekDays[d]).join(', ');
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          width: double.infinity,
+          height: 75,
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(0xFFF2F2F2), width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            ruleTypes[getRuleTypeIndexByType(
+                                    careRules[index].type)]
+                                .icon,
+                            color: Color(0xFF616E54),
+                          ),
+                          Text(
+                            careRules[index].name,
+                            style: TextStyle(
+                              color: Color(0xFF616E54),
+                              fontFamily: 'Manrope',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Text(
+                          '$scheduledDays - every ${careRules[index].scheduleIntervalWeeks} week${careRules[index].scheduleIntervalWeeks > 1 ? 's' : ''}',
+                          style: TextStyle(
+                            fontFamily: 'Manrope',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
