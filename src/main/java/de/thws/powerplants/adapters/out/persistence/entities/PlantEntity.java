@@ -12,6 +12,10 @@ public class PlantEntity {
     @Column(name = "id")
     private UUID id;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "home_group_id")
+    private GroupEntity group;
+
     @Column(name = "public_name", nullable = false)
     private String publicName;
 
@@ -34,6 +38,14 @@ public class PlantEntity {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public GroupEntity getGroup() {
+        return group;
+    }
+
+    public void setGroup(GroupEntity group) {
+        this.group = group;
     }
 
     public String getPublicName() {
