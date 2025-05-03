@@ -17,19 +17,19 @@ class Plant {
 
   factory Plant.fromJson(Map<String, dynamic> json) => Plant(
     id: json['id'],
-    name: json['name'],
+    name: json['publicName'],
     scientificName: json['scientificName'],
     description: json['description'],
-    imageUrl: json['imageUrl'],
+    imageUrl: json['pictureUrl'],
     groupId: json['groupId'],
   );
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'name': name,
+    'publicName': name,
     'scientificName': scientificName,
     'description': description,
-    'imageUrl': imageUrl,
+    'pictureUrl': imageUrl,
     'groupId': groupId,
   };
 
