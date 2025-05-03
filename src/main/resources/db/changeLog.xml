@@ -9,7 +9,11 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="1" author="powerplants Team">
-        <sqlFile path="sql/init.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="sql/1-init.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="2" author="powerplants Team">
+        <sqlFile path="sql/2-create-test-data.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
 </databaseChangeLog>
