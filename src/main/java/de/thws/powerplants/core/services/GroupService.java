@@ -5,6 +5,7 @@ import de.thws.powerplants.adapters.out.persistence.entities.HomeEntity;
 import de.thws.powerplants.adapters.out.persistence.repositories.GroupRepository;
 import de.thws.powerplants.adapters.out.persistence.repositories.HomeRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -13,13 +14,13 @@ import java.util.UUID;
 @ApplicationScoped
 public class GroupService {
 
-    private final GroupRepository groupRepository;
-    private final HomeRepository homeRepository;
+    @Inject
+    private GroupRepository groupRepository;
 
-    public GroupService(GroupRepository groupRepository, HomeRepository homeRepository) {
-        this.groupRepository = groupRepository;
-        this.homeRepository = homeRepository;
-    }
+    @Inject
+    private HomeRepository homeRepository;
+
+    public GroupService(){}
 
     @Transactional
     public GroupEntity createGroup(String publicName, String description, UUID homeId, String pictureUrl) {
