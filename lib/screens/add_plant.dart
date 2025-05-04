@@ -591,7 +591,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                     ),
                     Text(
-                      'Name*',
+                      '${AppLocalizations.of(context)?.add_plant_care_schedule_name}*',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -639,7 +639,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                     ),
                     Text(
-                      'Instruction*',
+                      '${AppLocalizations.of(context)?.add_plant_care_schedule_instruction}*',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -862,7 +862,7 @@ class _AddPlantState extends State<AddPlant> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            'minutes',
+                                            '${AppLocalizations.of(context)?.add_plant_care_schedule_minutes}',
                                             style: TextStyle(
                                               fontFamily: 'Manrope',
                                               fontSize: 16,
@@ -1045,7 +1045,7 @@ class _AddPlantState extends State<AddPlant> {
                       },
                     ),
                     Text(
-                      'Schedule*',
+                      '${AppLocalizations.of(context)?.add_plant_care_schedule_schedule}*',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -1103,7 +1103,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                     ),
                     Text(
-                      'Repeat every',
+                      '${AppLocalizations.of(context)?.add_plant_care_schedule_repeat}',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -1134,7 +1134,7 @@ class _AddPlantState extends State<AddPlant> {
                             child: Icon(Icons.remove, size: 20),
                           ),
                           Text(
-                            '$weekInterval week${weekInterval > 1 ? 's' : ''}',
+                            '$weekInterval ${weekInterval > 1 ? '${AppLocalizations.of(context)?.add_plant_care_schedule_weeks}' : '${AppLocalizations.of(context)?.add_plant_care_schedule_week}'}',
                             style: TextStyle(
                               fontFamily: 'Manrope',
                               fontSize: 14,
@@ -1466,7 +1466,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                       child: Center(
                         child: Text(
-                          'No Care Rules set yet...',
+                          '${AppLocalizations.of(context)?.add_plant_no_care_schedule_set}',
                         ),
                       ),
                     ),
@@ -1561,7 +1561,7 @@ class _AddPlantState extends State<AddPlant> {
           height: 16,
         ),
         Text(
-          'Schedule',
+          '${AppLocalizations.of(context)?.add_plant_care_schedule_schedule}',
           style: TextStyle(
             fontFamily: 'Manrope',
             fontSize: 16,
@@ -1622,7 +1622,7 @@ class _AddPlantState extends State<AddPlant> {
                       ),
                       Expanded(
                         child: Text(
-                          '$scheduledDays - every ${careRules[index].scheduleIntervalWeeks} week${careRules[index].scheduleIntervalWeeks > 1 ? 's' : ''}',
+                          '$scheduledDays - every ${careRules[index].scheduleIntervalWeeks} ${careRules[index].scheduleIntervalWeeks > 1 ? '${AppLocalizations.of(context)?.add_plant_care_schedule_weeks}' : '${AppLocalizations.of(context)?.add_plant_care_schedule_week}'}',
                           style: TextStyle(
                             fontFamily: 'Manrope',
                             fontSize: 14,
