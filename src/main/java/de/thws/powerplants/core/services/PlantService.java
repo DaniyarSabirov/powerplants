@@ -48,8 +48,22 @@ public class PlantService {
     }
 
     @Transactional
-    public boolean deletePlant(UUID plantId) {
-        return plantRepository.deleteById(plantId);
+    public boolean deletePlant(UUID groupId, UUID plantId) {
+
+        GroupEntity group = groupRepository.findById(groupId);
+
+        List<PlantEntity> plants = group.getPlants();
+
+        PlantEntity plantEntity = plants.stream()
+                .filter(plant -> plantId.equals(plant.getId()))
+                .findFirst()
+                .orElseThrow();
+
+        plantEntity.setGroup(null);
+
+        plants.remove(plantEntity);
+
+        return true;
     }
 
     @Transactional

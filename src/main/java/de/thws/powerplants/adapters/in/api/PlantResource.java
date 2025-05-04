@@ -73,9 +73,9 @@ public class PlantResource {
 
     @DELETE // delete plant
     @Path("/{plantId}")
-    public Response deletePlant(@PathParam("plantId") UUID plantId) {
+    public Response deletePlant(@PathParam("group_id") UUID groupId, @PathParam("plantId") UUID plantId) {
 
-        boolean deleted = plantService.deletePlant(plantId);
+        boolean deleted = plantService.deletePlant(groupId, plantId);
         if (deleted) {
             return Response.status(Response.Status.NO_CONTENT).build();
         } else {
