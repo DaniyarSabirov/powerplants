@@ -10,6 +10,12 @@ class GroupOverview extends StatefulWidget {
 class _GroupOverviewState extends State<GroupOverview> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: FloatingActionButton(
+          onPressed: () => {Navigator.of(context).pushNamed('/addplant')},
+        ),
+      ),
+    );
   }
 }
