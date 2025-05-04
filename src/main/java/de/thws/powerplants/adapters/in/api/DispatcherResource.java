@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.in;
+package de.thws.powerplants.adapters.in.api;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

@@ -85,13 +85,14 @@ class _GroupOverviewState extends State<GroupOverview> {
                     GestureDetector(
                       onTap: () => {
                         setState(() {
-                          plants.add(
-                            (
-                              title: 'New Plant',
-                              image:
-                                  'https://media.istockphoto.com/id/1147544807/de/vektor/miniaturbild-vektorgrafik.jpg?s=612x612&w=0&k=20&c=IIK_u_RTeRFyL6kB1EMzBufT4H7MYT3g04sz903fXAk='
-                            ),
-                          );
+                          // plants.add(
+                          //   (
+                          //     title: 'New Plant',
+                          //     image:
+                          //         'https://media.istockphoto.com/id/1147544807/de/vektor/miniaturbild-vektorgrafik.jpg?s=612x612&w=0&k=20&c=IIK_u_RTeRFyL6kB1EMzBufT4H7MYT3g04sz903fXAk='
+                          //   ),
+                          // );
+                          Navigator.of(context).pushNamed('/addplant')
                         }),
                       },
                       child: Container(
