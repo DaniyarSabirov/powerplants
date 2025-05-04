@@ -25,7 +25,7 @@ class _AddPlantState extends State<AddPlant> {
     'Hallway',
     'Sensitive plants',
   ];
-  int _currentStep = 0;
+  int currentStep = 0;
   final careRules = [];
   final ruleTypes = [
     (type: 'Water', icon: Icons.water_drop_outlined, label: 'Amount'),
@@ -33,13 +33,13 @@ class _AddPlantState extends State<AddPlant> {
     (type: 'Light', icon: Icons.wb_sunny_outlined, label: 'Duration'),
     (type: 'Custom', icon: Icons.auto_awesome_rounded, label: 'Description'),
   ];
-  int? _selectedRuleTypeIndex = 0;
+  int? selectedRuleTypeIndex = 0;
   final pruneAmount = [
-    'A little',
-    'More',
+    'A little'
+        'More',
     'A Lot',
   ];
-  String? _selectedPruneAmount = 'A little';
+  String? selectedPruneAmount = 'A little';
   final weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   Set<int> selectedDays = {};
   int weekInterval = 1;
@@ -59,6 +59,14 @@ class _AddPlantState extends State<AddPlant> {
   final TextEditingController careRuleDurationController =
       TextEditingController();
 
+  bool plantNameValid = true;
+  bool plantScientificNameValid = true;
+  bool careRulesValid = true;
+  bool careRuleNameValid = true;
+  bool careRuleInstructionValid = true;
+  bool careRuleDataValid = true;
+  bool careRuleScheduleValid = true;
+
   Future<void> _pickImage(ImageSource source) async {
     final picked = await imagePicker.pickImage(
       source: source,
@@ -73,11 +81,11 @@ class _AddPlantState extends State<AddPlant> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: _currentStep == 0,
+      canPop: currentStep == 0,
       onPopInvokedWithResult: (didPop, result) => {
-        if (!didPop && _currentStep > 0)
+        if (!didPop && currentStep > 0)
           {
-            setState(() => _currentStep--),
+            setState(() => currentStep--),
           },
       },
       child: Scaffold(
@@ -99,7 +107,7 @@ class _AddPlantState extends State<AddPlant> {
                     onTap: () {
                       _pickImage(ImageSource.gallery);
                     },
-                    child: _currentStep == 0
+                    child: currentStep == 0
                         ? Container(
                             width: 40,
                             height: 40,
@@ -180,7 +188,7 @@ class _AddPlantState extends State<AddPlant> {
                         ),
                         child: Stepper(
                           type: StepperType.horizontal,
-                          currentStep: _currentStep,
+                          currentStep: currentStep,
                           elevation: 0,
                           margin: EdgeInsets.zero,
                           controlsBuilder:
@@ -192,16 +200,16 @@ class _AddPlantState extends State<AddPlant> {
                               title: Text(
                                 AppLocalizations.of(context)!.add_plant_plant,
                                 style: TextStyle(
-                                  color: _currentStep >= 0
+                                  color: currentStep >= 0
                                       ? Color(0xFF92A56E)
                                       : Color(0xFFF2F2F2),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              isActive: _currentStep >= 0,
-                              state: 0 < _currentStep
+                              isActive: currentStep >= 0,
+                              state: 0 < currentStep
                                   ? StepState.complete
-                                  : 0 == _currentStep
+                                  : 0 == currentStep
                                       ? StepState.indexed
                                       : StepState.disabled,
                               stepStyle: StepStyle(
@@ -209,16 +217,16 @@ class _AddPlantState extends State<AddPlant> {
                                   color: Color(0xFFFCFCFC),
                                   fontWeight: FontWeight.bold,
                                 ),
-                                color: _currentStep > -1
+                                color: currentStep > -1
                                     ? Color(0xFF92A56E)
                                     : Color(0xFFF2F2F2),
                                 border: Border.all(
-                                  color: _currentStep > -1
+                                  color: currentStep > -1
                                       ? Color(0xFF92A56E)
                                       : Color(0xFFF2F2F2),
                                   width: 1,
                                 ),
-                                connectorColor: _currentStep > 0
+                                connectorColor: currentStep > 0
                                     ? Color(0xFF92A56E)
                                     : Color(0xFFF2F2F2),
                                 connectorThickness: 1,
@@ -229,16 +237,16 @@ class _AddPlantState extends State<AddPlant> {
                               title: Text(
                                 AppLocalizations.of(context)!.add_plant_care,
                                 style: TextStyle(
-                                  color: _currentStep >= 1
+                                  color: currentStep >= 1
                                       ? Color(0xFF92A56E)
                                       : Color(0xFFF2F2F2),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              isActive: _currentStep >= 1,
-                              state: 1 < _currentStep
+                              isActive: currentStep >= 1,
+                              state: 1 < currentStep
                                   ? StepState.complete
-                                  : 1 == _currentStep
+                                  : 1 == currentStep
                                       ? StepState.indexed
                                       : StepState.disabled,
                               stepStyle: StepStyle(
@@ -246,16 +254,16 @@ class _AddPlantState extends State<AddPlant> {
                                   color: Color(0xFFFCFCFC),
                                   fontWeight: FontWeight.bold,
                                 ),
-                                color: _currentStep > 0
+                                color: currentStep > 0
                                     ? Color(0xFF92A56E)
                                     : Color(0xFFF2F2F2),
                                 border: Border.all(
-                                  color: _currentStep > 0
+                                  color: currentStep > 0
                                       ? Color(0xFF92A56E)
                                       : Color(0xFFF2F2F2),
                                   width: 1,
                                 ),
-                                connectorColor: _currentStep > 1
+                                connectorColor: currentStep > 1
                                     ? Color(0xFF92A56E)
                                     : Color(0xFFF2F2F2),
                                 connectorThickness: 1,
@@ -266,16 +274,16 @@ class _AddPlantState extends State<AddPlant> {
                               title: Text(
                                 AppLocalizations.of(context)!.add_plant_confirm,
                                 style: TextStyle(
-                                  color: _currentStep >= 2
+                                  color: currentStep >= 2
                                       ? Color(0xFF92A56E)
                                       : Color(0xFFF2F2F2),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              isActive: _currentStep >= 2,
-                              state: 2 < _currentStep
+                              isActive: currentStep >= 2,
+                              state: 2 < currentStep
                                   ? StepState.complete
-                                  : 2 == _currentStep
+                                  : 2 == currentStep
                                       ? StepState.indexed
                                       : StepState.disabled,
                               stepStyle: StepStyle(
@@ -283,16 +291,16 @@ class _AddPlantState extends State<AddPlant> {
                                   color: Color(0xFFFCFCFC),
                                   fontWeight: FontWeight.bold,
                                 ),
-                                color: _currentStep > 1
+                                color: currentStep > 1
                                     ? Color(0xFF92A56E)
                                     : Color(0xFFF2F2F2),
                                 border: Border.all(
-                                  color: _currentStep > 1
+                                  color: currentStep > 1
                                       ? Color(0xFF92A56E)
                                       : Color(0xFFF2F2F2),
                                   width: 1,
                                 ),
-                                connectorColor: _currentStep > 2
+                                connectorColor: currentStep > 2
                                     ? Color(0xFF92A56E)
                                     : Color(0xFFF2F2F2),
                                 connectorThickness: 1,
@@ -307,15 +315,28 @@ class _AddPlantState extends State<AddPlant> {
                       alignment: Alignment.bottomCenter,
                       child: Center(
                         child: GestureDetector(
-                          onTap: () => setState(() {
-                            if (_currentStep < 2) {
-                              _currentStep++;
-                            } else {
-                              Navigator.of(context).pushReplacementNamed(
-                                '/groupoverview',
-                              );
-                            }
-                          }),
+                          onTap: () {
+                            setState(() {
+                              if (!validatePlantData()) {
+                                if (currentStep == 1) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Please add at least one care rule.'),
+                                    ),
+                                  );
+                                }
+                                return;
+                              }
+
+                              if (currentStep < 2) {
+                                currentStep++;
+                              } else {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/groupoverview');
+                              }
+                            });
+                          },
                           child: Container(
                             margin: EdgeInsets.only(top: 8, bottom: 36),
                             width: 350,
@@ -518,12 +539,11 @@ class _AddPlantState extends State<AddPlant> {
                           ),
                           child: Row(
                             children: List.generate(4, (index) {
-                              final isSelected =
-                                  _selectedRuleTypeIndex == index;
+                              final isSelected = selectedRuleTypeIndex == index;
                               return Expanded(
                                 child: GestureDetector(
                                   onTap: () => setState(() {
-                                    _selectedRuleTypeIndex = index;
+                                    selectedRuleTypeIndex = index;
                                   }),
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -583,9 +603,14 @@ class _AddPlantState extends State<AddPlant> {
                       width: double.infinity,
                       margin: EdgeInsets.only(bottom: 24, top: 4),
                       decoration: BoxDecoration(
-                        color: Color(
-                          0xFFF2F2F2,
-                        ),
+                        color: Color(0xFFF2F2F2),
+                        border: !careRuleNameValid
+                            ? Border.all(
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                width: 2,
+                                color: Colors.red.shade200,
+                              )
+                            : Border.all(width: 0, color: Colors.transparent),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -628,6 +653,13 @@ class _AddPlantState extends State<AddPlant> {
                       decoration: BoxDecoration(
                         color: Color(0xFFF2F2F2),
                         borderRadius: BorderRadius.circular(10),
+                        border: !careRuleInstructionValid
+                            ? Border.all(
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                width: 2,
+                                color: Colors.red.shade200,
+                              )
+                            : Border.all(width: 0, color: Colors.transparent),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -657,13 +689,13 @@ class _AddPlantState extends State<AddPlant> {
                     ),
                     StatefulBuilder(
                       builder: (context, setState) {
-                        switch (ruleTypes[_selectedRuleTypeIndex!].type) {
+                        switch (ruleTypes[selectedRuleTypeIndex!].type) {
                           case 'Prune':
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
+                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -680,6 +712,16 @@ class _AddPlantState extends State<AddPlant> {
                                   decoration: BoxDecoration(
                                     color: Color(0xFFF2F2F2),
                                     borderRadius: BorderRadius.circular(10),
+                                    border: !careRuleDataValid
+                                        ? Border.all(
+                                            strokeAlign:
+                                                BorderSide.strokeAlignOutside,
+                                            width: 2,
+                                            color: Colors.red.shade200,
+                                          )
+                                        : Border.all(
+                                            width: 0,
+                                            color: Colors.transparent),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -692,7 +734,7 @@ class _AddPlantState extends State<AddPlant> {
                                         borderRadius: BorderRadius.circular(10),
                                         elevation: 0,
                                         isExpanded: true,
-                                        value: _selectedPruneAmount,
+                                        value: selectedPruneAmount,
                                         hint: Text(
                                           AppLocalizations.of(context)!
                                               .add_plant_scientific_name_hint,
@@ -719,7 +761,7 @@ class _AddPlantState extends State<AddPlant> {
                                         }).toList(),
                                         onChanged: (newVal) {
                                           setState(() {
-                                            _selectedPruneAmount = newVal;
+                                            selectedPruneAmount = newVal;
                                           });
                                         },
                                       ),
@@ -733,7 +775,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
+                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -756,6 +798,16 @@ class _AddPlantState extends State<AddPlant> {
                                           topLeft: Radius.circular(10),
                                           bottomLeft: Radius.circular(10),
                                         ),
+                                        border: !careRuleDataValid
+                                            ? Border.all(
+                                                strokeAlign: BorderSide
+                                                    .strokeAlignOutside,
+                                                width: 2,
+                                                color: Colors.red.shade200,
+                                              )
+                                            : Border.all(
+                                                width: 0,
+                                                color: Colors.transparent),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -829,7 +881,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
+                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -842,6 +894,16 @@ class _AddPlantState extends State<AddPlant> {
                                   decoration: BoxDecoration(
                                     color: Color(0xFFF2F2F2),
                                     borderRadius: BorderRadius.circular(10),
+                                    border: !careRuleDataValid
+                                        ? Border.all(
+                                            strokeAlign:
+                                                BorderSide.strokeAlignOutside,
+                                            width: 2,
+                                            color: Colors.red.shade200,
+                                          )
+                                        : Border.all(
+                                            width: 0,
+                                            color: Colors.transparent),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -879,7 +941,7 @@ class _AddPlantState extends State<AddPlant> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${ruleTypes[_selectedRuleTypeIndex!].label}*',
+                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
@@ -902,6 +964,16 @@ class _AddPlantState extends State<AddPlant> {
                                           topLeft: Radius.circular(10),
                                           bottomLeft: Radius.circular(10),
                                         ),
+                                        border: !careRuleDataValid
+                                            ? Border.all(
+                                                strokeAlign: BorderSide
+                                                    .strokeAlignOutside,
+                                                width: 2,
+                                                color: Colors.red.shade200,
+                                              )
+                                            : Border.all(
+                                                width: 0,
+                                                color: Colors.transparent),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -973,7 +1045,7 @@ class _AddPlantState extends State<AddPlant> {
                       },
                     ),
                     Text(
-                      'Schedule',
+                      'Schedule*',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
@@ -1089,9 +1161,9 @@ class _AddPlantState extends State<AddPlant> {
                           onTap: () => this.setState(() {
                             String? data;
 
-                            switch (ruleTypes[_selectedRuleTypeIndex!].type) {
+                            switch (ruleTypes[selectedRuleTypeIndex!].type) {
                               case 'Prune':
-                                data = _selectedPruneAmount;
+                                data = selectedPruneAmount;
                                 break;
 
                               case 'Light':
@@ -1107,17 +1179,38 @@ class _AddPlantState extends State<AddPlant> {
                                 data = careRuleWaterAmountController.text;
                                 break;
                             }
+
+                            setState(() {
+                              validateCareRuleData(data!);
+                            });
+
+                            if (!careRuleNameValid ||
+                                !careRuleInstructionValid ||
+                                !careRuleDataValid ||
+                                !careRuleScheduleValid) {
+                              return;
+                            }
+
                             careRules.add(
                               (
                                 name: careRuleNameController.text,
                                 instruction: careRuleInstructionController.text,
-                                type: ruleTypes[_selectedRuleTypeIndex!].type,
+                                type: ruleTypes[selectedRuleTypeIndex!].type,
                                 ruleData: data,
                                 timestamp: DateTime.timestamp(),
                                 scheduleWeekDays: selectedDays,
                                 scheduleIntervalWeeks: weekInterval,
                               ),
                             );
+
+                            careRuleNameController.text = '';
+                            careRuleInstructionController.text = '';
+                            careRuleWaterAmountController.text = '';
+                            careRuleDescriptionController.text = '';
+                            careRuleDurationController.text = '';
+                            selectedDays.clear();
+                            weekInterval = 1;
+                            selectedRuleTypeIndex = 0;
                             Navigator.of(context).pop();
                           }),
                           child: Container(
@@ -1180,6 +1273,13 @@ class _AddPlantState extends State<AddPlant> {
           decoration: BoxDecoration(
             color: Color(0xFFF2F2F2),
             borderRadius: BorderRadius.circular(10),
+            border: !careRuleNameValid
+                ? Border.all(
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    width: 2,
+                    color: Colors.red.shade200,
+                  )
+                : Border.all(width: 0, color: Colors.transparent),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -1219,6 +1319,13 @@ class _AddPlantState extends State<AddPlant> {
           decoration: BoxDecoration(
             color: Color(0xFFF2F2F2),
             borderRadius: BorderRadius.circular(10),
+            border: !plantScientificNameValid
+                ? Border.all(
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    width: 2,
+                    color: Colors.red.shade200,
+                  )
+                : Border.all(width: 0, color: Colors.transparent),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -1532,5 +1639,67 @@ class _AddPlantState extends State<AddPlant> {
         ),
       ),
     );
+  }
+
+  bool validatePlantData() {
+    if (currentStep == 0) {
+      if (plantNameController.text.trim().isEmpty) {
+        plantNameValid = false;
+      } else {
+        plantNameValid = true;
+      }
+
+      if (plantScientificNameController.text.trim().isEmpty) {
+        plantScientificNameValid = false;
+      } else {
+        plantScientificNameValid = true;
+      }
+    } else if (currentStep == 1) {
+      if (careRules.isEmpty) {
+        careRulesValid = false;
+      } else {
+        careRulesValid = true;
+      }
+    }
+
+    if (!plantNameValid || !plantScientificNameValid || !careRulesValid) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool validateCareRuleData(String data) {
+    if (careRuleNameController.text.trim().isEmpty) {
+      careRuleNameValid = false;
+    } else {
+      careRuleNameValid = true;
+    }
+
+    if (careRuleInstructionController.text.trim().isEmpty) {
+      careRuleInstructionValid = false;
+    } else {
+      careRuleInstructionValid = true;
+    }
+
+    if (careRuleInstructionController.text.trim().isEmpty) {
+      careRuleInstructionValid = false;
+    } else {
+      careRuleInstructionValid = true;
+    }
+
+    if (data.trim().isEmpty) {
+      careRuleDataValid = false;
+    } else {
+      careRuleDataValid = true;
+    }
+
+    if (selectedDays.isEmpty) {
+      careRuleScheduleValid = false;
+    } else {
+      careRuleScheduleValid = true;
+    }
+
+    return true;
   }
 }
