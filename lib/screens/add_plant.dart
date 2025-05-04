@@ -347,8 +347,10 @@ class _AddPlantState extends State<AddPlant> {
                             ),
                             child: Center(
                               child: Text(
-                                AppLocalizations.of(context)!
-                                    .add_plant_care_schedule,
+                                currentStep == 2
+                                    ? AppLocalizations.of(context)!.save
+                                    : AppLocalizations.of(context)!
+                                        .add_plant_care_schedule,
                                 style: TextStyle(
                                   color: Color(0xFFFCFCFC),
                                   fontWeight: FontWeight.bold,
