@@ -19,7 +19,7 @@ class _AddPlantState extends State<AddPlant> {
   File? imageFile;
   final imagePicker = ImagePicker();
   int? selectedGroupIndex = 0;
-  final List<String> groups = [
+  List<String> groups = [
     'Living Room',
     'Kitchen',
     'Window plants',

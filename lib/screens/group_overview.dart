@@ -121,8 +121,7 @@ class _GroupOverviewState extends State<GroupOverview> {
                           ),
                         for (final plant in plants)
                           PlantListWidget(
-                            title: plant.name,
-                            image: plant.imageUrl ?? '',
+                            plant: plant,
                             onDelete: () => {
                               print('delete'),
                               setState(() {
