@@ -18,5 +18,22 @@
     "add_plant_description": "Beschreibung",
     "add_plant_description_hint": "Beschreibung hinzufügen...",
     "add_plant_description_description": "Die Beschreibung bietet Ihnen die Möglichkeit zusätzliche Informationen der Pflanze beizulegen",
-    "add_plant_care_schedule": "Pflegeplan konfigurieren"
+    "add_plant_care_schedule": "Pflegeplan konfigurieren",
+    "add_plant_care_schedule_type": "Typ",
+    "add_plant_care_schedule_type_water": "Wasser",
+    "add_plant_care_schedule_type_prune": "Trimmen",
+    "add_plant_care_schedule_type_light": "Licht",
+    "add_plant_care_schedule_type_custom": "Eigen",
+    "add_plant_care_schedule_name": "Name",
+    "add_plant_care_schedule_instruction": "Anweisung",
+    "add_plant_care_schedule_amount": "Menge",
+    "add_plant_care_schedule_duration": "Dauer",
+    "add_plant_care_schedule_description": "Beschreibung",
+    "add_plant_care_schedule_schedule": "Zeitplan",
+    "add_plant_care_schedule_repeat": "Wiederhole alle",
+    "add_plant_care_schedule_week": "Woche",
+    "add_plant_care_schedule_weeks": "Wochen",
+    "add_plant_prune_amount_little": "Ein wenig",
+    "add_plant_prune_amount_more": "Mittel",
+    "add_plant_prune_amount_lot": "Viel"
 }
