@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class PlantListWidget extends StatefulWidget {
   final VoidCallback onDelete;
   final String title;
-  final String image;
+  final String? image;
   const PlantListWidget({
     super.key,
     required this.title,
-    required this.image,
+    this.image,
     required this.onDelete,
   });
 
@@ -88,25 +90,31 @@ class _PlantListWidgetState extends State<PlantListWidget> {
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
                     ),
-                    child: Image.network(
-                      widget.image,
-                      fit: BoxFit.cover,
-                      width: 150,
-                      height: 150,
-                    ),
+                    child: (widget.image != null &&
+                            widget.image!.isNotEmpty &&
+                            File(widget.image!).existsSync())
+                        ? Image.file(
+                            File(widget.image!),
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          )
+                        : Container(),
                   ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          widget.title,
-                          style: TextStyle(
-                            fontSize: 18,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            widget.title,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
