@@ -168,19 +168,19 @@ class _PlantOverviewState extends State<PlantOverview> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 24, bottom: 8),
-                  child: Text(
-                    AppLocalizations.of(context)!
-                        .add_plant_care_schedule_schedule,
-                    style: TextStyle(
-                      color: Color(0xFF616E54),
-                      fontFamily: 'Manrope',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 24, bottom: 8),
+                //   child: Text(
+                //     AppLocalizations.of(context)!
+                //         .add_plant_care_schedule_schedule,
+                //     style: TextStyle(
+                //       color: Color(0xFF616E54),
+                //       fontFamily: 'Manrope',
+                //       fontSize: 20,
+                //       fontWeight: FontWeight.w900,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
