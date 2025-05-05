@@ -3,6 +3,7 @@ import 'package:frontend/models/plant.dart';
 import 'package:frontend/services/api_client.dart';
 import 'package:frontend/services/plant_service.dart';
 import 'package:frontend/widgets/plant_list_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupOverview extends StatefulWidget {
   const GroupOverview({super.key});
@@ -113,7 +114,8 @@ class _GroupOverviewState extends State<GroupOverview> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 24),
                             child: Text(
-                              'No plants found.',
+                              AppLocalizations.of(context)!
+                                  .group_overview_no_plants,
                               style:
                                   TextStyle(fontSize: 16, color: Colors.grey),
                             ),
@@ -126,7 +128,9 @@ class _GroupOverviewState extends State<GroupOverview> {
                                 plantService
                                     .deletePlant(groupId, plant.id!)
                                     .then((value) {
-                                  plants.remove(plant);
+                                  setState(() {
+                                    plants.remove(plant);
+                                  });
                                 });
                               }),
                             },
