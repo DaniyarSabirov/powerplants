@@ -928,7 +928,7 @@ class _AddPlantState extends State<AddPlant> {
                                     ),
                                     child: TextField(
                                       controller: careRuleDescriptionController,
-                                      maxLength: 300,
+                                      maxLength: 255,
                                       minLines: 1,
                                       maxLines: null,
                                       style: TextStyle(
@@ -1437,7 +1437,7 @@ class _AddPlantState extends State<AddPlant> {
             ),
             child: TextField(
               controller: plantDescriptionController,
-              maxLength: 300,
+              maxLength: 255,
               minLines: 1,
               maxLines: null,
               style: TextStyle(
