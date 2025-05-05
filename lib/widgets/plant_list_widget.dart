@@ -137,11 +137,12 @@ class _PlantListWidgetState extends State<PlantListWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                            top: 16,
+                            top: 32,
                             left: 16,
                           ),
                           child: Text(
                             widget.plant.description ?? '',
+                            maxLines: 3,
                             style: TextStyle(
                               fontSize: 12,
                             ),
