@@ -12,8 +12,8 @@ public class PlantEntity {
     @Column(name = "id")
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "home_group_id")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "home_group_id", nullable = false)
     private GroupEntity group;
 
     @Column(name = "public_name", nullable = false)

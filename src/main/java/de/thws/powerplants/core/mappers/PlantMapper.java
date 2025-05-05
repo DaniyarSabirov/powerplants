@@ -25,7 +25,7 @@ public class PlantMapper {
         plant.setId(plantEntity.getId());
         plant.setScientificName(plantEntity.getScientificName());
         plant.setPublicName(plantEntity.getPublicName());
-        plant.setDescription(plant.getDescription());
+        plant.setDescription(plantEntity.getDescription());
         plant.setPictureUrl(plantEntity.getPictureUrl());
 
         return plant;

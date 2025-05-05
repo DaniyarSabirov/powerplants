@@ -18,8 +18,7 @@ public class GroupEntity {
     @JoinColumn(name = "home_id")
     private HomeEntity home;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "home_group_id")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlantEntity> plants = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)
