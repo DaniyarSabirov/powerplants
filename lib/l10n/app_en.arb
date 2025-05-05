@@ -37,5 +37,7 @@
     "add_plant_prune_amount_more": "More",
     "add_plant_prune_amount_lot": "Much",
     "add_plant_no_care_schedule_set": "No plant care rules set yet...",
-    "add_plant_care_schedule_minutes": "minutes"
+    "add_plant_care_schedule_minutes": "minutes",
+
+    "group_overview_no_plants": "Keine Pflanzen gefunden."
 }

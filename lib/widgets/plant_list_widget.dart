@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/models/plant.dart';
 
 class PlantListWidget extends StatefulWidget {
   final VoidCallback onDelete;
-  final String title;
-  final String image;
+  final Plant plant;
+
   const PlantListWidget({
     super.key,
-    required this.title,
-    required this.image,
+    required this.plant,
     required this.onDelete,
   });
 
@@ -88,25 +90,67 @@ class _PlantListWidgetState extends State<PlantListWidget> {
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
                     ),
-                    child: Image.network(
-                      widget.image,
-                      fit: BoxFit.cover,
-                      width: 150,
-                      height: 150,
-                    ),
+                    child: (widget.plant.imageUrl != null &&
+                            widget.plant.imageUrl!.isNotEmpty &&
+                            File(widget.plant.imageUrl!).existsSync())
+                        ? Image.file(
+                            File(widget.plant.imageUrl!),
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          )
+                        : Container(
+                            width: 150,
+                            height: 150,
+                            color: Color(0xFFF9F9F9),
+                            child: Icon(
+                              Icons.image_not_supported_rounded,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
+                          ),
                   ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          widget.title,
-                          style: TextStyle(
-                            fontSize: 18,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 16,
+                            left: 16,
+                          ),
+                          child: Text(
+                            widget.plant.name,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(
+                            widget.plant.scientificName,
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 32,
+                            left: 16,
+                          ),
+                          child: Text(
+                            widget.plant.description ?? '',
+                            maxLines: 3,
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

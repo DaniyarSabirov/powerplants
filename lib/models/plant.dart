@@ -1,5 +1,5 @@
 class Plant {
-  final String id;
+  final String? id;
   final String name;
   final String scientificName;
   final String? description;
@@ -7,7 +7,7 @@ class Plant {
   final String groupId;
 
   Plant({
-    required this.id,
+    this.id,
     required this.name,
     required this.scientificName,
     this.description,
@@ -16,22 +16,22 @@ class Plant {
   });
 
   factory Plant.fromJson(Map<String, dynamic> json) => Plant(
-    id: json['id'],
-    name: json['publicName'],
-    scientificName: json['scientificName'],
-    description: json['description'],
-    imageUrl: json['pictureUrl'],
-    groupId: json['groupId'],
-  );
+        id: json['id'] ?? '',
+        name: json['publicName'],
+        scientificName: json['scientificName'],
+        description: json['description'] ?? '',
+        imageUrl: json['pictureUrl'] ?? '',
+        groupId: json['groupId'] ?? '',
+      );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'publicName': name,
-    'scientificName': scientificName,
-    'description': description,
-    'pictureUrl': imageUrl,
-    'groupId': groupId,
-  };
+        'id': id,
+        'publicName': name,
+        'scientificName': scientificName,
+        'description': description,
+        'pictureUrl': imageUrl,
+        'groupId': groupId,
+      };
 
   Plant copyWith({
     String? id,
@@ -54,14 +54,13 @@ class Plant {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Plant &&
-              runtimeType == other.runtimeType &&
-              id == other.id &&
-              groupId == other.groupId;
+      other is Plant &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          groupId == other.groupId;
 
   @override
-  int get hashCode =>
-      id.hashCode ^ groupId.hashCode;
+  int get hashCode => id.hashCode ^ groupId.hashCode;
 
   @override
   String toString() {

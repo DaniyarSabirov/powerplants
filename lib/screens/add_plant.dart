@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/models/plant.dart';
+import 'package:frontend/services/api_client.dart';
+import 'package:frontend/services/plant_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +19,7 @@ class _AddPlantState extends State<AddPlant> {
   File? imageFile;
   final imagePicker = ImagePicker();
   int? selectedGroupIndex = 0;
-  final List<String> groups = [
+  List<String> groups = [
     'Living Room',
     'Kitchen',
     'Window plants',
@@ -66,6 +69,15 @@ class _AddPlantState extends State<AddPlant> {
   bool careRuleInstructionValid = true;
   bool careRuleDataValid = true;
   bool careRuleScheduleValid = true;
+
+  Plant? plant;
+  late final PlantService plantService;
+
+  @override
+  void initState() {
+    super.initState();
+    plantService = PlantService(ApiClient('http://10.0.2.2:8080/api'));
+  }
 
   Future<void> _pickImage(ImageSource source) async {
     final picked = await imagePicker.pickImage(
@@ -332,8 +344,10 @@ class _AddPlantState extends State<AddPlant> {
                               if (currentStep < 2) {
                                 currentStep++;
                               } else {
-                                Navigator.of(context)
-                                    .pushReplacementNamed('/groupoverview');
+                                sendPlantData().then((e) {
+                                  Navigator.of(context)
+                                      .pushReplacementNamed('/groupoverview');
+                                });
                               }
                             });
                           },
@@ -1703,5 +1717,17 @@ class _AddPlantState extends State<AddPlant> {
     }
 
     return true;
+  }
+
+  Future<void> sendPlantData() async {
+    plant = Plant(
+      name: plantNameController.text.trim(),
+      scientificName: plantScientificNameController.text.trim(),
+      groupId: '4c8f6d82-e4c6-4478-92eb-d9342500f006',
+      description: plantDescriptionController.text.trim(),
+      imageUrl: imageFile?.path,
+    );
+
+    await plantService.createPlant(plant!);
   }
 }

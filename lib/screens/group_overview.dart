@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/plant.dart';
+import 'package:frontend/services/api_client.dart';
+import 'package:frontend/services/plant_service.dart';
 import 'package:frontend/widgets/plant_list_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupOverview extends StatefulWidget {
   const GroupOverview({super.key});
@@ -9,32 +13,20 @@ class GroupOverview extends StatefulWidget {
 }
 
 class _GroupOverviewState extends State<GroupOverview> {
-  final plants = [
-    (
-      title: 'Monstera',
-      image:
-          'https://florastore.com/cdn/shop/files/3512102_Atmosphere_04_SQ_MJ.jpg?v=1734605722&width=1080',
-    ),
-    (
-      title: 'Yucca',
-      image:
-          'https://www.houseplant.co.uk/cdn/shop/files/Indoor_Tropical_Yucca_Elephantipes_Elephant_Exotic_Air_Purifying_Easy_Care_Succulent_Houseplant_Range.jpg?v=1738072733&width=1946',
-    ),
-    (
-      title: 'Philodendron',
-      image:
-          'https://asset.bloomnation.com/c_pad,d_vendor:global:catalog:product:image.png,f_auto,fl_preserve_transparency,q_auto/v1630542296/vendor/4191/catalog/product/2/0/20210824101449_file_61256f59ca3db_61256fa6016cd._612fb763c8680._612fb7661f8de..jpg',
-    ),
-    (
-      title: 'Ivy',
-      image: 'https://growhub.ae/cdn/shop/files/Indoor-345.jpg?v=1688218239',
-    ),
-    (
-      title: 'Money Tree',
-      image:
-          'https://webshop.plnts.com/media/catalog/product/cache/aa5d334f459227518b6c3cf7ea9d29ed/p/l/pl.xxl.012-1-0106.jpg',
-    ),
-  ];
+  List<Plant> plants = [];
+  late final PlantService plantService;
+  final groupId = '4c8f6d82-e4c6-4478-92eb-d9342500f006';
+
+  @override
+  void initState() {
+    super.initState();
+    plantService = PlantService(ApiClient('http://10.0.2.2:8080/api'));
+    plantService.getPlantsByGroupId(groupId).then((data) {
+      setState(() {
+        plants = data;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,14 +110,28 @@ class _GroupOverviewState extends State<GroupOverview> {
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
+                        if (plants.isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24),
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .group_overview_no_plants,
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.grey),
+                            ),
+                          ),
                         for (final plant in plants)
                           PlantListWidget(
-                            title: plant.title,
-                            image: plant.image,
+                            plant: plant,
                             onDelete: () => {
-                              print('delete'),
                               setState(() {
-                                plants.remove(plant);
+                                plantService
+                                    .deletePlant(groupId, plant.id!)
+                                    .then((value) {
+                                  setState(() {
+                                    plants.remove(plant);
+                                  });
+                                });
                               }),
                             },
                           ),
