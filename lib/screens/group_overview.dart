@@ -14,14 +14,13 @@ class GroupOverview extends StatefulWidget {
 class _GroupOverviewState extends State<GroupOverview> {
   List<Plant> plants = [];
   late final PlantService plantService;
+  final groupId = '4c8f6d82-e4c6-4478-92eb-d9342500f006';
 
   @override
   void initState() {
     super.initState();
     plantService = PlantService(ApiClient('http://10.0.2.2:8080/api'));
-    plantService
-        .getPlantsByGroupId('4c8f6d82-e4c6-4478-92eb-d9342500f006')
-        .then((data) {
+    plantService.getPlantsByGroupId(groupId).then((data) {
       setState(() {
         plants = data;
       });
@@ -123,9 +122,12 @@ class _GroupOverviewState extends State<GroupOverview> {
                           PlantListWidget(
                             plant: plant,
                             onDelete: () => {
-                              print('delete'),
                               setState(() {
-                                plants.remove(plant);
+                                plantService
+                                    .deletePlant(groupId, plant.id!)
+                                    .then((value) {
+                                  plants.remove(plant);
+                                });
                               }),
                             },
                           ),
