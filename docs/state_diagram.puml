@@ -1,0 +1,52 @@
+@startuml
+
+[*] --> Signin
+[*] --> Signup
+
+Signin --> Homes : homes
+Signup --> Homes : homes
+
+Homes --> Signin
+Homes --> Dashboard : dashboard_data
+Homes -> Create_home
+Homes -> Edit_home
+Edit_home -> Homes
+
+Create_home --> Dashboard
+Homes -> Join_home
+Join_home --> Dashboard
+
+Dashboard --> Group_overview : groups
+Dashboard --> Task_overview : upcoming_care_rules
+Dashboard --> Create_group : all_care_rules
+Dashboard -> Calender : all_care_rules
+
+Dashboard --> Home_activity_history
+
+note right of Dashboard
+  Dashboard beinhaltet alle 
+  anstehenden Aufgaben, alle Gruppen
+  und die Möglichkeit neue Gruppen
+  zu erstellen
+end note
+
+Task_overview --> Dashboard
+
+Create_group --> Group_overview
+Group_overview -> Edit_group
+Edit_group -> Group_overview
+
+Group_overview --> Add_plant
+Add_plant --> Plant_overview
+
+Plant_overview -> Edit_plant
+Edit_plant -> Plant_overview
+
+Homes --> Profile
+Dashboard --> Profile
+Group_overview --> Profile
+Plant_overview --> Profile
+Task_overview --> Profile
+Home_activity_history --> Profile
+
+@enduml
