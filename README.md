@@ -35,6 +35,11 @@ https://www.figma.com/design/yY0zIon9shO64RLj2AyRJO/Powerplants?node-id=0-1&t=SA
 
 https://www.figma.com/design/yquM6kJgzYgQPbqG3KBEhm/Programmierprojekt?node-id=0-1&m=dev&t=Uy8TVn9Hz2ZK4Ery-1
 
+## State Diagram
+
+![State Diagram](docs/state_diagram.svg)
+
+
 ## Entity Relationship Model
 
 ![ERM](docs/ERM.svg)

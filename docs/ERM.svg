@@ -22,7 +22,7 @@ reverse link PlantCareRule to WaterPlantCareRule--><path d="M912.72,835.36 C913.
 reverse link PlantCareRule to SunlightPlantCareRule--><path d="M1001.48,826.82 C1025.6,848.94 1050.04,871.36 1068.84,888.62 " fill="none" id="PlantCareRule&lt;-SunlightPlantCareRule" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="none" points="996.57,831.81,986.57,813.13,1006.04,821.49,996.57,831.81" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[5d58aab51843f1a3f233e1f895556260]
 reverse link PlantCareRule to PruningPlantCareRule--><path d="M1004.22,814.85 C1004.31,814.9 1004.41,814.95 1004.5,815 C1084.71,856.66 1112.34,848.68 1198.5,876 C1211.61,880.16 1225.43,884.56 1239.04,888.9 " fill="none" id="PlantCareRule&lt;-PruningPlantCareRule" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="none" points="1000.5,820.79,986.68,804.73,1007.5,808.67,1000.5,820.79" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[2a1fa263e1fc104a6c6774344409cffc]
 link Account to PlantCareRuleDisabled--><path d="M565.34,131.43 C554.27,171.98 542.5,226.66 542.5,276 C542.5,276 542.5,276 542.5,741.5 C542.5,787.41 540.82,839.95 539.4,875.98 " fill="none" id="Account-PlantCareRuleDisabled" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="7" x="556.0032" y="152.6312">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="7" x="532.135" y="864.1585">*</text><!--MD5=[338ade1e215f2f8bc51db4d683250cff]
-link PlantCareRule to PlantCareRuleDisabled--><path d="M830.27,779.03 C767.77,809.02 680.51,850.88 617.54,881.1 " fill="none" id="PlantCareRule-PlantCareRuleDisabled" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="7" x="815.4801" y="778.8289">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="7" x="625.5024" y="873.4678">*</text><!--MD5=[318011ed9e5fbfc7a724b10f928cd8fc]
+link PlantCareRule to PlantCareRuleDisabled--><path d="M830.27,779.03 C767.77,809.02 680.51,850.88 617.54,881.1 " fill="none" id="PlantCareRule-PlantCareRuleDisabled" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="7" x="815.4801" y="778.8289">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="7" x="625.5024" y="873.4678">*</text><!--MD5=[6744b421fc01b77196ee34b960b3e4c3]
 @startuml
 note as N1
   publicNames are displayed to other Accounts
@@ -137,7 +137,7 @@ PlantUML version 1.2020.02(Sun Mar 01 11:22:07 CET 2020)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM
-Java Version: 21.0.5+11-LTS
+Java Version: 21.0.7+6-LTS
 Operating System: Linux
 Default Encoding: UTF-8
 Language: en
