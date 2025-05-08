@@ -1,7 +1,10 @@
 package de.thws.powerplants.adapters.in.api.json;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.UUID;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class JsonPlant {
 
     private UUID id;
