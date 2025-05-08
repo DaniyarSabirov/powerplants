@@ -4,10 +4,10 @@ import de.thws.powerplants.adapters.out.persistence.entities.GroupEntity;
 import de.thws.powerplants.adapters.out.persistence.entities.HomeEntity;
 import de.thws.powerplants.adapters.out.persistence.repositories.GroupRepository;
 import de.thws.powerplants.adapters.out.persistence.repositories.HomeRepository;
+import de.thws.powerplants.core.domain.Group;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -15,40 +15,38 @@ import java.util.UUID;
 public class GroupService {
 
     @Inject
-    private GroupRepository groupRepository;
-
-    @Inject
     private HomeRepository homeRepository;
 
-    public GroupService(){}
+    @Inject
+    private GroupRepository groupRepository;
+
+    public GroupService() {}
 
     @Transactional
-    public GroupEntity createGroup(String publicName, String description, UUID homeId, String pictureUrl) {
-        GroupEntity group = new GroupEntity();
-        group.setPublicName(publicName);
-        group.setDescription(description);
-        group.setPictureUrl(pictureUrl);
+    public GroupEntity createGroup(UUID homeId, Group group) {
 
-        HomeEntity home = homeRepository.findById(homeId);
-        if (home == null) {
-            throw new IllegalArgumentException("Home with the specified ID not found");
-        }
-        group.setHome(home);
+        HomeEntity homeEntity = homeRepository.findById(homeId);
 
-        groupRepository.persist(group);
-        return group;
+        GroupEntity groupEntity = new GroupEntity();
+
+        groupEntity.setPublicName(group.getPublicName());
+        groupEntity.setDescription(group.getDescription());
+        groupEntity.setPictureUrl(group.getPictureUrl());
+
+        groupEntity.setHome(homeEntity);
+
+        groupRepository.persist(groupEntity);
+
+        return groupEntity;
     }
 
+    @Transactional
     public List<GroupEntity> getAllGroups() {
         return groupRepository.listAll();
     }
 
     @Transactional
-    public void deleteGroup(UUID groupId) {
-        GroupEntity group = groupRepository.findById(groupId);
-        if (group == null) {
-            throw new IllegalArgumentException("Group with the provided ID not found");
-        }
-        groupRepository.delete(group);
+    public boolean deleteGroup(UUID groupId) {
+        return groupRepository.deleteById(groupId);
     }
 }

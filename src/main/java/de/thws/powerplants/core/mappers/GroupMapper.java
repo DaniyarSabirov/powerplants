@@ -12,7 +12,6 @@ public class GroupMapper {
         group.setPublicName(jsonGroup.getPublicName());
         group.setDescription(jsonGroup.getDescription());
         group.setPictureUrl(jsonGroup.getPictureUrl());
-        group.setHomeId(jsonGroup.getHomeId());
 
         return group;
     }

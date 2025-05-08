@@ -8,8 +8,6 @@ public class JsonGroup {
     private String publicName;
     private String description;
     private String pictureUrl;
-    private UUID homeId;
-
 
     public UUID getId() {
         return id;
@@ -41,13 +39,5 @@ public class JsonGroup {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
-    }
-
-    public UUID getHomeId() {
-        return homeId;
-    }
-
-    public void setHomeId(UUID homeId) {
-        this.homeId = homeId;
     }
 }
