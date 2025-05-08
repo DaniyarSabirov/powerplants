@@ -24,8 +24,8 @@ Für das Projekt werden 3 Typen von Branches verwendet:
 Konventionen zu Branch-Namen: <Issue-ID><Title>-<Of>-<The>-<Issue>
 Grundsätzlich werden die Branch-Namen automatisch erzeugt, indem man in einem Issue auf create Merge-Request klickt.
 
-## Comitt Richtilinien
-Comitt-Messages werden im englischen und im Präsens verfasst. 
+## Commit Richtilinien
+Commit-Messages werden im englischen und im Präsens verfasst. 
 
 z.B. "create flutter frontend", "update targets", "implement adaptive color theme"
 
@@ -43,3 +43,9 @@ https://www.figma.com/design/yquM6kJgzYgQPbqG3KBEhm/Programmierprojekt?node-id=0
 ## Entity Relationship Model
 
 ![ERM](docs/ERM.svg)
+
+## Naming
+
+In REST API Json Models wird ausschließlich snake case geschrieben, dies inkludiert auch (vor allem) Eigenschafts Schlüsselnamen.
+
+Z.B. wird NICHT "publicName" geschrieben sondern "public_name".
