@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/models/plant.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlantOverview extends StatefulWidget {
   const PlantOverview({super.key});
@@ -13,7 +11,7 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
-  late final Plant plant;
+  late Plant plant;
 
   @override
   void didChangeDependencies() {
@@ -23,6 +21,7 @@ class _PlantOverviewState extends State<PlantOverview> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -31,7 +30,7 @@ class _PlantOverviewState extends State<PlantOverview> {
               Container(
                 width: double.infinity,
                 height: 550,
-                color: Color(0xFFE0E0E0),
+                color: colorScheme.surfaceDim,
                 child: plant.imageUrl == null
                     ? Icon(Icons.add_a_photo, size: 48, color: Colors.grey)
                     : Image.file(File(plant.imageUrl!), fit: BoxFit.cover),
@@ -45,7 +44,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                     width: 400,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color(0x9FF2F2F2),
+                      color: colorScheme.surfaceBright,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Row(
@@ -56,19 +55,19 @@ class _PlantOverviewState extends State<PlantOverview> {
                           onTap: () => Navigator.of(context).pop(),
                           child: Icon(
                             Icons.arrow_back_ios_rounded,
-                            color: Color(0xFF1B2727),
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         Container(
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: Color(0xFF92A56E),
+                            color: colorScheme.secondary,
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Icon(
                             Icons.person_outline_rounded,
-                            color: Color(0xFFFCFCFC),
+                            color: colorScheme.onPrimary,
                           ),
                         ),
                       ],
@@ -86,7 +85,7 @@ class _PlantOverviewState extends State<PlantOverview> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xFFF2F2F2),
+                color: colorScheme.surface,
               ),
             ),
           ),
@@ -103,7 +102,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                     maxHeight: 256,
                   ),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFCFCFC),
+                    color: colorScheme.surfaceContainerHigh,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Padding(
@@ -125,19 +124,16 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 Text(
                                   plant.name,
                                   style: TextStyle(
-                                    color: Color(0xFF616E54),
-                                    fontFamily: 'Manrope',
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w900,
+                                    color: colorScheme.onSurface,
+                                    fontSize: 32,
+                                    fontFamily: 'BigCaslon',
                                   ),
                                 ),
                                 Text(
                                   plant.scientificName,
                                   style: TextStyle(
-                                    color: Color(0xFF92A56E),
-                                    fontFamily: 'Manrope',
+                                    color: colorScheme.onSurface,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                               ],
@@ -146,7 +142,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.edit_rounded,
-                                color: Color(0xFF616E54),
+                                color: colorScheme.onSurface,
                                 size: 24,
                               ),
                             ),
@@ -158,10 +154,8 @@ class _PlantOverviewState extends State<PlantOverview> {
                         Text(
                           plant.description ?? '',
                           style: TextStyle(
-                            color: Color(0xFF616E54),
-                            fontFamily: 'Manrope',
+                            color: colorScheme.onSurfaceVariant,
                             fontSize: 12,
-                            fontWeight: FontWeight.w900,
                           ),
                         ),
                       ],
@@ -174,10 +168,10 @@ class _PlantOverviewState extends State<PlantOverview> {
                 //     AppLocalizations.of(context)!
                 //         .add_plant_care_schedule_schedule,
                 //     style: TextStyle(
-                //       color: Color(0xFF616E54),
-                //       fontFamily: 'Manrope',
+                //       color: colorScheme.primary,
+                //
                 //       fontSize: 20,
-                //       fontWeight: FontWeight.w900,
+                //
                 //     ),
                 //   ),
                 // ),
