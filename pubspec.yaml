@@ -50,4 +50,35 @@ flutter:
   fonts:
     - family: Manrope
       fonts:
-        - asset: assets/fonts/Manrope.ttf
+        - asset: assets/fonts/ManropeExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/ManropeLight.ttf
+          weight: 300
+        - asset: assets/fonts/ManropeRegular.ttf
+          weight: 400
+        - asset: assets/fonts/ManropeMedium.ttf
+          weight: 500
+        - asset: assets/fonts/ManropeSemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/ManropeBold.ttf
+          weight: 700
+        - asset: assets/fonts/ManropeExtraBold.ttf
+          weight: 800
+
+    - family: BigCaslon
+      fonts:
+        - asset: assets/fonts/BigCaslonRegular.ttf
+          weight: 400
+        - asset: assets/fonts/BigCaslonBlack.ttf
+          weight: 900
+        - asset: assets/fonts/BigCaslonBold.ttf
+          weight: 600      
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/Helvetica.ttf
+          weight: 400
+        - asset: assets/fonts/HelveticaLight.ttf
+          weight: 100
+        - asset: assets/fonts/HelveticaBold.ttf
+          weight: 900
+
