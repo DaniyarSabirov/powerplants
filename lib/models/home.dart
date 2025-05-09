@@ -4,7 +4,7 @@ class Home {
   final String? description;
 
   Home({
-    required this.id,
+    this.id,
     required this.publicName,
     this.description,
   });

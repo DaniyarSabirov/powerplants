@@ -6,7 +6,7 @@ sealed class PlantCareRule {
   final String instructions;
 
   const PlantCareRule({
-    required this.id,
+    this.id,
     required this.publicName,
     required this.enabled,
     required this.cron,
@@ -91,7 +91,7 @@ final class CustomRule extends PlantCareRule {
   final String customInstructions;
 
   const CustomRule({
-    required super.id,
+    super.id,
     required super.publicName,
     required super.enabled,
     required super.cron,
@@ -145,7 +145,7 @@ final class WaterRule extends PlantCareRule {
   final int amount;
 
   const WaterRule({
-    required super.id,
+    super.id,
     required super.publicName,
     required super.enabled,
     required super.cron,
@@ -199,7 +199,7 @@ final class SunlightRule extends PlantCareRule {
   final int duration;
 
   const SunlightRule({
-    required super.id,
+    super.id,
     required super.publicName,
     required super.enabled,
     required super.cron,
@@ -254,7 +254,7 @@ final class PruningRule extends PlantCareRule {
   final String amount;
 
   const PruningRule({
-    required super.id,
+    super.id,
     required super.publicName,
     required super.enabled,
     required super.cron,
@@ -311,7 +311,7 @@ final class DoneRule extends PlantCareRule {
   final DateTime completedAt;
 
   const DoneRule({
-    required super.id,
+    super.id,
     required super.publicName,
     required super.enabled,
     required super.cron,
@@ -377,7 +377,7 @@ final class DisabledRule extends PlantCareRule {
   final DateTime disabledAt;
 
   const DisabledRule({
-    required super.id,
+    super.id,
     required super.publicName,
     required super.enabled,
     required super.cron,

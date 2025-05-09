@@ -9,7 +9,7 @@ class Account {
   final List<Home> homes;
 
   Account({
-    required this.id,
+    this.id,
     required this.publicName,
     required this.loginName,
     required this.loginPassword,

@@ -6,7 +6,7 @@ class HomeGroup {
   final String? pictureUrl;
 
   HomeGroup({
-    required this.id,
+    this.id,
     required this.homeId,
     required this.publicName,
     this.description,
