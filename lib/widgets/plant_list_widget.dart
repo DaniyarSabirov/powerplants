@@ -34,6 +34,7 @@ class _PlantListWidgetState extends State<PlantListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -78,7 +79,7 @@ class _PlantListWidgetState extends State<PlantListWidget> {
                 width: 375,
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFCFCFC),
+                  color: colorScheme.surfaceContainerHigh,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -107,11 +108,11 @@ class _PlantListWidgetState extends State<PlantListWidget> {
                           : Container(
                               width: 150,
                               height: 150,
-                              color: Color(0xFFF9F9F9),
+                              color: colorScheme.surfaceDim,
                               child: Icon(
                                 Icons.image_not_supported_rounded,
                                 size: 48,
-                                color: Colors.grey,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                     ),

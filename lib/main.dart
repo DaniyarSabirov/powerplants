@@ -11,6 +11,7 @@ import 'package:frontend/screens/sing_up.dart';
 import 'package:frontend/screens/start.dart';
 import 'package:frontend/screens/task_overview.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:frontend/util/themes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,10 +24,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Powerplants',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        fontFamily: 'Manrope',
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: [Locale('en'), Locale('de')],
       routes: {
@@ -42,6 +41,8 @@ class MyApp extends StatelessWidget {
         '/homeactivityhistory': (context) => const HomeActivityHistory(),
         '/addplant': (context) => const AddPlant(),
       },
+      // Dark-Variante
+      themeMode: ThemeMode.system,
       home: GroupOverview(),
     );
   }

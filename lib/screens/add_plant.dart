@@ -16,6 +16,7 @@ class AddPlant extends StatefulWidget {
 }
 
 class _AddPlantState extends State<AddPlant> {
+  var colorScheme;
   File? imageFile;
   final imagePicker = ImagePicker();
   int? selectedGroupIndex = 0;
@@ -38,8 +39,8 @@ class _AddPlantState extends State<AddPlant> {
   ];
   int? selectedRuleTypeIndex = 0;
   final pruneAmount = [
-    'A little'
-        'More',
+    'A little',
+    'More',
     'A Lot',
   ];
   String? selectedPruneAmount = 'A little';
@@ -92,6 +93,8 @@ class _AddPlantState extends State<AddPlant> {
 
   @override
   Widget build(BuildContext context) {
+    colorScheme = ColorScheme.of(context);
+
     return PopScope(
       canPop: currentStep == 0,
       onPopInvokedWithResult: (didPop, result) => {
@@ -108,9 +111,10 @@ class _AddPlantState extends State<AddPlant> {
                 Container(
                   width: double.infinity,
                   height: 350,
-                  color: Color(0xFFE0E0E0),
+                  color: colorScheme.surfaceDim,
                   child: imageFile == null
-                      ? Icon(Icons.add_a_photo, size: 48, color: Colors.grey)
+                      ? Icon(Icons.add_a_photo,
+                          size: 48, color: colorScheme.onSurfaceVariant)
                       : Image.file(imageFile!, fit: BoxFit.cover),
                 ),
                 Padding(
@@ -124,12 +128,12 @@ class _AddPlantState extends State<AddPlant> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Color(0xFFFCFCFC),
+                              color: colorScheme.surface,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Icon(
                               Icons.edit_rounded,
-                              color: Color(0xFF616E54),
+                              color: colorScheme.primary,
                             ),
                           )
                         : Container(),
@@ -144,7 +148,7 @@ class _AddPlantState extends State<AddPlant> {
                       width: 400,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Color(0x9FF2F2F2),
+                        color: colorScheme.surfaceBright,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Row(
@@ -155,19 +159,19 @@ class _AddPlantState extends State<AddPlant> {
                             onTap: () => Navigator.of(context).pop(),
                             child: Icon(
                               Icons.arrow_back_ios_rounded,
-                              color: Color(0xFF1B2727),
+                              color: colorScheme.onSurface,
                             ),
                           ),
                           Container(
                             width: 45,
                             height: 45,
                             decoration: BoxDecoration(
-                              color: Color(0xFF92A56E),
+                              color: colorScheme.secondary,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Icon(
                               Icons.person_outline_rounded,
-                              color: Color(0xFFFCFCFC),
+                              color: colorScheme.onPrimary,
                             ),
                           ),
                         ],
@@ -185,7 +189,7 @@ class _AddPlantState extends State<AddPlant> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFCFCFC),
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25),
@@ -213,9 +217,8 @@ class _AddPlantState extends State<AddPlant> {
                                 AppLocalizations.of(context)!.add_plant_plant,
                                 style: TextStyle(
                                   color: currentStep >= 0
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFFF2F2F2),
-                                  fontWeight: FontWeight.bold,
+                                      ? colorScheme.secondary
+                                      : colorScheme.surfaceDim,
                                 ),
                               ),
                               isActive: currentStep >= 0,
@@ -226,21 +229,20 @@ class _AddPlantState extends State<AddPlant> {
                                       : StepState.disabled,
                               stepStyle: StepStyle(
                                 indexStyle: TextStyle(
-                                  color: Color(0xFFFCFCFC),
-                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.surface,
                                 ),
                                 color: currentStep > -1
-                                    ? Color(0xFF92A56E)
-                                    : Color(0xFFF2F2F2),
+                                    ? colorScheme.secondary
+                                    : colorScheme.surfaceDim,
                                 border: Border.all(
                                   color: currentStep > -1
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFFF2F2F2),
+                                      ? colorScheme.secondary
+                                      : colorScheme.surfaceDim,
                                   width: 1,
                                 ),
                                 connectorColor: currentStep > 0
-                                    ? Color(0xFF92A56E)
-                                    : Color(0xFFF2F2F2),
+                                    ? colorScheme.secondary
+                                    : colorScheme.surfaceDim,
                                 connectorThickness: 1,
                               ),
                               content: plantStep(),
@@ -250,9 +252,8 @@ class _AddPlantState extends State<AddPlant> {
                                 AppLocalizations.of(context)!.add_plant_care,
                                 style: TextStyle(
                                   color: currentStep >= 1
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFFF2F2F2),
-                                  fontWeight: FontWeight.bold,
+                                      ? colorScheme.secondary
+                                      : colorScheme.surfaceDim,
                                 ),
                               ),
                               isActive: currentStep >= 1,
@@ -263,21 +264,20 @@ class _AddPlantState extends State<AddPlant> {
                                       : StepState.disabled,
                               stepStyle: StepStyle(
                                 indexStyle: TextStyle(
-                                  color: Color(0xFFFCFCFC),
-                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.surface,
                                 ),
                                 color: currentStep > 0
-                                    ? Color(0xFF92A56E)
-                                    : Color(0xFFF2F2F2),
+                                    ? colorScheme.secondary
+                                    : colorScheme.surfaceDim,
                                 border: Border.all(
                                   color: currentStep > 0
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFFF2F2F2),
+                                      ? colorScheme.secondary
+                                      : colorScheme.surfaceDim,
                                   width: 1,
                                 ),
                                 connectorColor: currentStep > 1
-                                    ? Color(0xFF92A56E)
-                                    : Color(0xFFF2F2F2),
+                                    ? colorScheme.secondary
+                                    : colorScheme.surfaceDim,
                                 connectorThickness: 1,
                               ),
                               content: scheduleStep(),
@@ -287,9 +287,8 @@ class _AddPlantState extends State<AddPlant> {
                                 AppLocalizations.of(context)!.add_plant_confirm,
                                 style: TextStyle(
                                   color: currentStep >= 2
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFFF2F2F2),
-                                  fontWeight: FontWeight.bold,
+                                      ? colorScheme.secondary
+                                      : colorScheme.surfaceDim,
                                 ),
                               ),
                               isActive: currentStep >= 2,
@@ -300,21 +299,20 @@ class _AddPlantState extends State<AddPlant> {
                                       : StepState.disabled,
                               stepStyle: StepStyle(
                                 indexStyle: TextStyle(
-                                  color: Color(0xFFFCFCFC),
-                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.surface,
                                 ),
                                 color: currentStep > 1
-                                    ? Color(0xFF92A56E)
-                                    : Color(0xFFF2F2F2),
+                                    ? colorScheme.secondary
+                                    : colorScheme.surfaceDim,
                                 border: Border.all(
                                   color: currentStep > 1
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFFF2F2F2),
+                                      ? colorScheme.secondary
+                                      : colorScheme.surfaceDim,
                                   width: 1,
                                 ),
                                 connectorColor: currentStep > 2
-                                    ? Color(0xFF92A56E)
-                                    : Color(0xFFF2F2F2),
+                                    ? colorScheme.secondary
+                                    : colorScheme.surfaceDim,
                                 connectorThickness: 1,
                               ),
                               content: confirmStep(),
@@ -356,7 +354,7 @@ class _AddPlantState extends State<AddPlant> {
                             width: 350,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: Color(0xFF616E54),
+                              color: colorScheme.primary,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Center(
@@ -366,9 +364,8 @@ class _AddPlantState extends State<AddPlant> {
                                         .add_plant_care_schedule
                                     : AppLocalizations.of(context)!.save,
                                 style: TextStyle(
-                                  color: Color(0xFFFCFCFC),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  color: colorScheme.onPrimary,
+                                  fontSize: 20,
                                 ),
                               ),
                             ),
@@ -398,7 +395,7 @@ class _AddPlantState extends State<AddPlant> {
           width: double.infinity,
           height: 150,
           decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFFF2F2F2), width: 2),
+            border: Border.all(color: colorScheme.surfaceDim, width: 2),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
@@ -415,15 +412,14 @@ class _AddPlantState extends State<AddPlant> {
                             ruleTypes[getRuleTypeIndexByType(
                                     careRules[index].type)]
                                 .icon,
-                            color: Color(0xFF616E54),
+                            color: colorScheme.primary,
                           ),
                           Text(
                             careRules[index].name,
                             style: TextStyle(
-                              color: Color(0xFF616E54),
+                              color: colorScheme.primary,
                               fontFamily: 'Manrope',
                               fontSize: 16,
-                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ],
@@ -449,7 +445,6 @@ class _AddPlantState extends State<AddPlant> {
                           style: TextStyle(
                             fontFamily: 'Manrope',
                             fontSize: 14,
-                            fontWeight: FontWeight.w900,
                           ),
                         ),
                       ),
@@ -473,10 +468,10 @@ class _AddPlantState extends State<AddPlant> {
                       child: GestureDetector(
                         child: Container(
                           width: double.infinity,
-                          color: Color(0xFFF2F2F2),
+                          color: colorScheme.surfaceDim,
                           child: Icon(
                             Icons.edit_outlined,
-                            color: Color(0xFF616E54),
+                            color: colorScheme.primary,
                             size: 24,
                           ),
                         ),
@@ -494,7 +489,7 @@ class _AddPlantState extends State<AddPlant> {
                           color: Colors.red.shade300,
                           child: Icon(
                             Icons.delete_forever_outlined,
-                            color: Color(0xFFFCFCFC),
+                            color: colorScheme.surface,
                             size: 24,
                           ),
                         ),
@@ -521,7 +516,7 @@ class _AddPlantState extends State<AddPlant> {
             return Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xFFFCFCFC),
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Padding(
@@ -536,7 +531,6 @@ class _AddPlantState extends State<AddPlant> {
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
-                        fontWeight: FontWeight.w900,
                       ),
                     ),
                     Container(
@@ -548,7 +542,7 @@ class _AddPlantState extends State<AddPlant> {
                           height: 50,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Color(0xFF92A56E),
+                              color: colorScheme.secondary,
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(15),
@@ -564,12 +558,12 @@ class _AddPlantState extends State<AddPlant> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: isSelected
-                                          ? Color(0xFF92A56E)
+                                          ? colorScheme.secondary
                                           : Colors.transparent,
                                       border: Border(
                                         left: index > 0
                                             ? BorderSide(
-                                                color: Color(0xFF92A56E),
+                                                color: colorScheme.secondary,
                                                 width: 2,
                                               )
                                             : BorderSide.none,
@@ -583,16 +577,15 @@ class _AddPlantState extends State<AddPlant> {
                                           Icon(
                                             ruleTypes[index].icon,
                                             color: isSelected
-                                                ? Color(0xFFFCFCFC)
-                                                : Color(0xFF92A56E),
+                                                ? colorScheme.surface
+                                                : colorScheme.secondary,
                                           ),
                                           Text(
                                             ruleTypes[index].type,
                                             style: TextStyle(
-                                              fontWeight: FontWeight.w900,
                                               color: isSelected
-                                                  ? Color(0xFFFCFCFC)
-                                                  : Color(0xFF92A56E),
+                                                  ? colorScheme.surface
+                                                  : colorScheme.secondary,
                                             ),
                                           ),
                                         ],
@@ -611,7 +604,6 @@ class _AddPlantState extends State<AddPlant> {
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
-                        fontWeight: FontWeight.w900,
                       ),
                     ),
                     Container(
@@ -619,7 +611,7 @@ class _AddPlantState extends State<AddPlant> {
                       width: double.infinity,
                       margin: EdgeInsets.only(bottom: 24, top: 4),
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2F2F2),
+                        color: colorScheme.surfaceDim,
                         border: !careRuleNameValid
                             ? Border.all(
                                 strokeAlign: BorderSide.strokeAlignOutside,
@@ -638,7 +630,6 @@ class _AddPlantState extends State<AddPlant> {
                           controller: careRuleNameController,
                           style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w900,
                           ),
                           decoration: InputDecoration(
                             isCollapsed: true,
@@ -648,7 +639,6 @@ class _AddPlantState extends State<AddPlant> {
                             hintStyle: TextStyle(
                               fontFamily: 'Manrope',
                               fontSize: 14,
-                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ),
@@ -659,7 +649,6 @@ class _AddPlantState extends State<AddPlant> {
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
-                        fontWeight: FontWeight.w900,
                       ),
                     ),
                     Container(
@@ -667,7 +656,7 @@ class _AddPlantState extends State<AddPlant> {
                       width: double.infinity,
                       margin: EdgeInsets.only(bottom: 24, top: 4),
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2F2F2),
+                        color: colorScheme.surfaceDim,
                         borderRadius: BorderRadius.circular(10),
                         border: !careRuleInstructionValid
                             ? Border.all(
@@ -686,7 +675,6 @@ class _AddPlantState extends State<AddPlant> {
                           controller: careRuleInstructionController,
                           style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w900,
                           ),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -697,7 +685,6 @@ class _AddPlantState extends State<AddPlant> {
                             hintStyle: TextStyle(
                               fontFamily: 'Manrope',
                               fontSize: 14,
-                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ),
@@ -715,7 +702,6 @@ class _AddPlantState extends State<AddPlant> {
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 Container(
@@ -726,7 +712,7 @@ class _AddPlantState extends State<AddPlant> {
                                     top: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFF2F2F2),
+                                    color: colorScheme.surfaceDim,
                                     borderRadius: BorderRadius.circular(10),
                                     border: !careRuleDataValid
                                         ? Border.all(
@@ -746,7 +732,7 @@ class _AddPlantState extends State<AddPlant> {
                                     ),
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton<String>(
-                                        dropdownColor: Color(0xFFF2F2F2),
+                                        dropdownColor: colorScheme.surfaceDim,
                                         borderRadius: BorderRadius.circular(10),
                                         elevation: 0,
                                         isExpanded: true,
@@ -757,7 +743,6 @@ class _AddPlantState extends State<AddPlant> {
                                           style: TextStyle(
                                             fontFamily: 'Manrope',
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w900,
                                           ),
                                         ),
                                         icon: Icon(Icons.arrow_drop_down,
@@ -770,7 +755,6 @@ class _AddPlantState extends State<AddPlant> {
                                               style: TextStyle(
                                                 fontFamily: 'Manrope',
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w900,
                                               ),
                                             ),
                                           );
@@ -795,7 +779,6 @@ class _AddPlantState extends State<AddPlant> {
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 Row(
@@ -809,7 +792,7 @@ class _AddPlantState extends State<AddPlant> {
                                         top: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFF2F2F2),
+                                        color: colorScheme.surfaceDim,
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           bottomLeft: Radius.circular(10),
@@ -835,7 +818,6 @@ class _AddPlantState extends State<AddPlant> {
                                               careRuleDurationController,
                                           style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w900,
                                           ),
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
@@ -847,7 +829,6 @@ class _AddPlantState extends State<AddPlant> {
                                             hintStyle: TextStyle(
                                               fontFamily: 'Manrope',
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w900,
                                             ),
                                           ),
                                         ),
@@ -862,13 +843,13 @@ class _AddPlantState extends State<AddPlant> {
                                         right: 64,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFFCFCFC),
+                                        color: colorScheme.surface,
                                         borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(10),
                                           bottomRight: Radius.circular(10),
                                         ),
                                         border: Border.all(
-                                          color: Color(0xFFF2F2F2),
+                                          color: colorScheme.surfaceDim,
                                         ),
                                       ),
                                       child: Padding(
@@ -882,7 +863,6 @@ class _AddPlantState extends State<AddPlant> {
                                             style: TextStyle(
                                               fontFamily: 'Manrope',
                                               fontSize: 16,
-                                              fontWeight: FontWeight.w900,
                                             ),
                                           ),
                                         ),
@@ -901,14 +881,13 @@ class _AddPlantState extends State<AddPlant> {
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 Container(
                                   width: double.infinity,
                                   margin: EdgeInsets.only(bottom: 24, top: 4),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFF2F2F2),
+                                    color: colorScheme.surfaceDim,
                                     borderRadius: BorderRadius.circular(10),
                                     border: !careRuleDataValid
                                         ? Border.all(
@@ -934,7 +913,6 @@ class _AddPlantState extends State<AddPlant> {
                                       style: TextStyle(
                                         fontFamily: 'Manrope',
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w900,
                                       ),
                                       decoration: InputDecoration(
                                         isCollapsed: true,
@@ -943,7 +921,6 @@ class _AddPlantState extends State<AddPlant> {
                                             .add_plant_description_hint,
                                         hintStyle: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w900,
                                         ),
                                       ),
                                     ),
@@ -961,7 +938,6 @@ class _AddPlantState extends State<AddPlant> {
                                   style: TextStyle(
                                     fontFamily: 'Manrope',
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 Row(
@@ -975,7 +951,7 @@ class _AddPlantState extends State<AddPlant> {
                                         top: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFF2F2F2),
+                                        color: colorScheme.surfaceDim,
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           bottomLeft: Radius.circular(10),
@@ -1001,7 +977,6 @@ class _AddPlantState extends State<AddPlant> {
                                               careRuleWaterAmountController,
                                           style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w900,
                                           ),
                                           decoration: InputDecoration(
                                             isCollapsed: true,
@@ -1012,7 +987,6 @@ class _AddPlantState extends State<AddPlant> {
                                             hintStyle: TextStyle(
                                               fontFamily: 'Manrope',
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w900,
                                             ),
                                           ),
                                         ),
@@ -1027,13 +1001,13 @@ class _AddPlantState extends State<AddPlant> {
                                         right: 64,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFFCFCFC),
+                                        color: colorScheme.surface,
                                         borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(10),
                                           bottomRight: Radius.circular(10),
                                         ),
                                         border: Border.all(
-                                          color: Color(0xFFF2F2F2),
+                                          color: colorScheme.surfaceDim,
                                         ),
                                       ),
                                       child: Padding(
@@ -1047,7 +1021,6 @@ class _AddPlantState extends State<AddPlant> {
                                             style: TextStyle(
                                               fontFamily: 'Manrope',
                                               fontSize: 16,
-                                              fontWeight: FontWeight.w900,
                                             ),
                                           ),
                                         ),
@@ -1065,7 +1038,6 @@ class _AddPlantState extends State<AddPlant> {
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
-                        fontWeight: FontWeight.w900,
                       ),
                     ),
                     Padding(
@@ -1089,13 +1061,13 @@ class _AddPlantState extends State<AddPlant> {
                               height: 75,
                               decoration: BoxDecoration(
                                 color: selected
-                                    ? Color(0xFF92A56E)
+                                    ? colorScheme.secondary
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
                                   color: selected
-                                      ? Color(0xFF92A56E)
-                                      : Color(0xFF616E54),
+                                      ? colorScheme.secondary
+                                      : colorScheme.primary,
                                   width: 1,
                                 ),
                               ),
@@ -1106,10 +1078,9 @@ class _AddPlantState extends State<AddPlant> {
                                   weekDays[index],
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
                                     color: selected
-                                        ? Color(0xFFFCFCFC)
-                                        : Color(0xFF616E54),
+                                        ? colorScheme.surface
+                                        : colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -1123,7 +1094,6 @@ class _AddPlantState extends State<AddPlant> {
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontSize: 16,
-                        fontWeight: FontWeight.w900,
                       ),
                     ),
                     SizedBox(height: 8),
@@ -1133,7 +1103,7 @@ class _AddPlantState extends State<AddPlant> {
                       margin: EdgeInsets.only(bottom: 24),
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2F2F2),
+                        color: colorScheme.surfaceDim,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
@@ -1154,7 +1124,6 @@ class _AddPlantState extends State<AddPlant> {
                             style: TextStyle(
                               fontFamily: 'Manrope',
                               fontSize: 14,
-                              fontWeight: FontWeight.w900,
                             ),
                           ),
                           GestureDetector(
@@ -1207,6 +1176,8 @@ class _AddPlantState extends State<AddPlant> {
                               return;
                             }
 
+                            final daysCopy = Set<int>.from(selectedDays);
+
                             careRules.add(
                               (
                                 name: careRuleNameController.text,
@@ -1214,7 +1185,7 @@ class _AddPlantState extends State<AddPlant> {
                                 type: ruleTypes[selectedRuleTypeIndex!].type,
                                 ruleData: data,
                                 timestamp: DateTime.timestamp(),
-                                scheduleWeekDays: selectedDays,
+                                scheduleWeekDays: daysCopy,
                                 scheduleIntervalWeeks: weekInterval,
                               ),
                             );
@@ -1234,15 +1205,14 @@ class _AddPlantState extends State<AddPlant> {
                             width: 350,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: Color(0xFF616E54),
+                              color: colorScheme.primary,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Center(
                               child: Text(
                                 AppLocalizations.of(context)!.save,
                                 style: TextStyle(
-                                  color: Color(0xFFFCFCFC),
-                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.surface,
                                   fontSize: 16,
                                 ),
                               ),
@@ -1278,8 +1248,8 @@ class _AddPlantState extends State<AddPlant> {
         Text(
           '${AppLocalizations.of(context)!.add_plant_name}*',
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
+            fontSize: 20,
+            fontWeight: FontWeight.w300,
           ),
         ),
         Container(
@@ -1287,9 +1257,9 @@ class _AddPlantState extends State<AddPlant> {
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 24, top: 4),
           decoration: BoxDecoration(
-            color: Color(0xFFF2F2F2),
+            color: colorScheme.surfaceDim,
             borderRadius: BorderRadius.circular(10),
-            border: !careRuleNameValid
+            border: !plantNameValid
                 ? Border.all(
                     strokeAlign: BorderSide.strokeAlignOutside,
                     width: 2,
@@ -1306,7 +1276,6 @@ class _AddPlantState extends State<AddPlant> {
               controller: plantNameController,
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w900,
               ),
               decoration: InputDecoration(
                 isCollapsed: true,
@@ -1314,7 +1283,6 @@ class _AddPlantState extends State<AddPlant> {
                 hintText: AppLocalizations.of(context)!.add_plant_name_hint,
                 hintStyle: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
@@ -1323,9 +1291,7 @@ class _AddPlantState extends State<AddPlant> {
         Text(
           '${AppLocalizations.of(context)!.add_plant_scientific_name}*',
           style: TextStyle(
-            fontFamily: 'Manrope',
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
+            fontSize: 20,
           ),
         ),
         Container(
@@ -1333,7 +1299,7 @@ class _AddPlantState extends State<AddPlant> {
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 24, top: 4),
           decoration: BoxDecoration(
-            color: Color(0xFFF2F2F2),
+            color: colorScheme.surfaceDim,
             borderRadius: BorderRadius.circular(10),
             border: !plantScientificNameValid
                 ? Border.all(
@@ -1352,7 +1318,6 @@ class _AddPlantState extends State<AddPlant> {
               controller: plantScientificNameController,
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w900,
               ),
               decoration: InputDecoration(
                 isCollapsed: true,
@@ -1364,7 +1329,6 @@ class _AddPlantState extends State<AddPlant> {
                 hintStyle: TextStyle(
                   fontFamily: 'Manrope',
                   fontSize: 14,
-                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
@@ -1373,8 +1337,7 @@ class _AddPlantState extends State<AddPlant> {
         Text(
           '${AppLocalizations.of(context)!.add_plant_group}*',
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
+            fontSize: 20,
           ),
         ),
         Container(
@@ -1391,20 +1354,22 @@ class _AddPlantState extends State<AddPlant> {
                   label: Text(
                     groups[index],
                     style: TextStyle(
-                      color: isSelected ? Color(0xFFFCFCFC) : Color(0xFF92A56E),
-                      fontWeight: FontWeight.bold,
+                      color: isSelected
+                          ? colorScheme.onPrimary
+                          : colorScheme.secondary,
                     ),
                   ),
                   selected: isSelected,
                   shape: StadiumBorder(
                     side: BorderSide(
-                      color:
-                          !isSelected ? Color(0xFFF2F2F2) : Color(0xFF92A56E),
+                      color: !isSelected
+                          ? colorScheme.surfaceDim
+                          : colorScheme.secondary,
                     ),
                   ),
-                  backgroundColor: Color(0xFFFCFCFC),
-                  selectedColor: Color(0xFF92A56E),
-                  checkmarkColor: Color(0xFFFCFCFC),
+                  backgroundColor: colorScheme.surface,
+                  selectedColor: colorScheme.secondary,
+                  checkmarkColor: colorScheme.surface,
                   onSelected: (selected) {
                     setState(() {
                       selectedGroupIndex = selected ? index : null;
@@ -1419,15 +1384,14 @@ class _AddPlantState extends State<AddPlant> {
         Text(
           AppLocalizations.of(context)!.add_plant_description,
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
+            fontSize: 20,
           ),
         ),
         Container(
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 24, top: 4),
           decoration: BoxDecoration(
-            color: Color(0xFFF2F2F2),
+            color: colorScheme.surfaceDim,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
@@ -1443,7 +1407,6 @@ class _AddPlantState extends State<AddPlant> {
               style: TextStyle(
                 fontFamily: 'Manrope',
                 fontSize: 14,
-                fontWeight: FontWeight.w900,
               ),
               decoration: InputDecoration(
                 isCollapsed: true,
@@ -1452,7 +1415,6 @@ class _AddPlantState extends State<AddPlant> {
                     AppLocalizations.of(context)!.add_plant_description_hint,
                 hintStyle: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
@@ -1477,7 +1439,7 @@ class _AddPlantState extends State<AddPlant> {
                       width: double.infinity,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Color(0xFFFCFCFC),
+                        color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Center(
@@ -1503,9 +1465,9 @@ class _AddPlantState extends State<AddPlant> {
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
-              color: Color(0xFFFCFCFC),
+              color: colorScheme.surface,
               border: Border.all(
-                color: Color(0xFFF2F2F2),
+                color: colorScheme.surfaceDim,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(15),
@@ -1513,7 +1475,7 @@ class _AddPlantState extends State<AddPlant> {
             child: Icon(
               Icons.add,
               size: 64,
-              color: Color(0xFFF2F2F2),
+              color: colorScheme.surfaceDim,
             ),
           ),
         ),
@@ -1535,7 +1497,6 @@ class _AddPlantState extends State<AddPlant> {
                   style: TextStyle(
                     fontFamily: 'Manrope',
                     fontSize: 24,
-                    fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
@@ -1543,7 +1504,6 @@ class _AddPlantState extends State<AddPlant> {
                   style: TextStyle(
                     fontFamily: 'Manrope',
                     fontSize: 16,
-                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
@@ -1555,7 +1515,6 @@ class _AddPlantState extends State<AddPlant> {
                   style: TextStyle(
                     fontFamily: 'Manrope',
                     fontSize: 16,
-                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
@@ -1570,7 +1529,6 @@ class _AddPlantState extends State<AddPlant> {
           style: TextStyle(
             fontFamily: 'Manrope',
             fontSize: 12,
-            fontWeight: FontWeight.w900,
           ),
         ),
         SizedBox(
@@ -1581,7 +1539,6 @@ class _AddPlantState extends State<AddPlant> {
           style: TextStyle(
             fontFamily: 'Manrope',
             fontSize: 16,
-            fontWeight: FontWeight.w900,
           ),
         ),
         Column(
@@ -1606,7 +1563,7 @@ class _AddPlantState extends State<AddPlant> {
           width: double.infinity,
           height: 75,
           decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFFF2F2F2), width: 2),
+            border: Border.all(color: colorScheme.surfaceDim, width: 2),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
@@ -1623,15 +1580,14 @@ class _AddPlantState extends State<AddPlant> {
                             ruleTypes[getRuleTypeIndexByType(
                                     careRules[index].type)]
                                 .icon,
-                            color: Color(0xFF616E54),
+                            color: colorScheme.primary,
                           ),
                           Text(
                             careRules[index].name,
                             style: TextStyle(
-                              color: Color(0xFF616E54),
+                              color: colorScheme.primary,
                               fontFamily: 'Manrope',
                               fontSize: 16,
-                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ],
@@ -1642,7 +1598,6 @@ class _AddPlantState extends State<AddPlant> {
                           style: TextStyle(
                             fontFamily: 'Manrope',
                             fontSize: 14,
-                            fontWeight: FontWeight.w900,
                           ),
                         ),
                       ),

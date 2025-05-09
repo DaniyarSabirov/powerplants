@@ -12,6 +12,8 @@ class GroupOverview extends StatefulWidget {
   State<GroupOverview> createState() => _GroupOverviewState();
 }
 
+var colorScheme;
+
 class _GroupOverviewState extends State<GroupOverview> {
   List<Plant> plants = [];
   late final PlantService plantService;
@@ -30,8 +32,8 @@ class _GroupOverviewState extends State<GroupOverview> {
 
   @override
   Widget build(BuildContext context) {
+    colorScheme = ColorScheme.of(context);
     return Scaffold(
-      backgroundColor: Color(0xFFF2F2F2),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 64, left: 24, right: 24),
@@ -43,7 +45,7 @@ class _GroupOverviewState extends State<GroupOverview> {
                 width: 375,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFCFCFC),
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Row(
@@ -52,18 +54,18 @@ class _GroupOverviewState extends State<GroupOverview> {
                   children: [
                     Icon(
                       Icons.arrow_back_ios_rounded,
-                      color: Color(0xFF1B2727),
+                      color: colorScheme.onSurface,
                     ),
                     Container(
                       width: 45,
                       height: 45,
                       decoration: BoxDecoration(
-                        color: Color(0xFF92A56E),
+                        color: colorScheme.secondary,
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: Icon(
                         Icons.person_outline_rounded,
-                        color: Colors.white,
+                        color: colorScheme.onSecondary,
                       ),
                     ),
                   ],
@@ -77,13 +79,6 @@ class _GroupOverviewState extends State<GroupOverview> {
                     GestureDetector(
                       onTap: () => {
                         setState(() {
-                          // plants.add(
-                          //   (
-                          //     title: 'New Plant',
-                          //     image:
-                          //         'https://media.istockphoto.com/id/1147544807/de/vektor/miniaturbild-vektorgrafik.jpg?s=612x612&w=0&k=20&c=IIK_u_RTeRFyL6kB1EMzBufT4H7MYT3g04sz903fXAk='
-                          //   ),
-                          // );
                           Navigator.of(context).pushNamed('/addplant');
                         }),
                       },
@@ -91,12 +86,12 @@ class _GroupOverviewState extends State<GroupOverview> {
                         width: 30,
                         height: 30,
                         decoration: BoxDecoration(
-                          color: Color(0xFFFCFCFC),
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Icon(
                           Icons.add_rounded,
-                          color: Color(0xFF1B2727),
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -144,34 +139,6 @@ class _GroupOverviewState extends State<GroupOverview> {
                 height: 50,
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget insertPlantWidget() {
-    double offsetX = 0;
-
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8),
-      child: GestureDetector(
-        onPanUpdate: (details) {
-          if (details.delta.dx < -10) {
-            setState(() {
-              offsetX = -100;
-            });
-            print('Swipe left');
-          }
-        },
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
-          transform: Matrix4.translationValues(offsetX, 0, 0),
-          width: 375,
-          height: 150,
-          decoration: BoxDecoration(
-            color: Color(0xFFFCFCFC),
-            borderRadius: BorderRadius.circular(25),
           ),
         ),
       ),
