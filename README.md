@@ -49,3 +49,15 @@ https://www.figma.com/design/yquM6kJgzYgQPbqG3KBEhm/Programmierprojekt?node-id=0
 In REST API Json Models wird ausschließlich snake case geschrieben, dies inkludiert auch (vor allem) Eigenschafts Schlüsselnamen.
 
 Z.B. wird NICHT "publicName" geschrieben sondern "public_name".
+
+# Backend
+
+## Richtlinien
+
+### Resourcen (API Endpoints)
+
+In Resourcen werden NUR JsonModels empfangen und zurückgegeben.
+Es gibt keine Ausnahmen. Das ist wichtig um eine einheitliche Struktur zu bewahren und die Kontrolle zu behalten
+was geschickt und empfangen wird.
+
+Um JsonModels und Core Domain Models zu konvertieren werden Mapper verwendet.
