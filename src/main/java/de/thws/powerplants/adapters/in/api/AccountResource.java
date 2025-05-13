@@ -1,6 +1,7 @@
 package de.thws.powerplants.adapters.in.api;
 
 import de.thws.powerplants.core.domain.Account;
+import de.thws.powerplants.core.mappers.AccountMapper;
 import de.thws.powerplants.core.services.AccountService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -15,7 +16,23 @@ import java.util.UUID;
 public class AccountResource {
 
     @Inject
-    AccountService accountService;
+    private AccountService accountService;
+
+    @POST
+    public Response createAccount(Account account) {
+        accountService.createAccount(account);
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    @POST
+    @Path("/{accountId}/homes/{homeId}")
+    public Response addHomeToAccount(@PathParam("accountId") UUID accountId, @PathParam("homeId") UUID homeId) {
+        boolean success = accountService.addHomeToAccount(accountId, homeId);
+        if (!success) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok().build();
+    }
 
     @GET
     public List<Account> getAllAccounts() {
@@ -29,13 +46,7 @@ public class AccountResource {
         if (account == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(account).build();
-    }
-
-    @POST
-    public Response createAccount(Account account) {
-        accountService.createAccount(account);
-        return Response.status(Response.Status.CREATED).build();
+        return Response.ok(AccountMapper.toJsonAccount(account)).build();
     }
 
     @PUT
@@ -56,15 +67,5 @@ public class AccountResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.noContent().build();
-    }
-
-    @POST
-    @Path("/{accountId}/homes/{homeId}")
-    public Response addHomeToAccount(@PathParam("accountId") UUID accountId, @PathParam("homeId") UUID homeId) {
-        boolean success = accountService.addHomeToAccount(accountId, homeId);
-        if (!success) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok().build();
     }
 }

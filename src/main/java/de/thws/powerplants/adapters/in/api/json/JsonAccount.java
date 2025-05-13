@@ -8,9 +8,12 @@ import java.util.UUID;
 public class JsonAccount {
 
     private UUID id;
-    private String email;
-    private String firstName;
-    private String lastName;
+    private String publicName;
+    private String name;
+    private String password;
+    private String pictureUrl;
+
+    public JsonAccount() {}
 
     public UUID getId() {
         return id;
@@ -20,27 +23,35 @@ public class JsonAccount {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPublicName() {
+        return publicName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPublicName(String publicName) {
+        this.publicName = publicName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     @Inject
-    HomeRepository homeRepository;
+    private HomeRepository homeRepository;
 
     @Inject
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll().stream().map(AccountMapper::toDomain).collect(Collectors.toList());
@@ -39,7 +39,7 @@ public class AccountService {
             throw new WebApplicationException("Public name already in use", 400);
         }
 
-        AccountEntity entity = AccountMapper.toEntity(account, homeRepository);
+        AccountEntity entity = AccountMapper.toEntity(account);
         accountRepository.persist(entity);
     }
 

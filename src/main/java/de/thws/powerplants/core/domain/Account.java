@@ -1,15 +1,16 @@
 package de.thws.powerplants.core.domain;
 
-import java.util.List;
 import java.util.UUID;
 
 public class Account {
+
     private UUID id;
     private String publicName;
     private String name;
     private String password;
     private String pictureUrl;
-    private List<UUID> homeIds;
+
+    public Account() {}
 
     public UUID getId() {
         return id;
@@ -49,13 +50,5 @@ public class Account {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
-    }
-
-    public List<UUID> getHomeIds() {
-        return homeIds;
-    }
-
-    public void setHomeIds(List<UUID> homeIds) {
-        this.homeIds = homeIds;
     }
 }
