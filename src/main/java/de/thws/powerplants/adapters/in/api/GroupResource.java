@@ -33,9 +33,13 @@ public class GroupResource {
     }
 
     @GET
-    public List<GroupEntity> getAllGroups() {
-        return groupService.getAllGroups();
+    public List<JsonGroup> getGroups(@PathParam("home_id") UUID homeId) {
+        List<GroupEntity> groupEntities = groupService.getGroupsByHomeId(homeId);
+        return groupEntities.stream()
+                .map(GroupMapper::toJsonGroup)
+                .toList();
     }
+
 
     @DELETE
     @Path("/{groupId}")
@@ -48,4 +52,13 @@ public class GroupResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
+    @PUT
+    @Path("/{groupId}")
+    public Response updateGroup(@PathParam("groupId") UUID groupId, JsonGroup jsonGroup) {
+        Group updatedGroup = GroupMapper.toGroupDTO(jsonGroup);
+        GroupEntity updatedEntity = groupService.updateGroup(groupId, updatedGroup);
+        return Response.ok(GroupMapper.toJsonGroup(updatedEntity)).build();
+    }
+
 }
