@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/account.dart';
 import 'package:frontend/services/account_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountProvider extends ChangeNotifier {
+  static const String _loggedInAccountKey = 'logged_in_account_id';
+
   final AccountService _accountService;
   List<Account> _accounts = [];
   bool _isLoading = false;
@@ -126,4 +129,38 @@ class AccountProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> signIn(String accountId) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await _handleAsync(() async {
+        _selectedAccount = await _accountService.getAccountById(accountId);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(_loggedInAccountKey, accountId);
+      });
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accountId = prefs.getString(_loggedInAccountKey);
+
+    if (accountId != null) {
+      await signIn(accountId);
+    }
+  }
+
+  Future<void> signOut() async {
+    _selectedAccount = null;
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_loggedInAccountKey);
+  }
+
 }
