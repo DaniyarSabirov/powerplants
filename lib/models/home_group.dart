@@ -1,5 +1,5 @@
 class HomeGroup {
-  final String id;
+  final String? id;
   final String homeId;
   final String publicName;
   final String? description;

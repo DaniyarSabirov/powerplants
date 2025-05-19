@@ -1,7 +1,7 @@
 import 'home.dart';
 
 class Account {
-  final String id;
+  final String? id;
   final String publicName;
   final String loginName;
   final String loginPassword;

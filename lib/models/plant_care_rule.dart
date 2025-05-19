@@ -1,5 +1,5 @@
 sealed class PlantCareRule {
-  final String id;
+  final String? id;
   final String publicName;
   final bool enabled;
   final String cron;
