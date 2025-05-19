@@ -56,16 +56,21 @@ class _GroupOverviewState extends State<GroupOverview> {
                       Icons.arrow_back_ios_rounded,
                       color: colorScheme.onSurface,
                     ),
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Icon(
-                        Icons.person_outline_rounded,
-                        color: colorScheme.onSecondary,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/profile');
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Icon(
+                          Icons.person_outline_rounded,
+                          color: colorScheme.onSecondary,
+                        ),
                       ),
                     ),
                   ],
