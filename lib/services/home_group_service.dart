@@ -6,27 +6,11 @@ class HomeGroupService {
 
   HomeGroupService(this._client);
 
-  Future<HomeGroup> getGroupById(String id) async {
-    try {
-      final response = await _client.get('/groups/$id'); // TODO check real endpoint
-
-      if (response.statusCode == 200) {
-        return HomeGroup.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception(
-          'Failed to load group data, status code: ${response.statusCode}',
-        );
-      }
-    } catch (e) {
-      throw Exception('Error fetching group: $e');
-    }
-  }
-
   Future<List<HomeGroup>> getGroupsByHomeId(String homeId) async {
     try {
       final response = await _client.get(
         '/homes/$homeId/groups',
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         final List<dynamic> groupsJson = response.data as List<dynamic>;
@@ -43,33 +27,12 @@ class HomeGroupService {
     }
   }
 
-  Future<List<HomeGroup>> getAllGroups() async {
-    try {
-      final response = await _client.get(
-          '/groups'
-      ); // TODO check real endpoint
-
-      if (response.statusCode == 200) {
-        final List<dynamic> groupsJson = response.data as List<dynamic>;
-        return groupsJson
-            .map((json) => HomeGroup.fromJson(json as Map<String, dynamic>))
-            .toList();
-      } else {
-        throw Exception(
-          'Failed to load groups, status code: ${response.statusCode}',
-        );
-      }
-    } catch (e) {
-      throw Exception('Error fetching all groups: $e');
-    }
-  }
-
-  Future<HomeGroup> createGroup(HomeGroup group) async {
+  Future<HomeGroup> createGroup(String homeId, HomeGroup group) async {
     try {
       final response = await _client.post(
-        '/groups',
+        'homes/$homeId/groups',
         data: group.toJson(),
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         return HomeGroup.fromJson(response.data as Map<String, dynamic>);
@@ -83,18 +46,18 @@ class HomeGroupService {
     }
   }
 
-  Future<void> updateGroup(String id, HomeGroup group) async {
+  Future<void> updateGroup(String homeId, String groupId, HomeGroup group) async {
     try {
       final response = await _client.put(
-        '/groups/$id',
+        'homes/$homeId/groups/$groupId',
         data: group.toJson(),
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         return;
       } else {
         throw Exception(
-          'Failed to update group $id, status code: ${response.statusCode}',
+          'Failed to update group $groupId, status code: ${response.statusCode}',
         );
       }
     } catch (e) {
@@ -102,21 +65,42 @@ class HomeGroupService {
     }
   }
 
-  Future<void> deleteGroup(String id) async {
+  Future<void> deleteGroup(String homeId, String groupId) async {
     try {
       final response = await _client.delete(
-        '/groups/$id',
-      ); // TODO check real endpoint
+        'homes/$homeId/groups/$groupId',
+      );
 
       if (response.statusCode == 204 || response.statusCode == 200) {
         return;
       } else {
         throw Exception(
-          'Failed to delete group $id, status code: ${response.statusCode}',
+          'Failed to delete group $groupId, status code: ${response.statusCode}',
         );
       }
     } catch (e) {
       throw Exception('Error deleting group: $e');
     }
   }
+
+  //
+  // Not implemented on Backend
+  //
+  // Future<HomeGroup> getGroupById(String id) async {
+  //   try {
+  //     final response = await _client.get('/groups/$id'); // TODO check real endpoint
+  //
+  //     if (response.statusCode == 200) {
+  //       return HomeGroup.fromJson(response.data as Map<String, dynamic>);
+  //     } else {
+  //       throw Exception(
+  //         'Failed to load group data, status code: ${response.statusCode}',
+  //       );
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Error fetching group: $e');
+  //   }
+  // }
+
+
 }

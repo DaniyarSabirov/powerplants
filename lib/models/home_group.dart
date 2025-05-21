@@ -1,12 +1,12 @@
 class HomeGroup {
-  final String id;
+  final String? id;
   final String homeId;
   final String publicName;
   final String? description;
   final String? pictureUrl;
 
   HomeGroup({
-    required this.id,
+    this.id,
     required this.homeId,
     required this.publicName,
     this.description,

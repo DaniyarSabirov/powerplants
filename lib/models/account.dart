@@ -1,7 +1,7 @@
 import 'home.dart';
 
 class Account {
-  final String id;
+  final String? id;
   final String publicName;
   final String loginName;
   final String loginPassword;
@@ -9,7 +9,7 @@ class Account {
   final List<Home> homes;
 
   Account({
-    required this.id,
+    this.id,
     required this.publicName,
     required this.loginName,
     required this.loginPassword,

@@ -1,10 +1,10 @@
 class Home {
-  final String id;
+  final String? id;
   final String publicName;
   final String? description;
 
   Home({
-    required this.id,
+    this.id,
     required this.publicName,
     this.description,
   });
