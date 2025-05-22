@@ -2,6 +2,7 @@ package de.thws.powerplants.adapters.in.api.json;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import java.util.List;
 import java.util.UUID;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -9,9 +10,11 @@ public class JsonAccount {
 
     private UUID id;
     private String publicName;
-    private String name;
-    private String password;
+    private String loginName;
+    private String loginPassword;
     private String pictureUrl;
+
+    private List<JsonHome> homes;
 
     public JsonAccount() {}
 
@@ -31,20 +34,20 @@ public class JsonAccount {
         this.publicName = publicName;
     }
 
-    public String getName() {
-        return name;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLoginPassword() {
+        return loginPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public String getPictureUrl() {
@@ -53,5 +56,13 @@ public class JsonAccount {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public List<JsonHome> getHomes() {
+        return homes;
+    }
+
+    public void setHomes(List<JsonHome> homes) {
+        this.homes = homes;
     }
 }
