@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "account")
-public class AccountEntity {
+public class JpaAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,7 +19,7 @@ public class AccountEntity {
             name = "account_home",
             joinColumns = @JoinColumn(name = "home_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id"))
-    private List<HomeEntity> homes = new ArrayList<>();
+    private List<JpaHome> homes = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
@@ -33,7 +33,7 @@ public class AccountEntity {
     @Column(name = "picture_url")
     private String pictureUrl;
 
-    public AccountEntity() {}
+    public JpaAccount() {}
 
     public UUID getId() {
         return id;
@@ -43,11 +43,11 @@ public class AccountEntity {
         this.id = id;
     }
 
-    public List<HomeEntity> getHomes() {
+    public List<JpaHome> getHomes() {
         return homes;
     }
 
-    public void setHomes(List<HomeEntity> homes) {
+    public void setHomes(List<JpaHome> homes) {
         this.homes = homes;
     }
 

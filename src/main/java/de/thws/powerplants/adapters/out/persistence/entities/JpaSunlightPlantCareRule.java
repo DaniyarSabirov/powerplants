@@ -6,12 +6,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "plant_care_rule_sunlight")
-public class SunlightPlantCareRuleEntity extends PlantCareRuleEntity {
+public class JpaSunlightPlantCareRule extends JpaPlantCareRule {
 
     @Column(name = "duration", nullable = false)
     private Long duration;
 
-    public SunlightPlantCareRuleEntity() {}
+    public JpaSunlightPlantCareRule() {}
 
     public Long getDuration() {
         return duration;

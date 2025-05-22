@@ -5,19 +5,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "plant_care_rule_water")
-public class WaterPlantCareRuleEntity extends PlantCareRuleEntity {
+@Table(name = "plant_care_rule_pruning")
+public class JpaPruningPlantCareRule extends JpaPlantCareRule {
 
     @Column(name = "amount", nullable = false)
-    private Long amount;
+    private String amount;
 
-    public WaterPlantCareRuleEntity() {}
+    public JpaPruningPlantCareRule() {}
 
-    public Long getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }

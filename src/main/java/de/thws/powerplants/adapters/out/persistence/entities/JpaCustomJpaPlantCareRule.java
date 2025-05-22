@@ -6,12 +6,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "plant_care_rule_custom")
-public class CustomPlantCareRuleEntity extends PlantCareRuleEntity {
+public class JpaCustomJpaPlantCareRule extends JpaPlantCareRule {
 
     @Column(name = "custom_instructions", nullable = false)
     private String customInstructions;
 
-    public CustomPlantCareRuleEntity() {}
+    public JpaCustomJpaPlantCareRule() {}
 
     public String getCustomInstructions() {
         return customInstructions;

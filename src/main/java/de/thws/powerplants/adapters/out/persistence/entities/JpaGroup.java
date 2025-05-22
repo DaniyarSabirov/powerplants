@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "home")
-public class HomeEntity {
+@Table(name = "home_group")
+public class JpaGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @ManyToMany(mappedBy = "homes")
-    private List<AccountEntity> accounts = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_id")
-    private List<GroupEntity> groups = new ArrayList<>();
+    private JpaHome home;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JpaPlant> plants = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
@@ -27,7 +27,10 @@ public class HomeEntity {
     @Column(name = "description")
     private String description;
 
-    public HomeEntity() {}
+    @Column(name = "picture_url")
+    private String pictureUrl;
+
+    public JpaGroup() {}
 
     public UUID getId() {
         return id;
@@ -37,20 +40,20 @@ public class HomeEntity {
         this.id = id;
     }
 
-    public List<AccountEntity> getAccounts() {
-        return accounts;
+    public JpaHome getHome() {
+        return home;
     }
 
-    public void setAccounts(List<AccountEntity> accounts) {
-        this.accounts = accounts;
+    public void setHome(JpaHome home) {
+        this.home = home;
     }
 
-    public List<GroupEntity> getGroups() {
-        return groups;
+    public List<JpaPlant> getPlants() {
+        return plants;
     }
 
-    public void setGroups(List<GroupEntity> groups) {
-        this.groups = groups;
+    public void setPlants(List<JpaPlant> plants) {
+        this.plants = plants;
     }
 
     public String getPublicName() {
@@ -67,5 +70,13 @@ public class HomeEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

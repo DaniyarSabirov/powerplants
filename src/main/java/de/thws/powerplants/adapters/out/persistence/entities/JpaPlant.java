@@ -1,28 +1,26 @@
 package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "home_group")
-public class GroupEntity {
+@Table(name = "plant")
+public class JpaPlant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "home_id")
-    private HomeEntity home;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PlantEntity> plants = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "home_group_id", nullable = false)
+    private JpaGroup group;
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
+
+    @Column(name = "scientific_name", nullable = false)
+    private String scientificName;
 
     @Column(name = "description")
     private String description;
@@ -30,7 +28,9 @@ public class GroupEntity {
     @Column(name = "picture_url")
     private String pictureUrl;
 
-    public GroupEntity() {}
+    // todo group foreign key
+
+    public JpaPlant() {}
 
     public UUID getId() {
         return id;
@@ -40,20 +40,12 @@ public class GroupEntity {
         this.id = id;
     }
 
-    public HomeEntity getHome() {
-        return home;
+    public JpaGroup getGroup() {
+        return group;
     }
 
-    public void setHome(HomeEntity home) {
-        this.home = home;
-    }
-
-    public List<PlantEntity> getPlants() {
-        return plants;
-    }
-
-    public void setPlants(List<PlantEntity> plants) {
-        this.plants = plants;
+    public void setGroup(JpaGroup group) {
+        this.group = group;
     }
 
     public String getPublicName() {
@@ -62,6 +54,14 @@ public class GroupEntity {
 
     public void setPublicName(String publicName) {
         this.publicName = publicName;
+    }
+
+    public String getScientificName() {
+        return scientificName;
+    }
+
+    public void setScientificName(String scientificName) {
+        this.scientificName = scientificName;
     }
 
     public String getDescription() {
