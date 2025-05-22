@@ -1,5 +1,6 @@
 package de.thws.powerplants.core.domain;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Home {
@@ -7,6 +8,9 @@ public class Home {
     private UUID id;
     private String publicName;
     private String description;
+
+    private List<Account> accounts;
+    private List<Group> groups;
 
     public Home() {}
 
@@ -32,5 +36,21 @@ public class Home {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }

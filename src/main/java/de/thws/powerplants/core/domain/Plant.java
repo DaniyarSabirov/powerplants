@@ -1,5 +1,6 @@
 package de.thws.powerplants.core.domain;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Plant {
@@ -10,6 +11,9 @@ public class Plant {
     private String description;
     private String pictureUrl;
     private PlantMetadata metadata;
+
+    private List<? extends PlantCareRule> plantCareRules;
+    private List<PlantCareDone> plantCareDones;
 
     public Plant() {}
 
@@ -59,5 +63,21 @@ public class Plant {
 
     public void setMetadata(PlantMetadata metadata) {
         this.metadata = metadata;
+    }
+
+    public List<? extends PlantCareRule> getPlantCareRules() {
+        return plantCareRules;
+    }
+
+    public void setPlantCareRules(List<? extends PlantCareRule> plantCareRules) {
+        this.plantCareRules = plantCareRules;
+    }
+
+    public List<PlantCareDone> getPlantCareDones() {
+        return plantCareDones;
+    }
+
+    public void setPlantCareDones(List<PlantCareDone> plantCareDones) {
+        this.plantCareDones = plantCareDones;
     }
 }
