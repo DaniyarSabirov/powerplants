@@ -31,7 +31,7 @@ public class JpaPlant {
     private JpaGroup group;
 
     @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
-    private List<? extends JpaPlantCareRule> plantCareRules = new ArrayList<>();
+    private List<JpaPlantCareRule> plantCareRules = new ArrayList<>();
 
     @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
     private List<JpaPlantCareDone> plantCareDones = new ArrayList<>();
@@ -86,11 +86,11 @@ public class JpaPlant {
         this.group = group;
     }
 
-    public List<? extends JpaPlantCareRule> getPlantCareRules() {
+    public List<JpaPlantCareRule> getPlantCareRules() {
         return plantCareRules;
     }
 
-    public void setPlantCareRules(List<? extends JpaPlantCareRule> plantCareRules) {
+    public void setPlantCareRules(List<JpaPlantCareRule> plantCareRules) {
         this.plantCareRules = plantCareRules;
     }
 
