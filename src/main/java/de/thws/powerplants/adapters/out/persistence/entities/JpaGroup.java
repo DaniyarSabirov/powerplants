@@ -14,13 +14,6 @@ public class JpaGroup {
     @Column(name = "id")
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "home_id")
-    private JpaHome home;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JpaPlant> plants = new ArrayList<>();
-
     @Column(name = "public_name", nullable = false)
     private String publicName;
 
@@ -30,6 +23,13 @@ public class JpaGroup {
     @Column(name = "picture_url")
     private String pictureUrl;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "home_id")
+    private JpaHome home;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JpaPlant> plants = new ArrayList<>();
+
     public JpaGroup() {}
 
     public UUID getId() {
@@ -38,22 +38,6 @@ public class JpaGroup {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public JpaHome getHome() {
-        return home;
-    }
-
-    public void setHome(JpaHome home) {
-        this.home = home;
-    }
-
-    public List<JpaPlant> getPlants() {
-        return plants;
-    }
-
-    public void setPlants(List<JpaPlant> plants) {
-        this.plants = plants;
     }
 
     public String getPublicName() {
@@ -78,5 +62,21 @@ public class JpaGroup {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public JpaHome getHome() {
+        return home;
+    }
+
+    public void setHome(JpaHome home) {
+        this.home = home;
+    }
+
+    public List<JpaPlant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<JpaPlant> plants) {
+        this.plants = plants;
     }
 }

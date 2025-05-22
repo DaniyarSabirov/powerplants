@@ -14,24 +14,24 @@ public class JpaAccount {
     @Column(name = "id")
     private UUID id;
 
+    @Column(name = "public_name", nullable = false)
+    private String publicName;
+
+    @Column(name = "login_name", nullable = false)
+    private String loginName;
+
+    @Column(name = "login_password", nullable = false)
+    private String loginPassword;
+
+    @Column(name = "picture_url")
+    private String pictureUrl;
+
     @ManyToMany
     @JoinTable(
             name = "account_home",
             joinColumns = @JoinColumn(name = "home_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id"))
     private List<JpaHome> homes = new ArrayList<>();
-
-    @Column(name = "public_name", nullable = false)
-    private String publicName;
-
-    @Column(name = "login_name", nullable = false)
-    private String name;
-
-    @Column(name = "login_password", nullable = false)
-    private String password;
-
-    @Column(name = "picture_url")
-    private String pictureUrl;
 
     public JpaAccount() {}
 
@@ -43,14 +43,6 @@ public class JpaAccount {
         this.id = id;
     }
 
-    public List<JpaHome> getHomes() {
-        return homes;
-    }
-
-    public void setHomes(List<JpaHome> homes) {
-        this.homes = homes;
-    }
-
     public String getPublicName() {
         return publicName;
     }
@@ -59,20 +51,20 @@ public class JpaAccount {
         this.publicName = publicName;
     }
 
-    public String getName() {
-        return name;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLoginPassword() {
+        return loginPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public String getPictureUrl() {
@@ -81,5 +73,13 @@ public class JpaAccount {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public List<JpaHome> getHomes() {
+        return homes;
+    }
+
+    public void setHomes(List<JpaHome> homes) {
+        this.homes = homes;
     }
 }

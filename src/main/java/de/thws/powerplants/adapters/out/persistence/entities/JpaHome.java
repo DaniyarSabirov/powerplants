@@ -14,18 +14,18 @@ public class JpaHome {
     @Column(name = "id")
     private UUID id;
 
+    @Column(name = "public_name", nullable = false)
+    private String publicName;
+
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany(mappedBy = "homes")
     private List<JpaAccount> accounts = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "home_id")
     private List<JpaGroup> groups = new ArrayList<>();
-
-    @Column(name = "public_name", nullable = false)
-    private String publicName;
-
-    @Column(name = "description")
-    private String description;
 
     public JpaHome() {}
 
@@ -35,22 +35,6 @@ public class JpaHome {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public List<JpaAccount> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<JpaAccount> accounts) {
-        this.accounts = accounts;
-    }
-
-    public List<JpaGroup> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<JpaGroup> groups) {
-        this.groups = groups;
     }
 
     public String getPublicName() {
@@ -67,5 +51,21 @@ public class JpaHome {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<JpaAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<JpaAccount> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<JpaGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<JpaGroup> groups) {
+        this.groups = groups;
     }
 }

@@ -12,6 +12,7 @@ public class Plant {
     private String pictureUrl;
     private PlantMetadata metadata;
 
+    private Group group;
     private List<? extends PlantCareRule> plantCareRules;
     private List<PlantCareDone> plantCareDones;
 
@@ -63,6 +64,14 @@ public class Plant {
 
     public void setMetadata(PlantMetadata metadata) {
         this.metadata = metadata;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public List<? extends PlantCareRule> getPlantCareRules() {

@@ -1,6 +1,8 @@
 package de.thws.powerplants.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -11,10 +13,6 @@ public class JpaPlant {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "home_group_id", nullable = false)
-    private JpaGroup group;
 
     @Column(name = "public_name", nullable = false)
     private String publicName;
@@ -28,7 +26,15 @@ public class JpaPlant {
     @Column(name = "picture_url")
     private String pictureUrl;
 
-    // todo group foreign key
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "home_group_id", nullable = false)
+    private JpaGroup group;
+
+    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
+    private List<? extends JpaPlantCareRule> plantCareRules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
+    private List<JpaPlantCareDone> plantCareDones = new ArrayList<>();
 
     public JpaPlant() {}
 
@@ -38,14 +44,6 @@ public class JpaPlant {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public JpaGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(JpaGroup group) {
-        this.group = group;
     }
 
     public String getPublicName() {
@@ -78,5 +76,29 @@ public class JpaPlant {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public JpaGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(JpaGroup group) {
+        this.group = group;
+    }
+
+    public List<? extends JpaPlantCareRule> getPlantCareRules() {
+        return plantCareRules;
+    }
+
+    public void setPlantCareRules(List<? extends JpaPlantCareRule> plantCareRules) {
+        this.plantCareRules = plantCareRules;
+    }
+
+    public List<JpaPlantCareDone> getPlantCareDones() {
+        return plantCareDones;
+    }
+
+    public void setPlantCareDones(List<JpaPlantCareDone> plantCareDones) {
+        this.plantCareDones = plantCareDones;
     }
 }

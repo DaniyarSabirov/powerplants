@@ -10,6 +10,7 @@ public class Group {
     private String description;
     private String pictureUrl;
 
+    private Home home;
     private List<Plant> plants;
 
     public Group() {}
@@ -44,6 +45,14 @@ public class Group {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public Home getHome() {
+        return home;
+    }
+
+    public void setHome(Home home) {
+        this.home = home;
     }
 
     public List<Plant> getPlants() {

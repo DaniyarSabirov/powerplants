@@ -25,7 +25,9 @@ public abstract class JpaPlantCareRule {
     @Column(name = "instructions")
     private String instructions;
 
-    // todo group foreign key
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "plant_id", nullable = false)
+    private JpaPlant plant;
 
     public JpaPlantCareRule() {}
 
@@ -67,5 +69,13 @@ public abstract class JpaPlantCareRule {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public JpaPlant getPlant() {
+        return plant;
+    }
+
+    public void setPlant(JpaPlant plant) {
+        this.plant = plant;
     }
 }
