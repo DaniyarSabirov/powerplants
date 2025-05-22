@@ -9,6 +9,8 @@ public class Group {
     private String description;
     private String pictureUrl;
 
+    public Group() {}
+
     public UUID getId() {
         return id;
     }

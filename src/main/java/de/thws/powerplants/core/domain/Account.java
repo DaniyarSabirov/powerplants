@@ -6,8 +6,8 @@ public class Account {
 
     private UUID id;
     private String publicName;
-    private String name;
-    private String password;
+    private String loginName;
+    private String loginPassword;
     private String pictureUrl;
 
     public Account() {}
@@ -28,20 +28,20 @@ public class Account {
         this.publicName = publicName;
     }
 
-    public String getName() {
-        return name;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLoginPassword() {
+        return loginPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public String getPictureUrl() {
