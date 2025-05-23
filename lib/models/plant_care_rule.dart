@@ -22,16 +22,16 @@ sealed class PlantCareRule {
       case 'custom':
         return CustomRule(
           id: json['id'] as String,
-          publicName: json['publicName'] as String,
+          publicName: json['public_name'] as String,
           enabled: json['enabled'] as bool,
           cron: json['cron'] as String,
           instructions: json['instructions'] as String,
-          customInstructions: json['customInstructions'] as String,
+          customInstructions: json['custom_instructions'] as String,
         );
       case 'water':
         return WaterRule(
           id: json['id'] as String,
-          publicName: json['publicName'] as String,
+          publicName: json['public_name'] as String,
           enabled: json['enabled'] as bool,
           cron: json['cron'] as String,
           instructions: json['instructions'] as String,
@@ -40,7 +40,7 @@ sealed class PlantCareRule {
       case 'sunlight':
         return SunlightRule(
           id: json['id'] as String,
-          publicName: json['publicName'] as String,
+          publicName: json['public_name'] as String,
           enabled: json['enabled'] as bool,
           cron: json['cron'] as String,
           instructions: json['instructions'] as String,
@@ -49,7 +49,7 @@ sealed class PlantCareRule {
       case 'pruning':
         return PruningRule(
           id: json['id'] as String,
-          publicName: json['publicName'] as String,
+          publicName: json['public_name'] as String,
           enabled: json['enabled'] as bool,
           cron: json['cron'] as String,
           instructions: json['instructions'] as String,
@@ -58,7 +58,7 @@ sealed class PlantCareRule {
       case 'done':
         return DoneRule(
           id: json['id'] as String,
-          publicName: json['publicName'] as String,
+          publicName: json['public_name'] as String,
           enabled: json['enabled'] as bool,
           cron: json['cron'] as String,
           instructions: json['instructions'] as String,
@@ -103,7 +103,7 @@ final class CustomRule extends PlantCareRule {
   Map<String, dynamic> toJson() => {
     'type': 'custom',
     'id': id,
-    'publicName': publicName,
+    'public_name': publicName,
     'enabled': enabled,
     'cron': cron,
     'instructions': instructions,
@@ -157,7 +157,7 @@ final class WaterRule extends PlantCareRule {
   Map<String, dynamic> toJson() => {
     'type': 'water',
     'id': id,
-    'publicName': publicName,
+    'public_name': publicName,
     'enabled': enabled,
     'cron': cron,
     'instructions': instructions,
@@ -212,7 +212,7 @@ final class SunlightRule extends PlantCareRule {
       {
         'type': 'sunlight',
         'id': id,
-        'publicName': publicName,
+        'public_name': publicName,
         'enabled': enabled,
         'cron': cron,
         'instructions': instructions,
@@ -267,7 +267,7 @@ final class PruningRule extends PlantCareRule {
       {
         'type': 'pruning',
         'id': id,
-        'publicName': publicName,
+        'public_name': publicName,
         'enabled': enabled,
         'cron': cron,
         'instructions': instructions,
@@ -326,13 +326,13 @@ final class DoneRule extends PlantCareRule {
       {
         'type': 'done',
         'id': id,
-        'publicName': publicName,
+        'public_name': publicName,
         'enabled': enabled,
         'cron': cron,
         'instructions': instructions,
-        'completedBy': completedBy,
+        'completed_by': completedBy,
         'details': details,
-        'completedAt': completedAt.toIso8601String(),
+        'completed_at': completedAt.toIso8601String(),
       };
 
   DoneRule copyWith({
@@ -391,12 +391,12 @@ final class DisabledRule extends PlantCareRule {
       {
         'type': 'disabled',
         'id': id,
-        'publicName': publicName,
+        'public_name': publicName,
         'enabled': enabled,
         'cron': cron,
         'instructions': instructions,
-        'disabledBy': disabledBy,
-        'disabledAt': disabledAt.toIso8601String(),
+        'disabled_by': disabledBy,
+        'disabled_at': disabledAt.toIso8601String(),
       };
 
   DisabledRule copyWith({

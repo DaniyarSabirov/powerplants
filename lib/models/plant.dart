@@ -17,20 +17,20 @@ class Plant {
 
   factory Plant.fromJson(Map<String, dynamic> json) => Plant(
         id: json['id'] ?? '',
-        name: json['publicName'],
-        scientificName: json['scientificName'],
+        name: json['public_name'],
+        scientificName: json['scientific_name'],
         description: json['description'] ?? '',
-        imageUrl: json['pictureUrl'] ?? '',
-        groupId: json['groupId'] ?? '',
+        imageUrl: json['picture_url'] ?? '',
+        groupId: json['group_id'] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'publicName': name,
-        'scientificName': scientificName,
+        'public_name': name,
+        'scientific_name': scientificName,
         'description': description,
-        'pictureUrl': imageUrl,
-        'groupId': groupId,
+        'picture_url': imageUrl,
+        'group_id': groupId,
       };
 
   Plant copyWith({
