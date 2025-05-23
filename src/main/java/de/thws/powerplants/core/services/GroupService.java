@@ -9,7 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +20,6 @@ public class GroupService {
 
     @Inject
     private GroupRepository groupRepository;
-
-
 
     public GroupService() {}
 
@@ -46,8 +43,6 @@ public class GroupService {
 
         return groupEntity;
     }
-
-
 
     @Transactional
     public boolean deleteGroup(UUID groupId) {

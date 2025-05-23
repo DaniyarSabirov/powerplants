@@ -17,8 +17,8 @@ public class AccountEntity {
     @ManyToMany
     @JoinTable(
             name = "account_home",
-            joinColumns = @JoinColumn(name = "home_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_id"))
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "home_id"))
     private List<HomeEntity> homes = new ArrayList<>();
 
     @Column(name = "public_name", nullable = false)

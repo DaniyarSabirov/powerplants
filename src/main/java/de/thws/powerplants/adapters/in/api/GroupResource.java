@@ -35,11 +35,8 @@ public class GroupResource {
     @GET
     public List<JsonGroup> getGroups(@PathParam("home_id") UUID homeId) {
         List<GroupEntity> groupEntities = groupService.getGroupsByHomeId(homeId);
-        return groupEntities.stream()
-                .map(GroupMapper::toJsonGroup)
-                .toList();
+        return groupEntities.stream().map(GroupMapper::toJsonGroup).toList();
     }
-
 
     @DELETE
     @Path("/{groupId}")
@@ -60,5 +57,4 @@ public class GroupResource {
         GroupEntity updatedEntity = groupService.updateGroup(groupId, updatedGroup);
         return Response.ok(GroupMapper.toJsonGroup(updatedEntity)).build();
     }
-
 }
