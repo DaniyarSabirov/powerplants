@@ -23,7 +23,9 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public List<Account> getAllAccounts() {
-        return accountRepository.findAll().stream().map(AccountMapper::toDomain).collect(Collectors.toList());
+        return accountRepository.findAll().list().stream()
+                .map(AccountMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     public Account getAccountById(UUID id) {
@@ -74,7 +76,10 @@ public class AccountService {
         var account = accountOpt.get();
         var home = homeOpt.get();
 
-        account.getHomes().add(home);
+        if (!account.getHomes().contains(home)) {
+            account.getHomes().add(home);
+            home.getAccounts().add(account);
+        }
 
         return true;
     }
