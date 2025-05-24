@@ -16,4 +16,6 @@ public interface AccountServicePortIn {
     Account updateAccountById(UUID id, Account account);
 
     void deleteAccountById(UUID id);
+
+    void addHomeToAccount(UUID accountId, UUID homeId);
 }
