@@ -1,13 +1,13 @@
 package de.thws.powerplants.adapters.in.api;
 
-import de.thws.powerplants.core.domain.Account;
-import de.thws.powerplants.core.mappers.AccountMapper;
-import de.thws.powerplants.core.services.AccountService;
+import de.thws.powerplants.adapters.in.api.json.JsonAccount;
+import de.thws.powerplants.adapters.in.api.service.RestAccountService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Path("/accounts")
@@ -16,56 +16,54 @@ import java.util.UUID;
 public class AccountResource {
 
     @Inject
-    private AccountService accountService;
+    private RestAccountService accountService;
 
     @POST
-    public Response createAccount(Account account) {
-        accountService.createAccount(account);
-        return Response.status(Response.Status.CREATED).build();
-    }
+    public Response createAccount(JsonAccount jsonAccount) {
 
-    @POST
-    @Path("/{accountId}/homes/{homeId}")
-    public Response addHomeToAccount(@PathParam("accountId") UUID accountId, @PathParam("homeId") UUID homeId) {
-        boolean success = accountService.addHomeToAccount(accountId, homeId);
-        if (!success) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok().build();
+        JsonAccount result = accountService.createAccount(jsonAccount);
+
+        return Response.status(Response.Status.CREATED).entity(result).build();
     }
 
     @GET
-    public List<Account> getAllAccounts() {
-        return accountService.getAllAccounts();
+    public Response getAccounts() {
+
+        List<JsonAccount> jsonAccounts = accountService.getAccounts();
+
+        return Response.ok(jsonAccounts).build();
     }
 
     @GET
     @Path("/{id}")
     public Response getAccountById(@PathParam("id") UUID id) {
-        Account account = accountService.getAccountById(id);
-        if (account == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+
+        Optional<JsonAccount> jsonAccount = accountService.getAccountById(id);
+        if (jsonAccount.isEmpty()) {
+            throw new NotFoundException();
         }
-        return Response.ok(AccountMapper.toJsonAccount(account)).build();
+
+        return Response.ok(jsonAccount.get()).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response updateAccount(@PathParam("id") UUID id, Account account) {
-        boolean updated = accountService.updateAccount(id, account);
-        if (!updated) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok().build();
+    public Response updateAccount(@PathParam("id") UUID id, JsonAccount jsonAccount) {
+        JsonAccount result = accountService.updateAccountById(id, jsonAccount);
+        return Response.ok(result).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteAccount(@PathParam("id") UUID id) {
-        boolean deleted = accountService.deleteAccount(id);
-        if (!deleted) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        accountService.deleteAccountById(id);
         return Response.noContent().build();
+    }
+
+    @POST
+    @Path("/{accountId}/homes/{homeId}")
+    public Response addHomeToAccount(@PathParam("accountId") UUID accountId, @PathParam("homeId") UUID homeId) {
+        accountService.addHomeToAccount(accountId, homeId);
+        return Response.ok().build();
     }
 }
