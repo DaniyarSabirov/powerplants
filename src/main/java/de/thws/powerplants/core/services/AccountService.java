@@ -1,81 +1,49 @@
 package de.thws.powerplants.core.services;
 
-import de.thws.powerplants.adapters.out.persistence.entities.AccountEntity;
-import de.thws.powerplants.adapters.out.persistence.repositories.AccountRepository;
-import de.thws.powerplants.adapters.out.persistence.repositories.HomeRepository;
 import de.thws.powerplants.core.domain.Account;
-import de.thws.powerplants.core.mappers.AccountMapper;
+import de.thws.powerplants.core.ports.in.AccountServicePortIn;
+import de.thws.powerplants.core.ports.out.AccountServicePortOut;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.WebApplicationException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
-public class AccountService {
+public class AccountService implements AccountServicePortIn {
 
     @Inject
-    private HomeRepository homeRepository;
+    private AccountServicePortOut accountServicePortOut;
 
-    @Inject
-    private AccountRepository accountRepository;
+    public AccountService() {}
 
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll().stream().map(AccountMapper::toDomain).collect(Collectors.toList());
+    @Override
+    public Account createAccount(Account account) {
+        return accountServicePortOut.createAccount(account);
     }
 
-    public Account getAccountById(UUID id) {
-        return accountRepository
-                .findByIdOptional(id)
-                .map(AccountMapper::toDomain)
-                .orElse(null);
+    @Override
+    public List<Account> getAccounts() {
+        return accountServicePortOut.getAccounts();
     }
 
-    @Transactional
-    public void createAccount(Account account) {
-        if (accountRepository.findByPublicName(account.getPublicName()).isPresent()) {
-            throw new WebApplicationException("Public name already in use", 400);
-        }
-
-        AccountEntity entity = AccountMapper.toEntity(account);
-        accountRepository.persist(entity);
+    @Override
+    public Optional<Account> getAccountById(UUID id) {
+        return accountServicePortOut.getAccountById(id);
     }
 
-    @Transactional
-    public boolean deleteAccount(UUID id) {
-        return accountRepository.deleteById(id);
+    @Override
+    public Account updateAccountById(UUID id, Account account) {
+        return accountServicePortOut.updateAccountById(id, account);
     }
 
-    @Transactional
-    public boolean updateAccount(UUID id, Account updatedAccount) {
-        return accountRepository
-                .findByIdOptional(id)
-                .map(existing -> {
-                    existing.setName(updatedAccount.getName());
-                    existing.setPublicName(updatedAccount.getPublicName());
-                    existing.setPassword(updatedAccount.getPassword());
-                    existing.setPictureUrl(updatedAccount.getPictureUrl());
-                    return true;
-                })
-                .orElse(false);
+    @Override
+    public void deleteAccountById(UUID id) {
+        accountServicePortOut.deleteAccountById(id);
     }
 
-    @Transactional
-    public boolean addHomeToAccount(UUID accountId, UUID homeId) {
-        var accountOpt = accountRepository.findByIdOptional(accountId);
-        var homeOpt = homeRepository.findByIdOptional(homeId);
-
-        if (accountOpt.isEmpty() || homeOpt.isEmpty()) {
-            return false;
-        }
-
-        var account = accountOpt.get();
-        var home = homeOpt.get();
-
-        account.getHomes().add(home);
-
-        return true;
+    @Override
+    public void addHomeToAccount(UUID accountId, UUID homeId) {
+        accountServicePortOut.addHomeToAccount(accountId, homeId);
     }
 }
