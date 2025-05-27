@@ -2,8 +2,10 @@ package de.thws.powerplants.adapters.out.persistence.service;
 
 import de.thws.powerplants.adapters.out.persistence.entities.JpaAccount;
 import de.thws.powerplants.adapters.out.persistence.entities.JpaGroup;
+import de.thws.powerplants.adapters.out.persistence.entities.JpaPlant;
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;
+import de.thws.powerplants.core.domain.Plant;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -57,6 +59,32 @@ public class JpaMapper {
         result.setPublicName(group.getPublicName());
         result.setDescription(group.getDescription());
         result.setPictureUrl(group.getPictureUrl());
+
+        return result;
+    }
+
+    public Plant toPlant(JpaPlant plant) {
+
+        Plant result = new Plant();
+
+        result.setId(plant.getId());
+        result.setScientificName(plant.getScientificName());
+        result.setPublicName(plant.getPublicName());
+        result.setDescription(plant.getDescription());
+        result.setPictureUrl(plant.getPictureUrl());
+
+        return result;
+    }
+
+    public JpaPlant toJpaPlant(Plant plant) {
+
+        JpaPlant result = new JpaPlant();
+
+        result.setId(plant.getId());
+        result.setScientificName(plant.getScientificName());
+        result.setPublicName(plant.getPublicName());
+        result.setDescription(plant.getDescription());
+        result.setPictureUrl(plant.getPictureUrl());
 
         return result;
     }
