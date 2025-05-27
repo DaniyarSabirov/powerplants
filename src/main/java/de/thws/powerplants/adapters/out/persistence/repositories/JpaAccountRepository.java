@@ -10,6 +10,6 @@ import java.util.UUID;
 public class JpaAccountRepository implements PanacheRepositoryBase<JpaAccount, UUID> {
 
     public Optional<JpaAccount> findByPublicName(String publicName) {
-        return find("public_name", publicName).firstResultOptional();
+        return find("publicName", publicName).firstResultOptional();
     }
 }
