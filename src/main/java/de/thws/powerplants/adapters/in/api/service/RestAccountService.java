@@ -14,7 +14,7 @@ import java.util.UUID;
 public class RestAccountService {
 
     @Inject
-    private AccountServicePortIn accountService;
+    private AccountServicePortIn accountServicePortIn;
 
     @Inject
     private JsonMapper jsonMapper;
@@ -25,21 +25,21 @@ public class RestAccountService {
 
         Account account = jsonMapper.toAccount(jsonAccount);
 
-        Account result = accountService.createAccount(account);
+        Account result = accountServicePortIn.createAccount(account);
 
         return jsonMapper.toJsonAccount(result);
     }
 
     public List<JsonAccount> getAccounts() {
 
-        List<Account> accounts = accountService.getAccounts();
+        List<Account> accounts = accountServicePortIn.getAccounts();
 
         return accounts.stream().map(jsonMapper::toJsonAccount).toList();
     }
 
     public Optional<JsonAccount> getAccountById(UUID id) {
 
-        Optional<Account> account = accountService.getAccountById(id);
+        Optional<Account> account = accountServicePortIn.getAccountById(id);
 
         return account.map(jsonMapper::toJsonAccount);
     }
@@ -48,17 +48,17 @@ public class RestAccountService {
 
         Account account = jsonMapper.toAccount(jsonAccount);
 
-        Account result = accountService.updateAccountById(id, account);
+        Account result = accountServicePortIn.updateAccountById(id, account);
 
         return jsonMapper.toJsonAccount(result);
     }
 
     public void deleteAccountById(UUID id) {
 
-        accountService.deleteAccountById(id);
+        accountServicePortIn.deleteAccountById(id);
     }
 
     public void addHomeToAccount(UUID accountId, UUID homeId) {
-        accountService.addHomeToAccount(accountId, homeId);
+        accountServicePortIn.addHomeToAccount(accountId, homeId);
     }
 }
