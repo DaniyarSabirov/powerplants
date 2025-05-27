@@ -8,6 +8,7 @@ import de.thws.powerplants.core.domain.Plant;
 import de.thws.powerplants.core.ports.out.PlantServicePortOut;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,6 +39,7 @@ public class JpaPlantService implements PlantServicePortOut {
     }
 
     @Override
+    @Transactional
     public Plant createPlant(UUID groupId, Plant plant) {
 
         JpaGroup group = jpaGroupRepository.findById(groupId);
@@ -55,6 +57,7 @@ public class JpaPlantService implements PlantServicePortOut {
     }
 
     @Override
+    @Transactional
     public List<Plant> getPlants(UUID groupId) {
 
         JpaGroup group = jpaGroupRepository.findById(groupId);
@@ -66,6 +69,7 @@ public class JpaPlantService implements PlantServicePortOut {
     }
 
     @Override
+    @Transactional
     public Optional<Plant> getPlantById(UUID groupId, UUID plantId) {
 
         Optional<JpaPlant> plant = jpaPlantRepository.findByIdOptional(plantId);
@@ -74,6 +78,7 @@ public class JpaPlantService implements PlantServicePortOut {
     }
 
     @Override
+    @Transactional
     public Plant updatePlantById(UUID groupId, UUID plantId, Plant plant) {
 
         return jpaPlantRepository
@@ -84,6 +89,7 @@ public class JpaPlantService implements PlantServicePortOut {
     }
 
     @Override
+    @Transactional
     public void deletePlantById(UUID groupId, UUID plantId) {
         jpaPlantRepository.deleteById(plantId);
     }

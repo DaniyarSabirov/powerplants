@@ -8,6 +8,7 @@ import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.out.GroupServicePortOut;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,6 +38,7 @@ public class JpaGroupService implements GroupServicePortOut {
     }
 
     @Override
+    @Transactional
     public Group createGroup(UUID homeId, Group group) {
 
         JpaHome home = jpaHomeRepository.findById(homeId);
@@ -54,6 +56,7 @@ public class JpaGroupService implements GroupServicePortOut {
     }
 
     @Override
+    @Transactional
     public List<Group> getGroups(UUID homeId) {
 
         JpaHome home = jpaHomeRepository.findById(homeId);
@@ -65,6 +68,7 @@ public class JpaGroupService implements GroupServicePortOut {
     }
 
     @Override
+    @Transactional
     public Optional<Group> getGroupById(UUID homeId, UUID groupId) {
 
         Optional<JpaGroup> group = jpaGroupRepository.findByIdOptional(groupId);
@@ -73,6 +77,7 @@ public class JpaGroupService implements GroupServicePortOut {
     }
 
     @Override
+    @Transactional
     public Group updateGroupById(UUID homeId, UUID groupId, Group group) {
 
         return jpaGroupRepository
@@ -83,6 +88,7 @@ public class JpaGroupService implements GroupServicePortOut {
     }
 
     @Override
+    @Transactional
     public void deleteGroupById(UUID homeId, UUID groupId) {
         jpaGroupRepository.deleteById(groupId);
     }
