@@ -1,6 +1,9 @@
 package de.thws.powerplants.adapters.out.persistence.service;
 
+import de.thws.powerplants.adapters.out.persistence.entities.JpaGroup;
+import de.thws.powerplants.adapters.out.persistence.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.repositories.JpaGroupRepository;
+import de.thws.powerplants.adapters.out.persistence.repositories.JpaHomeRepository;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.out.GroupServicePortOut;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,6 +16,9 @@ import java.util.UUID;
 public class JpaGroupService implements GroupServicePortOut {
 
     @Inject
+    private JpaHomeRepository jpaHomeRepository;
+
+    @Inject
     private JpaGroupRepository jpaGroupRepository;
 
     @Inject
@@ -20,26 +26,64 @@ public class JpaGroupService implements GroupServicePortOut {
 
     public JpaGroupService() {}
 
+    protected JpaGroup copyGroup(JpaGroup jpaGroup, Group group) {
+
+        // jpaGroup.setId(group.getId());
+        jpaGroup.setPublicName(group.getPublicName());
+        jpaGroup.setDescription(group.getDescription());
+        jpaGroup.setPictureUrl(group.getPictureUrl());
+
+        return jpaGroup;
+    }
+
     @Override
     public Group createGroup(UUID homeId, Group group) {
-        return null;
+
+        JpaHome home = jpaHomeRepository.findById(homeId);
+        if (home == null) {
+            throw new NullPointerException(); // todo
+        }
+
+        JpaGroup jpaGroup = jpaMapper.toJpaGroup(group);
+
+        jpaGroup.setHome(home);
+
+        jpaGroupRepository.persist(jpaGroup);
+
+        return jpaMapper.toGroup(jpaGroup);
     }
 
     @Override
     public List<Group> getGroups(UUID homeId) {
-        return List.of();
+
+        JpaHome home = jpaHomeRepository.findById(homeId);
+        if (home == null) {
+            throw new NullPointerException(); // todo
+        }
+
+        return home.getGroups().stream().map(jpaMapper::toGroup).toList();
     }
 
     @Override
     public Optional<Group> getGroupById(UUID homeId, UUID groupId) {
-        return Optional.empty();
+
+        Optional<JpaGroup> group = jpaGroupRepository.findByIdOptional(groupId);
+
+        return group.map(jpaMapper::toGroup);
     }
 
     @Override
     public Group updateGroupById(UUID homeId, UUID groupId, Group group) {
-        return null;
+
+        return jpaGroupRepository
+                .findByIdOptional(groupId)
+                .map((v) -> copyGroup(v, group))
+                .map(jpaMapper::toGroup)
+                .orElseThrow();
     }
 
     @Override
-    public void deleteGroupById(UUID homeId, UUID groupId) {}
+    public void deleteGroupById(UUID homeId, UUID groupId) {
+        jpaGroupRepository.deleteById(groupId);
+    }
 }
