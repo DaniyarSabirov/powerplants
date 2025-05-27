@@ -25,10 +25,24 @@ public class JpaAccountService implements AccountServicePortOut {
 
     public JpaAccountService() {}
 
+    protected JpaAccount copyAccount(JpaAccount jpaAccount, Account account) {
+
+        jpaAccount.setPublicName(account.getPublicName());
+        jpaAccount.setLoginName(account.getLoginName());
+        jpaAccount.setLoginPassword(account.getLoginPassword());
+        jpaAccount.setPictureUrl(account.getPictureUrl());
+
+        return jpaAccount;
+    }
+
     @Override
     public Account createAccount(Account account) {
 
         JpaAccount jpaAccount = jpaMapper.toJpaAccount(account);
+
+        if (jpaAccountRepository.findByPublicName(jpaAccount.getPublicName()).isPresent()) {
+            throw new IllegalStateException("Public name already in use"); // todo
+        }
 
         jpaAccountRepository.persist(jpaAccount);
 
@@ -37,21 +51,30 @@ public class JpaAccountService implements AccountServicePortOut {
 
     @Override
     public List<Account> getAccounts() {
-        return List.of();
+
+        return jpaAccountRepository.findAll().stream().map(jpaMapper::toAccount).toList();
     }
 
     @Override
     public Optional<Account> getAccountById(UUID id) {
-        return Optional.empty();
+
+        return jpaAccountRepository.findByIdOptional(id).map(jpaMapper::toAccount);
     }
 
     @Override
     public Account updateAccountById(UUID id, Account account) {
-        return null;
+
+        return jpaAccountRepository
+                .findByIdOptional(id)
+                .map((v) -> copyAccount(v, account))
+                .map(jpaMapper::toAccount)
+                .orElseThrow();
     }
 
     @Override
-    public void deleteAccountById(UUID id) {}
+    public void deleteAccountById(UUID id) {
+        jpaAccountRepository.deleteById(id);
+    }
 
     @Override
     public void addHomeToAccount(UUID accountId, UUID homeId) {
