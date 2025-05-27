@@ -11,11 +11,11 @@ public interface AccountService {
 
     List<Account> getAccounts();
 
-    Optional<Account> getAccountById(UUID id);
+    Optional<Account> getAccountById(UUID accountId);
 
-    Account updateAccountById(UUID id, Account account);
+    Account updateAccountById(UUID accountId, Account account);
 
-    void deleteAccountById(UUID id);
+    void deleteAccountById(UUID accountId);
 
     void addHomeToAccount(UUID accountId, UUID homeId);
 }
