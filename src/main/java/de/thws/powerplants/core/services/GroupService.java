@@ -15,5 +15,5 @@ public interface GroupService {
 
     Group updateGroupById(UUID homeId, UUID groupId, Group group);
 
-    void deleteGroupById(UUID groupId);
+    void deleteGroupById(UUID homeId, UUID groupId);
 }

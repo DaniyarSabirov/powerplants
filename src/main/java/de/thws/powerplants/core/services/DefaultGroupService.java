@@ -38,7 +38,7 @@ public class DefaultGroupService implements GroupServicePortIn {
     }
 
     @Override
-    public void deleteGroupById(UUID groupId) {
-        groupServicePortOut.deleteGroupById(groupId);
+    public void deleteGroupById(UUID homeId, UUID groupId) {
+        groupServicePortOut.deleteGroupById(homeId, groupId);
     }
 }
