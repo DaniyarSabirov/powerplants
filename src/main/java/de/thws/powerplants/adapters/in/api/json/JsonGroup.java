@@ -2,6 +2,7 @@ package de.thws.powerplants.adapters.in.api.json;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import java.util.List;
 import java.util.UUID;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -11,6 +12,10 @@ public class JsonGroup {
     private String publicName;
     private String description;
     private String pictureUrl;
+
+    private List<JsonPlant> plants;
+
+    public JsonGroup() {}
 
     public UUID getId() {
         return id;
@@ -42,5 +47,13 @@ public class JsonGroup {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public List<JsonPlant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<JsonPlant> plants) {
+        this.plants = plants;
     }
 }

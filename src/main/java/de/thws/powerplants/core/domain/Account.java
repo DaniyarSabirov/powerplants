@@ -1,14 +1,17 @@
 package de.thws.powerplants.core.domain;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Account {
 
     private UUID id;
     private String publicName;
-    private String name;
-    private String password;
+    private String loginName;
+    private String loginPassword;
     private String pictureUrl;
+
+    private List<Home> homes;
 
     public Account() {}
 
@@ -28,20 +31,20 @@ public class Account {
         this.publicName = publicName;
     }
 
-    public String getName() {
-        return name;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLoginPassword() {
+        return loginPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public String getPictureUrl() {
@@ -50,5 +53,13 @@ public class Account {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public List<Home> getHomes() {
+        return homes;
+    }
+
+    public void setHomes(List<Home> homes) {
+        this.homes = homes;
     }
 }

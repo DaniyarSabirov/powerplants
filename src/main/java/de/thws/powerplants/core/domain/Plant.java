@@ -1,11 +1,30 @@
 package de.thws.powerplants.core.domain;
 
+import java.util.List;
+import java.util.UUID;
+
 public class Plant {
 
+    private UUID id;
     private String publicName;
     private String scientificName;
     private String description;
     private String pictureUrl;
+    private PlantMetadata metadata;
+
+    private Group group;
+    private List<? extends PlantCareRule> plantCareRules;
+    private List<PlantCareDone> plantCareDones;
+
+    public Plant() {}
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getPublicName() {
         return publicName;
@@ -37,5 +56,37 @@ public class Plant {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public PlantMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(PlantMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public List<? extends PlantCareRule> getPlantCareRules() {
+        return plantCareRules;
+    }
+
+    public void setPlantCareRules(List<? extends PlantCareRule> plantCareRules) {
+        this.plantCareRules = plantCareRules;
+    }
+
+    public List<PlantCareDone> getPlantCareDones() {
+        return plantCareDones;
+    }
+
+    public void setPlantCareDones(List<PlantCareDone> plantCareDones) {
+        this.plantCareDones = plantCareDones;
     }
 }
