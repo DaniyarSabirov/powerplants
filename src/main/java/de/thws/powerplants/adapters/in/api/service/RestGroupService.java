@@ -2,6 +2,7 @@ package de.thws.powerplants.adapters.in.api.service;
 
 import de.thws.powerplants.adapters.in.api.json.JsonGroup;
 import de.thws.powerplants.adapters.in.api.json.JsonMapper;
+import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.in.GroupServicePortIn;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,20 +22,38 @@ public class RestGroupService {
     public RestGroupService() {}
 
     public JsonGroup createGroup(UUID homeId, JsonGroup jsonGroup) {
-        return null;
+
+        Group group = jsonMapper.toGroup(jsonGroup);
+
+        Group result = groupServicePortIn.createGroup(homeId, group);
+
+        return jsonMapper.toJsonGroup(result);
     }
 
     public List<JsonGroup> getGroups(UUID homeId) {
-        return null;
+
+        List<Group> result = groupServicePortIn.getGroups(homeId);
+
+        return result.stream().map(jsonMapper::toJsonGroup).toList();
     }
 
     public Optional<JsonGroup> getGroupById(UUID homeId, UUID groupId) {
-        return null;
+
+        Optional<Group> result = groupServicePortIn.getGroupById(homeId, groupId);
+
+        return result.map(jsonMapper::toJsonGroup);
     }
 
     public JsonGroup updateGroupById(UUID homeId, UUID groupId, JsonGroup jsonGroup) {
-        return null;
+
+        Group group = jsonMapper.toGroup(jsonGroup);
+
+        Group result = groupServicePortIn.updateGroupById(homeId, groupId, group);
+
+        return jsonMapper.toJsonGroup(result);
     }
 
-    public void deleteGroupById(UUID homeId, UUID groupId) {}
+    public void deleteGroupById(UUID homeId, UUID groupId) {
+        groupServicePortIn.deleteGroupById(homeId, groupId);
+    }
 }
