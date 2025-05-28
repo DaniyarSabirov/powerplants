@@ -2,9 +2,11 @@ package de.thws.powerplants.adapters.out.persistence.service;
 
 import de.thws.powerplants.adapters.out.persistence.entities.JpaAccount;
 import de.thws.powerplants.adapters.out.persistence.entities.JpaGroup;
+import de.thws.powerplants.adapters.out.persistence.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.entities.JpaPlant;
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;
+import de.thws.powerplants.core.domain.Home;
 import de.thws.powerplants.core.domain.Plant;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -35,6 +37,28 @@ public class JpaMapper {
         result.setLoginName(account.getLoginName());
         result.setLoginPassword(account.getLoginPassword());
         result.setPictureUrl(account.getPictureUrl());
+
+        return result;
+    }
+
+    public Home toHome(JpaHome home) {
+
+        Home result = new Home();
+
+        result.setId(home.getId());
+        result.setPublicName(home.getPublicName());
+        result.setDescription(home.getDescription());
+
+        return result;
+    }
+
+    public JpaHome toJpaHome(Home home) {
+
+        JpaHome result = new JpaHome();
+
+        result.setId(home.getId());
+        result.setPublicName(home.getPublicName());
+        result.setDescription(home.getDescription());
 
         return result;
     }
