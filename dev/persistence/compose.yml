@@ -1,0 +1,57 @@
+services:
+  powerplants-dev-database:
+    image: postgres:16-alpine
+    container_name: powerplants-dev-database
+    restart: unless-stopped
+    networks:
+      - powerplants-dev-net
+    ports:
+      - "5432:5432"
+    volumes:
+      - powerplants-dev-database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=powerplants-dev
+      - POSTGRES_USER=powerplants-dev
+      - POSTGRES_PASSWORD=powerplants-dev
+
+  powerplants-dev-pgadmin4:
+    image: dpage/pgadmin4:9.3
+    container_name: powerplants-dev-pgadmin4
+    restart: unless-stopped
+    depends_on:
+      - powerplants-dev-database
+    networks:
+      - powerplants-dev-net
+    ports:
+      - "8000:80"
+    volumes:
+      - powerplants-dev-pgadmin4:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+
+  powerplants-dev-minio:
+    image: minio/minio:latest
+    container_name: powerplants-dev-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    networks:
+      - powerplants-dev-net
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - powerplants-dev-minio:/data
+    environment:
+      - MINIO_ROOT_USER=admin@example.com
+      - MINIO_ROOT_PASSWORD=admin
+
+volumes:
+  powerplants-dev-database:
+  powerplants-dev-pgadmin4:
+  powerplants-dev-minio:
+
+networks:
+  powerplants-dev-net:
+    name: powerplants-dev-net
+    external: false
