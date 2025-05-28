@@ -6,9 +6,12 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.jboss.resteasy.reactive.PartType;
+import org.jboss.resteasy.reactive.RestForm;
 
 @Path("/accounts")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,7 +22,10 @@ public class AccountResource {
     private RestAccountService accountService;
 
     @POST
-    public Response createAccount(JsonAccount jsonAccount) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response createAccount(
+            @RestForm("account") @PartType(MediaType.APPLICATION_JSON) JsonAccount jsonAccount,
+            @RestForm InputStream image) {
 
         JsonAccount result = accountService.createAccount(jsonAccount);
 
@@ -48,8 +54,14 @@ public class AccountResource {
 
     @PUT
     @Path("/{id}")
-    public Response updateAccount(@PathParam("id") UUID id, JsonAccount jsonAccount) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response updateAccount(
+            @PathParam("id") UUID id,
+            @RestForm("account") @PartType(MediaType.APPLICATION_JSON) JsonAccount jsonAccount,
+            @RestForm InputStream image) {
+
         JsonAccount result = accountService.updateAccountById(id, jsonAccount);
+
         return Response.ok(result).build();
     }
 

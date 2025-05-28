@@ -6,9 +6,12 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.jboss.resteasy.reactive.PartType;
+import org.jboss.resteasy.reactive.RestForm;
 
 @Path("/homes/{home_id}/groups")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,7 +22,11 @@ public class GroupResource {
     private RestGroupService groupService;
 
     @POST
-    public Response createGroup(@PathParam("home_id") UUID homeId, JsonGroup jsonGroup) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response createGroup(
+            @PathParam("home_id") UUID homeId,
+            @RestForm("group") @PartType(MediaType.APPLICATION_JSON) JsonGroup jsonGroup,
+            @RestForm InputStream image) {
 
         JsonGroup result = groupService.createGroup(homeId, jsonGroup);
 
@@ -48,9 +55,15 @@ public class GroupResource {
 
     @PUT
     @Path("/{groupId}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response updateGroupById(
-            @PathParam("home_id") UUID homeId, @PathParam("groupId") UUID groupId, JsonGroup jsonGroup) {
+            @PathParam("home_id") UUID homeId,
+            @PathParam("groupId") UUID groupId,
+            @RestForm("group") @PartType(MediaType.APPLICATION_JSON) JsonGroup jsonGroup,
+            @RestForm InputStream image) {
+
         JsonGroup result = groupService.updateGroupById(homeId, groupId, jsonGroup);
+
         return Response.ok(result).build();
     }
 

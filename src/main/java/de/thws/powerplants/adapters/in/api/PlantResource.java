@@ -6,9 +6,12 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.jboss.resteasy.reactive.PartType;
+import org.jboss.resteasy.reactive.RestForm;
 
 @Path("/groups/{group_id}/plants")
 @Produces(MediaType.APPLICATION_JSON)
@@ -18,16 +21,19 @@ public class PlantResource {
     @Inject
     private RestPlantService plantService;
 
-    @POST // create plant
-    public Response createPlant(@PathParam("group_id") UUID groupId, JsonPlant jsonPlant) {
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response createPlant(
+            @PathParam("group_id") UUID groupId,
+            @RestForm("plant") @PartType(MediaType.APPLICATION_JSON) JsonPlant jsonPlant,
+            @RestForm InputStream image) {
 
         JsonPlant result = plantService.createPlant(groupId, jsonPlant);
 
         return Response.status(Response.Status.CREATED).entity(result).build();
     }
 
-    @GET // get all the plants
-    @Path("")
+    @GET
     public Response getPlants(@PathParam("group_id") UUID groupId) {
 
         List<JsonPlant> jsonPlants = plantService.getPlants(groupId);
@@ -35,7 +41,7 @@ public class PlantResource {
         return Response.ok(jsonPlants).build();
     }
 
-    @GET // get concrete plant with the help of ID
+    @GET
     @Path("/{plantId}")
     public Response getPlantById(@PathParam("group_id") UUID groupId, @PathParam("plantId") UUID plantId) {
 
@@ -47,17 +53,21 @@ public class PlantResource {
         return Response.ok(jsonPlant.get()).build();
     }
 
-    @PUT // update plant
+    @PUT
     @Path("/{plantId}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response updatePlantById(
-            @PathParam("group_id") UUID groupId, @PathParam("plantId") UUID plantId, JsonPlant jsonPlant) {
+            @PathParam("group_id") UUID groupId,
+            @PathParam("plantId") UUID plantId,
+            @RestForm("plant") @PartType(MediaType.APPLICATION_JSON) JsonPlant jsonPlant,
+            @RestForm InputStream image) {
 
         JsonPlant result = plantService.updatePlantById(groupId, plantId, jsonPlant);
 
         return Response.ok(result).build();
     }
 
-    @DELETE // delete plant
+    @DELETE
     @Path("/{plantId}")
     public Response deletePlant(@PathParam("group_id") UUID groupId, @PathParam("plantId") UUID plantId) {
 
