@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.in.api.json;
+package de.thws.powerplants.adapters.in.api.rest.json;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.UUID;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class JsonHome {
+public class JsonGroup {
 
     private UUID id;
     private String publicName;
     private String description;
+    private String pictureUrl;
 
-    private List<JsonAccount> accounts;
-    private List<JsonGroup> groups;
+    private List<JsonPlant> plants;
 
-    public JsonHome() {}
+    public JsonGroup() {}
 
     public UUID getId() {
         return id;
@@ -41,19 +41,19 @@ public class JsonHome {
         this.description = description;
     }
 
-    public List<JsonAccount> getAccounts() {
-        return accounts;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setAccounts(List<JsonAccount> accounts) {
-        this.accounts = accounts;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
-    public List<JsonGroup> getGroups() {
-        return groups;
+    public List<JsonPlant> getPlants() {
+        return plants;
     }
 
-    public void setGroups(List<JsonGroup> groups) {
-        this.groups = groups;
+    public void setPlants(List<JsonPlant> plants) {
+        this.plants = plants;
     }
 }

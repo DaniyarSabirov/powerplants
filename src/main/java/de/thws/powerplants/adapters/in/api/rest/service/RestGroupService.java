@@ -1,7 +1,7 @@
-package de.thws.powerplants.adapters.in.api.service;
+package de.thws.powerplants.adapters.in.api.rest.service;
 
-import de.thws.powerplants.adapters.in.api.json.JsonGroup;
-import de.thws.powerplants.adapters.in.api.json.JsonMapper;
+import de.thws.powerplants.adapters.in.api.rest.json.JsonGroup;
+import de.thws.powerplants.adapters.in.api.rest.json.JsonMapper;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.in.GroupServicePortIn;
 import jakarta.enterprise.context.ApplicationScoped;

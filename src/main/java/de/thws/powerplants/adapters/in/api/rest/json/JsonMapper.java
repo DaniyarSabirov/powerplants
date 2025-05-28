@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.in.api.json;
+package de.thws.powerplants.adapters.in.api.rest.json;
 
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;

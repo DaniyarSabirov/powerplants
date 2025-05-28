@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.in.api.service;
+package de.thws.powerplants.adapters.in.api.rest.service;
 
 import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -1,7 +1,7 @@
-package de.thws.powerplants.adapters.in.api;
+package de.thws.powerplants.adapters.in.api.rest;
 
-import de.thws.powerplants.adapters.in.api.json.JsonPlant;
-import de.thws.powerplants.adapters.in.api.service.RestPlantService;
+import de.thws.powerplants.adapters.in.api.rest.json.JsonPlant;
+import de.thws.powerplants.adapters.in.api.rest.service.RestPlantService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
