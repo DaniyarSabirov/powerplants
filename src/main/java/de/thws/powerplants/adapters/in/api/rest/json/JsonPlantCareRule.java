@@ -1,8 +1,9 @@
 package de.thws.powerplants.adapters.in.api.rest.json;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.util.UUID;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public abstract class JsonPlantCareRule {

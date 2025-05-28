@@ -1,12 +1,14 @@
 package de.thws.powerplants.adapters.in.api.rest;
 
-import de.thws.powerplants.adapters.in.api.rest.service.RestImageService;
+import java.io.InputStream;
+import java.util.UUID;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.UUID;
+
+import de.thws.powerplants.adapters.in.api.rest.service.RestImageService;
 
 @Path("/images/{imageId}")
 @Produces(MediaType.APPLICATION_OCTET_STREAM)

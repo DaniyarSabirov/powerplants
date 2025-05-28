@@ -1,10 +1,11 @@
 package de.thws.powerplants.adapters.in.api.rest.json;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.domain.Home;
 import de.thws.powerplants.core.domain.Plant;
-import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class JsonMapper {

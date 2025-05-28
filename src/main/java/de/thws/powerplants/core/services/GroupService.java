@@ -1,9 +1,10 @@
 package de.thws.powerplants.core.services;
 
-import de.thws.powerplants.core.domain.Group;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import de.thws.powerplants.core.domain.Group;
 
 public interface GroupService {
 

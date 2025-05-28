@@ -1,9 +1,10 @@
 package de.thws.powerplants.adapters.out.persistence.jpa.entities;
 
-import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "home")

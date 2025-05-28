@@ -1,11 +1,13 @@
 package de.thws.powerplants.adapters.out.persistence.s3;
 
-import de.thws.powerplants.core.ports.out.ImageServicePortOut;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import de.thws.powerplants.core.ports.out.ImageServicePortOut;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;

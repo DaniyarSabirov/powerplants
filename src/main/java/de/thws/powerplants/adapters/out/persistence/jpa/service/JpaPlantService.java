@@ -1,17 +1,19 @@
 package de.thws.powerplants.adapters.out.persistence.jpa.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaPlant;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaGroupRepository;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaPlantRepository;
 import de.thws.powerplants.core.domain.Plant;
 import de.thws.powerplants.core.ports.out.PlantServicePortOut;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @ApplicationScoped
 public class JpaPlantService implements PlantServicePortOut {

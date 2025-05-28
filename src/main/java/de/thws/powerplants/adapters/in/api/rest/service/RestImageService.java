@@ -1,10 +1,12 @@
 package de.thws.powerplants.adapters.in.api.rest.service;
 
-import de.thws.powerplants.core.ports.in.ImageServicePortIn;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.io.InputStream;
 import java.util.UUID;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 
 @ApplicationScoped
 public class RestImageService {

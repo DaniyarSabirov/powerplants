@@ -1,14 +1,16 @@
 package de.thws.powerplants.adapters.in.api.rest.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
 import de.thws.powerplants.adapters.in.api.rest.json.JsonGroup;
 import de.thws.powerplants.adapters.in.api.rest.json.JsonMapper;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.in.GroupServicePortIn;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @ApplicationScoped
 public class RestGroupService {

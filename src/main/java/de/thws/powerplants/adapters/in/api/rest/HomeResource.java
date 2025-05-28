@@ -1,14 +1,16 @@
 package de.thws.powerplants.adapters.in.api.rest;
 
-import de.thws.powerplants.adapters.in.api.rest.json.JsonHome;
-import de.thws.powerplants.adapters.in.api.rest.service.RestHomeService;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
+import de.thws.powerplants.adapters.in.api.rest.json.JsonHome;
+import de.thws.powerplants.adapters.in.api.rest.service.RestHomeService;
 
 @Path("/homes")
 @Produces(MediaType.APPLICATION_JSON)

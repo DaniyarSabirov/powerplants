@@ -1,5 +1,7 @@
 package de.thws.powerplants.adapters.out.persistence.jpa.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaAccount;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
@@ -8,7 +10,6 @@ import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.domain.Home;
 import de.thws.powerplants.core.domain.Plant;
-import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class JpaMapper {
