@@ -44,7 +44,7 @@ services:
       - powerplants-dev-minio:/data
     environment:
       - MINIO_ROOT_USER=admin@example.com
-      - MINIO_ROOT_PASSWORD=admin
+      - MINIO_ROOT_PASSWORD=12345678
 
 volumes:
   powerplants-dev-database:
