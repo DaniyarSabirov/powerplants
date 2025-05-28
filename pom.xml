@@ -181,6 +181,9 @@
                 <configuration>
                     <java>
                         <palantirJavaFormat/>
+                        <importOrder>
+                            <order>java,jakarta</order>
+                        </importOrder>
                     </java>
                 </configuration>
             </plugin>
