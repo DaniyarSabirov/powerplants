@@ -1,9 +1,9 @@
-package de.thws.powerplants.adapters.out.persistence.service;
+package de.thws.powerplants.adapters.out.persistence.jpa.service;
 
-import de.thws.powerplants.adapters.out.persistence.entities.JpaGroup;
-import de.thws.powerplants.adapters.out.persistence.entities.JpaHome;
-import de.thws.powerplants.adapters.out.persistence.repositories.JpaGroupRepository;
-import de.thws.powerplants.adapters.out.persistence.repositories.JpaHomeRepository;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
+import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaGroupRepository;
+import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaHomeRepository;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.out.GroupServicePortOut;
 import jakarta.enterprise.context.ApplicationScoped;

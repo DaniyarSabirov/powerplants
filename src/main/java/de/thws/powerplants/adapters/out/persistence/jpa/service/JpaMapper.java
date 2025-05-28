@@ -1,9 +1,9 @@
-package de.thws.powerplants.adapters.out.persistence.service;
+package de.thws.powerplants.adapters.out.persistence.jpa.service;
 
-import de.thws.powerplants.adapters.out.persistence.entities.JpaAccount;
-import de.thws.powerplants.adapters.out.persistence.entities.JpaGroup;
-import de.thws.powerplants.adapters.out.persistence.entities.JpaHome;
-import de.thws.powerplants.adapters.out.persistence.entities.JpaPlant;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaAccount;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaPlant;
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.domain.Home;

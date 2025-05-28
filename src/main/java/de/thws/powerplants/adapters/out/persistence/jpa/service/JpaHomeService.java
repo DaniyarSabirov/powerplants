@@ -1,7 +1,7 @@
-package de.thws.powerplants.adapters.out.persistence.service;
+package de.thws.powerplants.adapters.out.persistence.jpa.service;
 
-import de.thws.powerplants.adapters.out.persistence.entities.JpaHome;
-import de.thws.powerplants.adapters.out.persistence.repositories.JpaHomeRepository;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
+import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaHomeRepository;
 import de.thws.powerplants.core.domain.Home;
 import de.thws.powerplants.core.ports.out.HomeServicePortOut;
 import jakarta.enterprise.context.ApplicationScoped;

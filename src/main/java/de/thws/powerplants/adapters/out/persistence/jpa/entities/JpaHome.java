@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.out.persistence.entities;
+package de.thws.powerplants.adapters.out.persistence.jpa.entities;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "home_group")
-public class JpaGroup {
+@Table(name = "home")
+public class JpaHome {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,17 +20,14 @@ public class JpaGroup {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "picture_url")
-    private String pictureUrl;
+    @ManyToMany(mappedBy = "homes")
+    private List<JpaAccount> accounts = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "home_id")
-    private JpaHome home;
+    private List<JpaGroup> groups = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JpaPlant> plants = new ArrayList<>();
-
-    public JpaGroup() {}
+    public JpaHome() {}
 
     public UUID getId() {
         return id;
@@ -56,27 +53,19 @@ public class JpaGroup {
         this.description = description;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public List<JpaAccount> getAccounts() {
+        return accounts;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setAccounts(List<JpaAccount> accounts) {
+        this.accounts = accounts;
     }
 
-    public JpaHome getHome() {
-        return home;
+    public List<JpaGroup> getGroups() {
+        return groups;
     }
 
-    public void setHome(JpaHome home) {
-        this.home = home;
-    }
-
-    public List<JpaPlant> getPlants() {
-        return plants;
-    }
-
-    public void setPlants(List<JpaPlant> plants) {
-        this.plants = plants;
+    public void setGroups(List<JpaGroup> groups) {
+        this.groups = groups;
     }
 }

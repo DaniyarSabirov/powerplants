@@ -1,4 +1,4 @@
-package de.thws.powerplants.adapters.out.persistence.entities;
+package de.thws.powerplants.adapters.out.persistence.jpa.entities;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "home")
-public class JpaHome {
+@Table(name = "home_group")
+public class JpaGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,14 +20,17 @@ public class JpaHome {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "homes")
-    private List<JpaAccount> accounts = new ArrayList<>();
+    @Column(name = "picture_url")
+    private String pictureUrl;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_id")
-    private List<JpaGroup> groups = new ArrayList<>();
+    private JpaHome home;
 
-    public JpaHome() {}
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JpaPlant> plants = new ArrayList<>();
+
+    public JpaGroup() {}
 
     public UUID getId() {
         return id;
@@ -53,19 +56,27 @@ public class JpaHome {
         this.description = description;
     }
 
-    public List<JpaAccount> getAccounts() {
-        return accounts;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setAccounts(List<JpaAccount> accounts) {
-        this.accounts = accounts;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
-    public List<JpaGroup> getGroups() {
-        return groups;
+    public JpaHome getHome() {
+        return home;
     }
 
-    public void setGroups(List<JpaGroup> groups) {
-        this.groups = groups;
+    public void setHome(JpaHome home) {
+        this.home = home;
+    }
+
+    public List<JpaPlant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<JpaPlant> plants) {
+        this.plants = plants;
     }
 }
