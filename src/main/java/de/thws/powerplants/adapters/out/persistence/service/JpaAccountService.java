@@ -60,17 +60,17 @@ public class JpaAccountService implements AccountServicePortOut {
 
     @Override
     @Transactional
-    public Optional<Account> getAccountById(UUID id) {
+    public Optional<Account> getAccountById(UUID accountId) {
 
-        return jpaAccountRepository.findByIdOptional(id).map(jpaMapper::toAccount);
+        return jpaAccountRepository.findByIdOptional(accountId).map(jpaMapper::toAccount);
     }
 
     @Override
     @Transactional
-    public Account updateAccountById(UUID id, Account account) {
+    public Account updateAccountById(UUID accountId, Account account) {
 
         return jpaAccountRepository
-                .findByIdOptional(id)
+                .findByIdOptional(accountId)
                 .map((v) -> copyAccount(v, account))
                 .map(jpaMapper::toAccount)
                 .orElseThrow();
@@ -78,8 +78,8 @@ public class JpaAccountService implements AccountServicePortOut {
 
     @Override
     @Transactional
-    public void deleteAccountById(UUID id) {
-        jpaAccountRepository.deleteById(id);
+    public void deleteAccountById(UUID accountId) {
+        jpaAccountRepository.deleteById(accountId);
     }
 
     @Override
