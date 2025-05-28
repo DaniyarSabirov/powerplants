@@ -21,6 +21,7 @@
         <java.mainClass>de.thws.powerplants.infrastructure.Program</java.mainClass>
         <!-- server dependencies -->
         <quarkus.version>3.20.1</quarkus.version>
+        <quarkus-minio.version>3.8.4</quarkus-minio.version>
         <guava.version>33.4.8-jre</guava.version>
         <!-- testing dependencies -->
         <mockito.version>5.18.0</mockito.version>
@@ -65,6 +66,12 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-liquibase</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkiverse.minio</groupId>
+            <artifactId>quarkus-minio</artifactId>
+            <version>${quarkus-minio.version}</version>
         </dependency>
 
         <dependency>
