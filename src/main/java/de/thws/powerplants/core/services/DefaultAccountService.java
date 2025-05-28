@@ -28,18 +28,18 @@ public class DefaultAccountService implements AccountServicePortIn {
     }
 
     @Override
-    public Optional<Account> getAccountById(UUID id) {
-        return accountServicePortOut.getAccountById(id);
+    public Optional<Account> getAccountById(UUID accountId) {
+        return accountServicePortOut.getAccountById(accountId);
     }
 
     @Override
-    public Account updateAccountById(UUID id, Account account) {
-        return accountServicePortOut.updateAccountById(id, account);
+    public Account updateAccountById(UUID accountId, Account account) {
+        return accountServicePortOut.updateAccountById(accountId, account);
     }
 
     @Override
-    public void deleteAccountById(UUID id) {
-        accountServicePortOut.deleteAccountById(id);
+    public void deleteAccountById(UUID accountId) {
+        accountServicePortOut.deleteAccountById(accountId);
     }
 
     @Override
