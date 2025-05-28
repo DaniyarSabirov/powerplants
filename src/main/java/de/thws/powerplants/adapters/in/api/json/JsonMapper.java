@@ -2,6 +2,7 @@ package de.thws.powerplants.adapters.in.api.json;
 
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.domain.Group;
+import de.thws.powerplants.core.domain.Home;
 import de.thws.powerplants.core.domain.Plant;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -32,6 +33,28 @@ public class JsonMapper {
         result.setLoginName(account.getLoginName());
         result.setLoginPassword(account.getLoginPassword());
         result.setPictureUrl(account.getPictureUrl());
+
+        return result;
+    }
+
+    public Home toHome(JsonHome home) {
+
+        Home result = new Home();
+
+        result.setId(home.getId());
+        result.setPublicName(home.getPublicName());
+        result.setDescription(home.getDescription());
+
+        return result;
+    }
+
+    public JsonHome toJsonHome(Home home) {
+
+        JsonHome result = new JsonHome();
+
+        result.setId(home.getId());
+        result.setPublicName(home.getPublicName());
+        result.setDescription(home.getDescription());
 
         return result;
     }
