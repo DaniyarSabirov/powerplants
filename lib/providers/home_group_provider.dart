@@ -31,20 +31,6 @@ class HomeGroupProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> loadGroupById(String groupId) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      await _handleAsync(() async {
-        _selectedGroup = await _homeGroupService.getGroupById(groupId);
-      });
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
   Future<void> loadGroupsByHomeId(String homeId) async {
     _isLoading = true;
     notifyListeners();
@@ -59,27 +45,13 @@ class HomeGroupProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> loadAllGroups() async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      await _handleAsync(() async {
-        _groups = await _homeGroupService.getAllGroups();
-      });
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
   Future<void> addGroup(HomeGroup group) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       await _handleAsync(() async {
-        final newGroup = await _homeGroupService.createGroup(group);
+        final newGroup = await _homeGroupService.createGroup(group.homeId, group);
         _groups.add(newGroup);
       });
     } finally {
@@ -103,13 +75,13 @@ class HomeGroupProvider extends ChangeNotifier {
         throw Exception(_error);
       }
 
-      await _homeGroupService.updateGroup(group.id!, group);
+      await _homeGroupService.updateGroup(group.homeId, group.id!, group);
       _groups[index] = group;
       notifyListeners();
     });
   }
 
-  Future<void> deleteGroup(String groupId) async {
+  Future<void> deleteGroup(String homeId, String groupId) async {
     final index = _groups.indexWhere((g) => g.id == groupId);
     if (index == -1) return;
 
@@ -118,7 +90,7 @@ class HomeGroupProvider extends ChangeNotifier {
 
     try {
       await _handleAsync(() async {
-        await _homeGroupService.deleteGroup(groupId);
+        await _homeGroupService.deleteGroup(homeId, groupId);
       });
     } catch (_) {
       _groups.insert(index, removedGroup); // rollback
@@ -126,4 +98,21 @@ class HomeGroupProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+//
+//  Method on backend is not implemented
+//
+// Future<void> loadGroupById(String groupId) async {
+//   _isLoading = true;
+//   notifyListeners();
+//
+//   try {
+//     await _handleAsync(() async {
+//       _selectedGroup = await _homeGroupService.getGroupById(groupId);
+//     });
+//   } finally {
+//     _isLoading = false;
+//     notifyListeners();
+//   }
+// }
 }

@@ -21,8 +21,8 @@ class Account {
     return Account(
       id: json['id'] as String,
       publicName: json['public_name'] as String,
-      loginName: json['login_name'] as String,
-      loginPassword: json['login_password'] as String,
+      loginName: json['name'] as String,
+      loginPassword: json['password'] as String,
       pictureUrl: json['picture_url'] as String?,
       homes: (json['homes'] as List<dynamic>?)
           ?.map((homeJson) => Home.fromJson(homeJson as Map<String, dynamic>))
@@ -34,8 +34,8 @@ class Account {
     return {
       'id': id,
       'public_name': publicName,
-      'login_name': loginName,
-      'login_password': loginPassword,
+      'name': loginName,
+      'password': loginPassword,
       'picture_url': pictureUrl,
       'homes': homes.map((home) => home.toJson()).toList(),
     };
