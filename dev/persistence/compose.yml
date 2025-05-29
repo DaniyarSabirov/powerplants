@@ -15,7 +15,7 @@ services:
       - POSTGRES_PASSWORD=powerplants-dev
 
   powerplants-dev-pgadmin4:
-    image: dpage/pgadmin4:9.3
+    image: dpage/pgadmin4:9.4
     container_name: powerplants-dev-pgadmin4
     restart: unless-stopped
     depends_on:
