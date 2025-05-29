@@ -2,17 +2,17 @@ create extension if not exists "pgcrypto";
 
 create table account (
     id uuid primary key default gen_random_uuid(),
-    public_name varchar (255) not null,
-    login_name varchar (255) not null,
-    login_password varchar (255) not null,
-    picture_url varchar (255),
+    public_name text not null,
+    login_name text not null,
+    login_password text not null,
+    image_id text,
     unique (login_name)
 );
 
 create table home (
     id uuid primary key default gen_random_uuid(),
-    public_name varchar (255) not null,
-    description varchar (255)
+    public_name text not null,
+    description text
 );
 
 create table account_home (
@@ -24,35 +24,35 @@ create table account_home (
 create table home_group (
     id uuid primary key default gen_random_uuid(),
     home_id uuid references home (id) not null,
-    public_name varchar (255) not null,
-    description varchar (255),
-    picture_url varchar (255),
+    public_name text not null,
+    description text,
+    image_id text,
     unique (home_id, public_name)
 );
 
 create table plant (
     id uuid primary key default gen_random_uuid(),
     home_group_id uuid references home_group (id) not null,
-    public_name varchar (255) not null,
-    scientific_name varchar (255) not null,
-    description varchar (255),
-    picture_url varchar (255),
+    public_name text not null,
+    scientific_name text not null,
+    description text,
+    image_id text,
     unique (home_group_id, public_name)
 );
 
 create table plant_care_rule (
     id uuid primary key default gen_random_uuid(),
     plant_id uuid references plant (id) not null,
-    public_name varchar (255) not null,
+    public_name text not null,
     enabled boolean not null default true,
-    cron varchar (255) not null,
-    instructions varchar (255),
+    cron text not null,
+    instructions text,
     unique (plant_id, public_name)
 );
 
 create table plant_care_rule_custom (
     id uuid primary key references plant_care_rule (id),
-    custom_instructions varchar (255) not null
+    custom_instructions text not null
 );
 
 create table plant_care_rule_water (
@@ -67,7 +67,7 @@ create table plant_care_rule_sunlight (
 
 create table plant_care_rule_pruning (
     id uuid primary key references plant_care_rule (id),
-    amount varchar (255) not null
+    amount text not null
 );
 
 create table plant_care_rule_disabled (
@@ -82,5 +82,5 @@ create table plant_care_done (
     plant_care_rule_id uuid references plant_care_rule (id) not null,
     completed_by uuid references account (id) not null,
     completed_at timestamptz not null,
-    details varchar (255)
+    details text
 );
