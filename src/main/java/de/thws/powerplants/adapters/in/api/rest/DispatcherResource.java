@@ -9,6 +9,8 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class DispatcherResource {
 
+    public DispatcherResource() {}
+
     @GET
     public Response getDispatcherState() {
         return Response.ok().build();

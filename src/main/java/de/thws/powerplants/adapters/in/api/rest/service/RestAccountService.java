@@ -1,5 +1,6 @@
 package de.thws.powerplants.adapters.in.api.rest.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class RestAccountService {
 
     public RestAccountService() {}
 
-    public JsonAccount createAccount(JsonAccount jsonAccount) {
+    public JsonAccount createAccount(JsonAccount jsonAccount, InputStream image) {
 
         Account account = jsonMapper.toAccount(jsonAccount);
 
@@ -46,7 +47,7 @@ public class RestAccountService {
         return account.map(jsonMapper::toJsonAccount);
     }
 
-    public JsonAccount updateAccountById(UUID id, JsonAccount jsonAccount) {
+    public JsonAccount updateAccountById(UUID id, JsonAccount jsonAccount, InputStream image) {
 
         Account account = jsonMapper.toAccount(jsonAccount);
 

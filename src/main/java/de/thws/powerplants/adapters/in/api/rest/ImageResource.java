@@ -18,6 +18,8 @@ public class ImageResource {
     @Inject
     private RestImageService imageService;
 
+    public ImageResource() {}
+
     @PUT
     public Response createImage(@PathParam("imageId") UUID imageId, InputStream inputStream) {
 

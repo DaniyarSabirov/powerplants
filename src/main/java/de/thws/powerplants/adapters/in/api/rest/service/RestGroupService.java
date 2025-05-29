@@ -1,5 +1,6 @@
 package de.thws.powerplants.adapters.in.api.rest.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class RestGroupService {
 
     public RestGroupService() {}
 
-    public JsonGroup createGroup(UUID homeId, JsonGroup jsonGroup) {
+    public JsonGroup createGroup(UUID homeId, JsonGroup jsonGroup, InputStream image) {
 
         Group group = jsonMapper.toGroup(jsonGroup);
 
@@ -46,7 +47,7 @@ public class RestGroupService {
         return result.map(jsonMapper::toJsonGroup);
     }
 
-    public JsonGroup updateGroupById(UUID homeId, UUID groupId, JsonGroup jsonGroup) {
+    public JsonGroup updateGroupById(UUID homeId, UUID groupId, JsonGroup jsonGroup, InputStream image) {
 
         Group group = jsonMapper.toGroup(jsonGroup);
 

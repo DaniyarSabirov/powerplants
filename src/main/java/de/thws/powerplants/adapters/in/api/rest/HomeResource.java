@@ -20,6 +20,8 @@ public class HomeResource {
     @Inject
     private RestHomeService homeService;
 
+    public HomeResource() {}
+
     @POST
     public Response createHome(JsonHome jsonHome) {
 

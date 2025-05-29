@@ -1,5 +1,6 @@
 package de.thws.powerplants.adapters.in.api.rest.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class RestPlantService {
 
     public RestPlantService() {}
 
-    public JsonPlant createPlant(UUID groupId, JsonPlant jsonPlant) {
+    public JsonPlant createPlant(UUID groupId, JsonPlant jsonPlant, InputStream image) {
 
         Plant plant = jsonMapper.toPlant(jsonPlant);
 
@@ -46,7 +47,7 @@ public class RestPlantService {
         return plant.map(jsonMapper::toJsonPlant);
     }
 
-    public JsonPlant updatePlantById(UUID groupId, UUID plantId, JsonPlant jsonPlant) {
+    public JsonPlant updatePlantById(UUID groupId, UUID plantId, JsonPlant jsonPlant, InputStream image) {
 
         Plant plant = jsonMapper.toPlant(jsonPlant);
 

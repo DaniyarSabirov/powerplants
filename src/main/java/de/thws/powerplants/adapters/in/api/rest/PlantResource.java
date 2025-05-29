@@ -23,6 +23,8 @@ public class PlantResource {
     @Inject
     private RestPlantService plantService;
 
+    public PlantResource() {}
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response createPlant(
@@ -30,7 +32,7 @@ public class PlantResource {
             @RestForm("plant") @PartType(MediaType.APPLICATION_JSON) JsonPlant jsonPlant,
             @RestForm InputStream image) {
 
-        JsonPlant result = plantService.createPlant(groupId, jsonPlant);
+        JsonPlant result = plantService.createPlant(groupId, jsonPlant, image);
 
         return Response.status(Response.Status.CREATED).entity(result).build();
     }
@@ -64,7 +66,7 @@ public class PlantResource {
             @RestForm("plant") @PartType(MediaType.APPLICATION_JSON) JsonPlant jsonPlant,
             @RestForm InputStream image) {
 
-        JsonPlant result = plantService.updatePlantById(groupId, plantId, jsonPlant);
+        JsonPlant result = plantService.updatePlantById(groupId, plantId, jsonPlant, image);
 
         return Response.ok(result).build();
     }
