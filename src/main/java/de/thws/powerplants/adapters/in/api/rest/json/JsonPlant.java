@@ -13,7 +13,7 @@ public class JsonPlant {
     private String publicName;
     private String scientificName;
     private String description;
-    private String pictureUrl;
+    private String imageId;
     private JsonPlantMetadata metadata;
 
     private List<? extends JsonPlantCareRule> plantCareRules;
@@ -53,12 +53,12 @@ public class JsonPlant {
         this.description = description;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public JsonPlantMetadata getMetadata() {

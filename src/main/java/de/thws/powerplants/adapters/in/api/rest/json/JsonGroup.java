@@ -12,7 +12,7 @@ public class JsonGroup {
     private UUID id;
     private String publicName;
     private String description;
-    private String pictureUrl;
+    private String imageId;
 
     private List<JsonPlant> plants;
 
@@ -42,12 +42,12 @@ public class JsonGroup {
         this.description = description;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public List<JsonPlant> getPlants() {

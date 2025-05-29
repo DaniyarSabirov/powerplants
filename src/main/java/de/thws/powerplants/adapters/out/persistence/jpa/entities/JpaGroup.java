@@ -21,8 +21,8 @@ public class JpaGroup {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "picture_url")
-    private String pictureUrl;
+    @Column(name = "image_id")
+    private String imageId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_id")
@@ -57,12 +57,12 @@ public class JpaGroup {
         this.description = description;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public JpaHome getHome() {
