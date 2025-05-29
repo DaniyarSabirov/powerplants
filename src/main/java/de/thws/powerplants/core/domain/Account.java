@@ -3,13 +3,13 @@ package de.thws.powerplants.core.domain;
 import java.util.List;
 import java.util.UUID;
 
-public class Account {
+public class Account implements ImageHolder {
 
     private UUID id;
     private String publicName;
     private String loginName;
     private String loginPassword;
-    private String pictureUrl;
+    private String imageId;
 
     private List<Home> homes;
 
@@ -47,12 +47,14 @@ public class Account {
         this.loginPassword = loginPassword;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    @Override
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    @Override
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public List<Home> getHomes() {
