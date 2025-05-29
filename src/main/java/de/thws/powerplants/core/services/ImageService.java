@@ -8,4 +8,6 @@ public interface ImageService {
     void createImage(UUID imageId, InputStream inputStream);
 
     InputStream getImageById(UUID imageId);
+
+    void deleteImageById(UUID imageId);
 }
