@@ -24,8 +24,7 @@ public class JpaHome {
     @ManyToMany(mappedBy = "homes")
     private List<JpaAccount> accounts = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "home_id")
+    @OneToMany(mappedBy = "home", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JpaGroup> groups = new ArrayList<>();
 
     public JpaHome() {}
