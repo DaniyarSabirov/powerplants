@@ -18,7 +18,7 @@ public class JpaAccount {
     @Column(name = "public_name", nullable = false)
     private String publicName;
 
-    @Column(name = "login_name", nullable = false)
+    @Column(name = "login_name", nullable = false, unique = true)
     private String loginName;
 
     @Column(name = "login_password", nullable = false)

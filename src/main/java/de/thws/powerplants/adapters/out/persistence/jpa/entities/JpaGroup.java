@@ -24,8 +24,8 @@ public class JpaGroup {
     @Column(name = "image_id")
     private String imageId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "home_id")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "home_id", nullable = false)
     private JpaHome home;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
