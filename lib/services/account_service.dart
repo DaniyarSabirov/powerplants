@@ -10,7 +10,7 @@ class AccountService {
     try {
       final response = await _client.get(
           '/accounts'
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         final List<dynamic> accountsJson = response.data as List<dynamic>;
@@ -27,32 +27,11 @@ class AccountService {
     }
   }
 
-  Future<List<Account>> getAccountsByHomeId(String homeId) async {
-    try {
-      final response = await _client.get(
-        '/homes/$homeId/accounts',
-      ); // TODO check real endpoint
-
-      if (response.statusCode == 200) {
-        final List<dynamic> accountsJson = response.data as List<dynamic>;
-        return accountsJson
-            .map((json) => Account.fromJson(json as Map<String, dynamic>))
-            .toList();
-      } else {
-        throw Exception(
-          'Failed to load accounts for home $homeId, status code: ${response.statusCode}',
-        );
-      }
-    } catch (e) {
-      throw Exception('Error fetching accounts by home: $e');
-    }
-  }
-
   Future<Account> getAccountById(String id) async {
     try {
       final response = await _client.get(
           '/accounts/$id'
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         return Account.fromJson(response.data as Map<String, dynamic>);
@@ -71,7 +50,7 @@ class AccountService {
       final response = await _client.post(
         '/accounts',
         data: account.toJson(),
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         return Account.fromJson(response.data as Map<String, dynamic>);
@@ -90,7 +69,7 @@ class AccountService {
       final response = await _client.put(
         '/accounts/$id',
         data: account.toJson(),
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 200) {
         return;
@@ -108,7 +87,7 @@ class AccountService {
     try {
       final response = await _client.delete(
         '/accounts/$id',
-      ); // TODO check real endpoint
+      );
 
       if (response.statusCode == 204 || response.statusCode == 200) {
         return;
@@ -121,4 +100,47 @@ class AccountService {
       throw Exception('Error deleting account: $e');
     }
   }
+
+  Future<void> addHomeToAccount(String accountId, String homeId) async {
+    try {
+      final response = await _client.post(
+        '/accounts/$accountId/homes/$homeId',
+      );
+
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception(
+          'Failed to add home $homeId to account $accountId, status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error adding home to account: $e');
+    }
+  }
+
+
+  //
+  //  Not implemented on backend
+  //
+  // Future<List<Account>> getAccountsByHomeId(String homeId) async {
+  //   try {
+  //     final response = await _client.get(
+  //       '/homes/$homeId/accounts',
+  //     ); // TODO check real endpoint
+  //
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> accountsJson = response.data as List<dynamic>;
+  //       return accountsJson
+  //           .map((json) => Account.fromJson(json as Map<String, dynamic>))
+  //           .toList();
+  //     } else {
+  //       throw Exception(
+  //         'Failed to load accounts for home $homeId, status code: ${response.statusCode}',
+  //       );
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Error fetching accounts by home: $e');
+  //   }
+  // }
 }
