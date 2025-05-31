@@ -8,15 +8,14 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.UUID;
 
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+
 import de.thws.powerplants.adapters.in.api.rest.json.JsonGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaHomeRepository;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -52,8 +51,7 @@ class GroupResourceTest {
     void createGroup() {
         InputStream dummyImage = new ByteArrayInputStream("dummy-image-content".getBytes());
 
-        createdGroupId = given()
-                .multiPart("group", createTestJsonGroup(), "application/json")
+        createdGroupId = given().multiPart("group", createTestJsonGroup(), "application/json")
                 .multiPart("image", "test.jpg", dummyImage)
                 .pathParam("home_id", homeId)
                 .when()
@@ -72,8 +70,7 @@ class GroupResourceTest {
     @Test
     @Order(2)
     void getAllGroups() {
-        given()
-                .pathParam("home_id", homeId)
+        given().pathParam("home_id", homeId)
                 .when()
                 .get()
                 .then()
@@ -85,8 +82,7 @@ class GroupResourceTest {
     @Test
     @Order(3)
     void getGroupById() {
-        given()
-                .pathParam("home_id", homeId)
+        given().pathParam("home_id", homeId)
                 .pathParam("groupId", createdGroupId)
                 .when()
                 .get("/{groupId}")
@@ -105,8 +101,7 @@ class GroupResourceTest {
 
         InputStream dummyImage = new ByteArrayInputStream("updated-image-content".getBytes());
 
-        given()
-                .multiPart("group", updatedGroup, "application/json")
+        given().multiPart("group", updatedGroup, "application/json")
                 .multiPart("image", "updated.jpg", dummyImage)
                 .pathParam("home_id", homeId)
                 .pathParam("groupId", createdGroupId)
@@ -121,8 +116,7 @@ class GroupResourceTest {
     @Test
     @Order(5)
     void deleteGroupById() {
-        given()
-                .pathParam("home_id", homeId)
+        given().pathParam("home_id", homeId)
                 .pathParam("groupId", createdGroupId)
                 .when()
                 .delete("/{groupId}")
@@ -133,8 +127,7 @@ class GroupResourceTest {
     @Test
     @Order(6)
     void getGroupByIdAfterDelete() {
-        given()
-                .pathParam("home_id", homeId)
+        given().pathParam("home_id", homeId)
                 .pathParam("groupId", createdGroupId)
                 .when()
                 .get("/{groupId}")

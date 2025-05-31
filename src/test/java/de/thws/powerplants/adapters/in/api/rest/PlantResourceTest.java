@@ -8,15 +8,14 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.UUID;
 
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+
 import de.thws.powerplants.adapters.in.api.rest.json.JsonPlant;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaGroupRepository;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -51,8 +50,7 @@ class PlantResourceTest {
     @Test
     @Order(1)
     void createPlant() {
-        createdPlantId = given()
-                .multiPart("plant", createTestJsonPlant(), "application/json")
+        createdPlantId = given().multiPart("plant", createTestJsonPlant(), "application/json")
                 .pathParam("group_id", groupId)
                 .when()
                 .post()
@@ -69,8 +67,7 @@ class PlantResourceTest {
     @Test
     @Order(2)
     void getAllPlants() {
-        given()
-                .pathParam("group_id", groupId)
+        given().pathParam("group_id", groupId)
                 .when()
                 .get()
                 .then()
@@ -81,8 +78,7 @@ class PlantResourceTest {
     @Test
     @Order(3)
     void getPlantById() {
-        given()
-                .pathParam("group_id", groupId)
+        given().pathParam("group_id", groupId)
                 .pathParam("plantId", createdPlantId)
                 .when()
                 .get("/{plantId}")
@@ -102,8 +98,7 @@ class PlantResourceTest {
 
         InputStream dummyImage = new ByteArrayInputStream("updated-image".getBytes());
 
-        given()
-                .multiPart("plant", updatedPlant, "application/json")
+        given().multiPart("plant", updatedPlant, "application/json")
                 .multiPart("image", "updated.jpg", dummyImage)
                 .pathParam("group_id", groupId)
                 .pathParam("plantId", createdPlantId)
@@ -118,8 +113,7 @@ class PlantResourceTest {
     @Test
     @Order(5)
     void deletePlant() {
-        given()
-                .pathParam("group_id", groupId)
+        given().pathParam("group_id", groupId)
                 .pathParam("plantId", createdPlantId)
                 .when()
                 .delete("/{plantId}")
@@ -130,8 +124,7 @@ class PlantResourceTest {
     @Test
     @Order(6)
     void getPlantByIdAfterDelete() {
-        given()
-                .pathParam("group_id", groupId)
+        given().pathParam("group_id", groupId)
                 .pathParam("plantId", createdPlantId)
                 .when()
                 .get("/{plantId}")

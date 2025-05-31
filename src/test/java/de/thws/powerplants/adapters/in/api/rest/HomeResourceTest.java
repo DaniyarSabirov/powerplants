@@ -2,6 +2,7 @@ package de.thws.powerplants.adapters.in.api.rest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.UUID;
 
@@ -12,8 +13,6 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @QuarkusTest
@@ -32,8 +31,7 @@ class HomeResourceTest {
     @Test
     @Order(1)
     void createHome() {
-        createdHomeId = given()
-                .contentType("application/json")
+        createdHomeId = given().contentType("application/json")
                 .body(createTestJsonHome())
                 .when()
                 .post()
@@ -51,19 +49,13 @@ class HomeResourceTest {
     @Test
     @Order(2)
     void getHomes() {
-        given()
-                .when()
-                .get()
-                .then()
-                .statusCode(200)
-                .body("$", not(empty()));
+        given().when().get().then().statusCode(200).body("$", not(empty()));
     }
 
     @Test
     @Order(3)
     void getHomeById() {
-        given()
-                .pathParam("id", createdHomeId)
+        given().pathParam("id", createdHomeId)
                 .when()
                 .get("/{id}")
                 .then()
@@ -79,8 +71,7 @@ class HomeResourceTest {
         updatedHome.setPublicName("Updated Home");
         updatedHome.setDescription("Updated description");
 
-        given()
-                .contentType("application/json")
+        given().contentType("application/json")
                 .pathParam("id", createdHomeId)
                 .body(updatedHome)
                 .when()
@@ -94,22 +85,12 @@ class HomeResourceTest {
     @Test
     @Order(5)
     void deleteHome() {
-        given()
-                .pathParam("id", createdHomeId)
-                .when()
-                .delete("/{id}")
-                .then()
-                .statusCode(204);
+        given().pathParam("id", createdHomeId).when().delete("/{id}").then().statusCode(204);
     }
 
     @Test
     @Order(6)
     void getHomeByIdAfterDelete() {
-        given()
-                .pathParam("id", createdHomeId)
-                .when()
-                .get("/{id}")
-                .then()
-                .statusCode(404);
+        given().pathParam("id", createdHomeId).when().get("/{id}").then().statusCode(404);
     }
 }
