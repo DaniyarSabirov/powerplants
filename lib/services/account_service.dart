@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:frontend/services/api_client.dart';
+import 'package:http_parser/http_parser.dart';
 import '../models/account.dart';
 
 class AccountService {
@@ -45,11 +50,27 @@ class AccountService {
     }
   }
 
-  Future<Account> createAccount(Account account) async {
+  Future<Account> createAccount(Account account, File? image) async {
     try {
+      final formData = FormData.fromMap({
+        'account': MultipartFile.fromString(
+          jsonEncode(account.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+        if (image != null)
+          'image': await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'), // или image/png
+          ),
+      });
+
       final response = await _client.post(
         '/accounts',
-        data: account.toJson(),
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -64,11 +85,28 @@ class AccountService {
     }
   }
 
-  Future<void> updateAccount(String id, Account account) async {
+
+  Future<void> updateAccount(String id, Account account, File? image) async {
     try {
+      final formData = FormData.fromMap({
+        'account': MultipartFile.fromString(
+          jsonEncode(account.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+        if (image != null)
+          'image': await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'), // или image/png
+          ),
+      });
+
       final response = await _client.put(
         '/accounts/$id',
-        data: account.toJson(),
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
 
       if (response.statusCode == 200) {
@@ -82,6 +120,7 @@ class AccountService {
       throw Exception('Error updating account: $e');
     }
   }
+
 
   Future<void> deleteAccount(String id) async {
     try {
