@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 
 import de.thws.powerplants.adapters.in.api.rest.json.JsonPlant;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
+import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaGroupRepository;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
@@ -33,8 +34,13 @@ class PlantResourceTest {
     @BeforeAll
     @Transactional
     void setupGroup() {
+
+        JpaHome home = new JpaHome();
+        home.setPublicName("Test Home");
+
         JpaGroup group = new JpaGroup();
         group.setPublicName("Test Group");
+        group.setHome(home);
         jpaGroupRepository.persist(group);
         groupId = group.getId();
     }
