@@ -86,7 +86,7 @@ class AccountService {
   }
 
 
-  Future<void> updateAccount(String id, Account account, File? image) async {
+  Future<Account> updateAccount(String id, Account account, File? image) async {
     try {
       final formData = FormData.fromMap({
         'account': MultipartFile.fromString(
@@ -110,7 +110,7 @@ class AccountService {
       );
 
       if (response.statusCode == 200) {
-        return;
+        return Account.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception(
           'Failed to update account with id $id, status code: ${response.statusCode}',
