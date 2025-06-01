@@ -69,10 +69,16 @@ class _DashboardState extends State<Dashboard> {
                         borderRadius: BorderRadius.circular(8),
                         child: Stack(
                           children: [
-                            Image.network(
-                              'https://cms.interiorcompany.com/wp-content/uploads/2024/01/hang-decorative-plants-from-the-ceiling.jpg',
-                              fit: BoxFit.cover,
-                            ),
+                            (groups[i].pictureUrl != '')
+                                ? Image.asset(
+                                    groups[i].pictureUrl!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(
+                                    color: Colors
+                                        .primaries[i % Colors.primaries.length]
+                                        .shade700,
+                                  ),
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: Container(
