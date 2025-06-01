@@ -4,8 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
 
 import jakarta.inject.Inject;
@@ -14,6 +13,7 @@ import jakarta.transaction.Transactional;
 import de.thws.powerplants.adapters.in.api.rest.json.JsonGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaHomeRepository;
+import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.*;
@@ -25,7 +25,10 @@ import org.junit.jupiter.api.*;
 class GroupResourceTest {
 
     @Inject
-    JpaHomeRepository jpaHomeRepository;
+    private JpaHomeRepository jpaHomeRepository;
+
+    @Inject
+    private ImageServicePortIn imageServicePortIn;
 
     private UUID homeId;
     private static UUID createdGroupId;
@@ -48,11 +51,12 @@ class GroupResourceTest {
 
     @Test
     @Order(1)
-    void createGroup() {
-        InputStream dummyImage = new ByteArrayInputStream("dummy-image-content".getBytes());
+    void createGroup() throws IOException {
 
-        createdGroupId = given().multiPart("group", createTestJsonGroup(), "application/json")
-                .multiPart("image", "test.jpg", dummyImage)
+        InputStream testImage = new FileInputStream("src/test/resources/profile.png");
+
+        JsonGroup jsonGroup = given().multiPart("group", createTestJsonGroup(), "application/json")
+                .multiPart("image", "", testImage)
                 .pathParam("home_id", homeId)
                 .when()
                 .post()
@@ -62,7 +66,15 @@ class GroupResourceTest {
                 .body("description", equalTo("Test description"))
                 .extract()
                 .jsonPath()
-                .getObject("id", UUID.class);
+                .getObject("", JsonGroup.class);
+
+        assertNotNull(jsonGroup);
+
+        InputStream image = imageServicePortIn.getImageById(UUID.fromString(jsonGroup.getImageId()));
+        assertNotNull(image);
+        image.close();
+
+        createdGroupId = jsonGroup.getId();
 
         assertNotNull(createdGroupId);
     }

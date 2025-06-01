@@ -4,8 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
 
 import jakarta.inject.Inject;
@@ -15,6 +14,7 @@ import de.thws.powerplants.adapters.in.api.rest.json.JsonPlant;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaGroupRepository;
+import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.*;
@@ -26,7 +26,10 @@ import org.junit.jupiter.api.*;
 class PlantResourceTest {
 
     @Inject
-    JpaGroupRepository jpaGroupRepository;
+    private JpaGroupRepository jpaGroupRepository;
+
+    @Inject
+    private ImageServicePortIn imageServicePortIn;
 
     private UUID groupId;
     private static UUID createdPlantId;
@@ -55,8 +58,12 @@ class PlantResourceTest {
 
     @Test
     @Order(1)
-    void createPlant() {
-        createdPlantId = given().multiPart("plant", createTestJsonPlant(), "application/json")
+    void createPlant() throws IOException {
+
+        InputStream testImage = new FileInputStream("src/test/resources/profile.png");
+
+        JsonPlant jsonPlant = given().multiPart("plant", createTestJsonPlant(), "application/json")
+                .multiPart("image", "", testImage)
                 .pathParam("group_id", groupId)
                 .when()
                 .post()
@@ -65,7 +72,15 @@ class PlantResourceTest {
                 .body("public_name", equalTo("Test Plant"))
                 .extract()
                 .jsonPath()
-                .getObject("id", UUID.class);
+                .getObject("", JsonPlant.class);
+
+        assertNotNull(jsonPlant);
+
+        InputStream image = imageServicePortIn.getImageById(UUID.fromString(jsonPlant.getImageId()));
+        assertNotNull(image);
+        image.close();
+
+        createdPlantId = jsonPlant.getId();
 
         assertNotNull(createdPlantId);
     }
