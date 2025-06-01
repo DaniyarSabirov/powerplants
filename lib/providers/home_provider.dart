@@ -59,20 +59,6 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> loadHomesByAccountId(String accountId) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      await _handleAsync(() async {
-        _homes = await _homeService.getHomesByAccountId(accountId);
-      });
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
   Future<void> addHome(Home home) async {
     _isLoading = true;
     notifyListeners();
@@ -126,4 +112,21 @@ class HomeProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  //
+  // Not implemented on backend
+  //
+  // Future<void> loadHomesByAccountId(String accountId) async {
+  //   _isLoading = true;
+  //   notifyListeners();
+  //
+  //   try {
+  //     await _handleAsync(() async {
+  //       _homes = await _homeService.getHomesByAccountId(accountId);
+  //     });
+  //   } finally {
+  //     _isLoading = false;
+  //     notifyListeners();
+  //   }
+  // }
 }
