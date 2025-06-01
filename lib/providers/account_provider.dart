@@ -84,30 +84,40 @@ class AccountProvider extends ChangeNotifier {
   }
 
   Future<void> updateAccount(Account account, File? image) async {
-    await _handleAsync(() async {
-      if (account.id == null) {
-        _error = 'Account ID is null';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      final index = _accounts.indexWhere((a) => a.id == account.id);
-
-      if (index == -1) {
-        _error = 'Account with ID ${account.id} not found in local list';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      await _accountService.updateAccount(account.id!, account, image);
-      _accounts[index] = account;
-
-      if (_selectedAccount?.id == account.id) {
-        _selectedAccount = account;
-      }
-
+    if (account.id == null) {
+      _error = 'Account ID is null';
       notifyListeners();
-    });
+      throw Exception(_error);
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final updatedAccount = await _accountService.updateAccount(
+        account.id!,
+        account,
+        image,
+      );
+
+      final index = _accounts.indexWhere((a) => a.id == updatedAccount.id);
+      if (index != -1) {
+        _accounts[index] = updatedAccount;
+      }
+
+      if (_selectedAccount?.id == updatedAccount.id) {
+        _selectedAccount = updatedAccount;
+      }
+
+      _tempAvatar = null; // clear temporary avatar
+      _error = null;
+    } catch (e) {
+      _error = 'Failed to update account: $e';
+      rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> deleteAccount(String id) async {
@@ -167,7 +177,6 @@ class AccountProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Update avatar on backend + clear temp avatar
   Future<void> updateAvatar(File image) async {
     if (_selectedAccount == null || _selectedAccount!.id == null) {
       _error = 'No selected account to update avatar';
@@ -175,34 +184,8 @@ class AccountProvider extends ChangeNotifier {
       throw Exception(_error);
     }
 
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      final updatedAccount = await _accountService.updateAccount(
-        _selectedAccount!.id!,
-        _selectedAccount!,
-        image,
-      );
-
-      final index = _accounts.indexWhere((a) => a.id == updatedAccount.id);
-      if (index != -1) {
-        _accounts[index] = updatedAccount;
-      }
-
-      _selectedAccount = updatedAccount;
-      _tempAvatar = null; // clear temporary avatar only on success
-      _error = null;
-    } catch (e) {
-      _error = 'Failed to update avatar: $e';
-      // Optionally keep tempAvatar to allow retry or keep UI consistent
-      rethrow;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    await updateAccount(_selectedAccount!, image);
   }
-
 
 
 //
@@ -221,4 +204,5 @@ class AccountProvider extends ChangeNotifier {
 //     notifyListeners();
 //   }
 // }
+
 }
