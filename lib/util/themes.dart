@@ -25,6 +25,49 @@ final ThemeData lightTheme = ThemeData(
   fontFamily: 'Manrope',
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
+  textTheme: const TextTheme(
+    headlineLarge: TextStyle(
+      fontSize: 36.0,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'BigCaslon',
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 28.0,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineSmall: TextStyle(
+      fontSize: 24.0,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.normal,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.normal,
+    ),
+    bodySmall: TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.bold,
+    ),
+    labelLarge: TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    ),
+    labelMedium: TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.bold,
+    ),
+    labelSmall: TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.bold,
+    ),
+    displaySmall: TextStyle(
+      fontSize: 10.0,
+      fontWeight: FontWeight.w100,
+    ),
+  ),
 );
 
 final ThemeData darkTheme = ThemeData(
@@ -52,53 +95,47 @@ final ThemeData darkTheme = ThemeData(
   fontFamily: 'Manrope',
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
+  textTheme: const TextTheme(
+    headlineLarge: TextStyle(
+      fontSize: 36.0,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'BigCaslon',
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 28.0,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineSmall: TextStyle(
+      fontSize: 24.0,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.normal,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.normal,
+    ),
+    bodySmall: TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.bold,
+    ),
+    labelLarge: TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    ),
+    labelMedium: TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.bold,
+    ),
+    labelSmall: TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.bold,
+    ),
+    displaySmall: TextStyle(
+      fontSize: 10.0,
+      fontWeight: FontWeight.w100,
+    ),
+  ),
 );
-
-
-
-//Original
-
-
-// final ThemeData lightTheme = ThemeData(
-//   brightness: Brightness.light,
-//   colorScheme: const ColorScheme.light(
-//     primary: Color(0xFF616E54),
-//     onPrimary: Color(0xFFFCFCFC),
-//     secondary: Color(0xFF92A56E),
-//     onSecondary: Color(0xFFFCFCFC),
-//     tertiary: Color(0xFFC2CDA3),
-//     onTertiary: Color(0xFF151515),
-//     surface: Color(0xFFFCFCFC),
-//     surfaceDim: Color(0xFFF2F2F2),
-//     surfaceBright: Color(0xFFFFFFFF),
-//     onSurface: Color(0xFF151515),
-//     onSurfaceVariant: Color(0xFF252525),
-//   ),
-//   scaffoldBackgroundColor: Color(0xFFF2F2F2),
-//   appBarTheme: const AppBarTheme(
-//     backgroundColor: Color(0xFFFCFCFC),
-//     foregroundColor: Color(0xFF252525),
-//   ),
-// );
-
-// final ThemeData darkTheme = ThemeData(
-//   brightness: Brightness.light,
-//   colorScheme: const ColorScheme.light(
-//     primary: Color(0xFF616E54),
-//     onPrimary: Color(0xFFFCFCFC),
-//     secondary: Color(0xFF92A56E),
-//     onSecondary: Color(0xFFFCFCFC),
-//     tertiary: Color(0xFFC2CDA3),
-//     onTertiary: Color(0xFF151515),
-//     surface: Color(0xFF191A1F),
-//     surfaceDim: Color(0xFF0D0E13),
-//     surfaceBright: Color(0xFF262A35),
-//     onSurface: Color(0xFFFCFCFC),
-//     onSurfaceVariant: Color(0xFFF2F2F2),
-//   ),
-//   scaffoldBackgroundColor: Color(0xFF0D0E13),
-//   appBarTheme: const AppBarTheme(
-//     backgroundColor: Color(0xFF191A1F),
-//     foregroundColor: Color(0xFFFCFCFC),
-//   ),
-// );

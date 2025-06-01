@@ -22,6 +22,7 @@ class _PlantOverviewState extends State<PlantOverview> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = ColorScheme.of(context);
+    final theme = Theme.of(context);
     return Scaffold(
       body: Stack(
         children: [

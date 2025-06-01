@@ -25,9 +25,11 @@ class _ProfileState extends State<Profile> {
     'Philodendron',
     'Fern',
   ];
+  var theme;
 
   @override
   Widget build(BuildContext context) {
+    theme = Theme.of(context);
     colorScheme = ColorScheme.of(context);
     return Scaffold(
       body: Stack(
