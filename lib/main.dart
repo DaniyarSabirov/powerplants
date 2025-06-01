@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       },
       // Dark-Variante
       themeMode: ThemeMode.system,
-      home: GroupOverview(),
+      home: Dashboard(),
     );
   }
 }
