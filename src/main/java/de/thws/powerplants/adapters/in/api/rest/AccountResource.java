@@ -23,13 +23,15 @@ public class AccountResource {
     @Inject
     private RestAccountService accountService;
 
+    public AccountResource() {}
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response createAccount(
             @RestForm("account") @PartType(MediaType.APPLICATION_JSON) JsonAccount jsonAccount,
             @RestForm InputStream image) {
 
-        JsonAccount result = accountService.createAccount(jsonAccount);
+        JsonAccount result = accountService.createAccount(jsonAccount, image);
 
         return Response.status(Response.Status.CREATED).entity(result).build();
     }
@@ -62,7 +64,7 @@ public class AccountResource {
             @RestForm("account") @PartType(MediaType.APPLICATION_JSON) JsonAccount jsonAccount,
             @RestForm InputStream image) {
 
-        JsonAccount result = accountService.updateAccountById(id, jsonAccount);
+        JsonAccount result = accountService.updateAccountById(id, jsonAccount, image);
 
         return Response.ok(result).build();
     }

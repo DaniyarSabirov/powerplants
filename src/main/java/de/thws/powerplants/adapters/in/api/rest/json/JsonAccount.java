@@ -13,7 +13,7 @@ public class JsonAccount {
     private String publicName;
     private String loginName;
     private String loginPassword;
-    private String pictureUrl;
+    private String imageId;
 
     private List<JsonHome> homes;
 
@@ -51,12 +51,12 @@ public class JsonAccount {
         this.loginPassword = loginPassword;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public List<JsonHome> getHomes() {

@@ -35,7 +35,7 @@ public class JpaPlantService implements PlantServicePortOut {
         jpaPlant.setScientificName(plant.getScientificName());
         jpaPlant.setPublicName(plant.getPublicName());
         jpaPlant.setDescription(plant.getDescription());
-        jpaPlant.setPictureUrl(plant.getPictureUrl());
+        jpaPlant.setImageId(plant.getImageId());
 
         return jpaPlant;
     }

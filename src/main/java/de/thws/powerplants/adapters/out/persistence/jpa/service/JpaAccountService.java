@@ -33,7 +33,7 @@ public class JpaAccountService implements AccountServicePortOut {
         jpaAccount.setPublicName(account.getPublicName());
         jpaAccount.setLoginName(account.getLoginName());
         jpaAccount.setLoginPassword(account.getLoginPassword());
-        jpaAccount.setPictureUrl(account.getPictureUrl());
+        jpaAccount.setImageId(account.getImageId());
 
         return jpaAccount;
     }

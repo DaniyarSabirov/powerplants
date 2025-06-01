@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import de.thws.powerplants.core.ports.out.ImageServicePortOut;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
@@ -60,5 +61,18 @@ public class S3ImageService implements ImageServicePortOut {
                 .build();
 
         return s3Client.getObject(request);
+    }
+
+    @Override
+    public void deleteImageById(UUID imageId) {
+
+        checkBucket();
+
+        DeleteObjectRequest request = DeleteObjectRequest.builder()
+                .bucket(BUCKET_NAME)
+                .key(imageId.toString())
+                .build();
+
+        s3Client.deleteObject(request);
     }
 }

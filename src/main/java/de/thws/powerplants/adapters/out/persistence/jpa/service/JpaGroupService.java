@@ -34,7 +34,7 @@ public class JpaGroupService implements GroupServicePortOut {
         // jpaGroup.setId(group.getId());
         jpaGroup.setPublicName(group.getPublicName());
         jpaGroup.setDescription(group.getDescription());
-        jpaGroup.setPictureUrl(group.getPictureUrl());
+        jpaGroup.setImageId(group.getImageId());
 
         return jpaGroup;
     }

@@ -24,7 +24,7 @@ public class JpaMapper {
         result.setPublicName(account.getPublicName());
         result.setLoginName(account.getLoginName());
         result.setLoginPassword(account.getLoginPassword());
-        result.setPictureUrl(account.getPictureUrl());
+        result.setImageId(account.getImageId());
 
         return result;
     }
@@ -37,7 +37,7 @@ public class JpaMapper {
         result.setPublicName(account.getPublicName());
         result.setLoginName(account.getLoginName());
         result.setLoginPassword(account.getLoginPassword());
-        result.setPictureUrl(account.getPictureUrl());
+        result.setImageId(account.getImageId());
 
         return result;
     }
@@ -71,7 +71,7 @@ public class JpaMapper {
         result.setId(group.getId());
         result.setPublicName(group.getPublicName());
         result.setDescription(group.getDescription());
-        result.setPictureUrl(group.getPictureUrl());
+        result.setImageId(group.getImageId());
 
         return result;
     }
@@ -83,7 +83,7 @@ public class JpaMapper {
         result.setId(group.getId());
         result.setPublicName(group.getPublicName());
         result.setDescription(group.getDescription());
-        result.setPictureUrl(group.getPictureUrl());
+        result.setImageId(group.getImageId());
 
         return result;
     }
@@ -96,7 +96,7 @@ public class JpaMapper {
         result.setScientificName(plant.getScientificName());
         result.setPublicName(plant.getPublicName());
         result.setDescription(plant.getDescription());
-        result.setPictureUrl(plant.getPictureUrl());
+        result.setImageId(plant.getImageId());
 
         return result;
     }
@@ -109,7 +109,7 @@ public class JpaMapper {
         result.setScientificName(plant.getScientificName());
         result.setPublicName(plant.getPublicName());
         result.setDescription(plant.getDescription());
-        result.setPictureUrl(plant.getPictureUrl());
+        result.setImageId(plant.getImageId());
 
         return result;
     }

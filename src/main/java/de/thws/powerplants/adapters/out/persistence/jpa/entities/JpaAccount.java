@@ -18,14 +18,14 @@ public class JpaAccount {
     @Column(name = "public_name", nullable = false)
     private String publicName;
 
-    @Column(name = "login_name", nullable = false)
+    @Column(name = "login_name", nullable = false, unique = true)
     private String loginName;
 
     @Column(name = "login_password", nullable = false)
     private String loginPassword;
 
-    @Column(name = "picture_url")
-    private String pictureUrl;
+    @Column(name = "image_id")
+    private String imageId;
 
     @ManyToMany
     @JoinTable(
@@ -68,12 +68,12 @@ public class JpaAccount {
         this.loginPassword = loginPassword;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public List<JpaHome> getHomes() {

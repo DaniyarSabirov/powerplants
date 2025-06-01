@@ -11,7 +11,7 @@ class Account {
   publicName: String not null
   loginName: String not null
   loginPassword: StringHash not null
-  picture: ImageURL
+  imageId: String
 }
 
 class Home {
@@ -31,7 +31,7 @@ class Group {
   id: UUID
   publicName: String not null
   description: String
-  picture: ImageURL
+  imageId: String
   -- FK --
   home: Home not null
 }
@@ -41,7 +41,7 @@ class Plant {
   publicName: String not null
   scientificName: String not null
   description: String
-  picture: ImageURL
+  imageId: String
   metadata: PlantMetadata
   -- FK --
   group: Group not null

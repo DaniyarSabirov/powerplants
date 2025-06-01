@@ -42,14 +42,14 @@ public class AccountServiceTest {
         entity1.setLoginName("User1");
         entity1.setPublicName("publicUser1");
         entity1.setLoginPassword("pass1");
-        entity1.setPictureUrl("url1");
+        entity1.setImageId("url1");
 
         entity2 = new JpaAccount();
         entity2.setId(UUID.fromString("00000000-0000-0000-0000-000000000002"));
         entity2.setLoginName("User2");
         entity2.setPublicName("publicUser2");
         entity2.setLoginPassword("pass2");
-        entity2.setPictureUrl("url2");
+        entity2.setImageId("url2");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class AccountServiceTest {
         account.setPublicName("uniquePublicName");
         account.setLoginName("UserName");
         account.setLoginPassword("pass");
-        account.setPictureUrl("url");
+        account.setImageId("url");
 
         when(accountRepository.findByPublicName(account.getPublicName())).thenReturn(Optional.empty());
 
@@ -167,13 +167,13 @@ public class AccountServiceTest {
         existingEntity.setLoginName("OldName");
         existingEntity.setPublicName("OldPublicName");
         existingEntity.setLoginPassword("oldPass");
-        existingEntity.setPictureUrl("oldUrl");
+        existingEntity.setImageId("oldUrl");
 
         Account updatedAccount = new Account();
         updatedAccount.setLoginName("NewName");
         updatedAccount.setPublicName("NewPublicName");
         updatedAccount.setLoginPassword("newPass");
-        updatedAccount.setPictureUrl("newUrl");
+        updatedAccount.setImageId("newUrl");
 
         when(accountRepository.findByIdOptional(id)).thenReturn(Optional.of(existingEntity));
 
@@ -183,7 +183,7 @@ public class AccountServiceTest {
         assertEquals("NewName", account.getLoginName());
         assertEquals("NewPublicName", existingEntity.getPublicName());
         assertEquals("newPass", account.getLoginPassword());
-        assertEquals("newUrl", existingEntity.getPictureUrl());
+        assertEquals("newUrl", existingEntity.getImageId());
 
         verify(accountRepository, times(1)).findByIdOptional(id);
     }

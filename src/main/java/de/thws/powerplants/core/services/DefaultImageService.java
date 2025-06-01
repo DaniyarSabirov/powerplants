@@ -26,4 +26,9 @@ public class DefaultImageService implements ImageServicePortIn {
     public InputStream getImageById(UUID imageId) {
         return imageServicePortOut.getImageById(imageId);
     }
+
+    @Override
+    public void deleteImageById(UUID imageId) {
+        imageServicePortOut.deleteImageById(imageId);
+    }
 }

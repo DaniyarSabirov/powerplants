@@ -18,7 +18,7 @@ public abstract class JpaPlantCareRule {
     private String name;
 
     @Column(name = "enabled", nullable = false)
-    private boolean enabled;
+    private boolean enabled = true;
 
     @Column(name = "cron", nullable = false)
     private String cron;

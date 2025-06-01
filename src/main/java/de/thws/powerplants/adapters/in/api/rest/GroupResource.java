@@ -23,6 +23,8 @@ public class GroupResource {
     @Inject
     private RestGroupService groupService;
 
+    public GroupResource() {}
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response createGroup(
@@ -30,7 +32,7 @@ public class GroupResource {
             @RestForm("group") @PartType(MediaType.APPLICATION_JSON) JsonGroup jsonGroup,
             @RestForm InputStream image) {
 
-        JsonGroup result = groupService.createGroup(homeId, jsonGroup);
+        JsonGroup result = groupService.createGroup(homeId, jsonGroup, image);
 
         return Response.status(Response.Status.CREATED).entity(result).build();
     }
@@ -64,7 +66,7 @@ public class GroupResource {
             @RestForm("group") @PartType(MediaType.APPLICATION_JSON) JsonGroup jsonGroup,
             @RestForm InputStream image) {
 
-        JsonGroup result = groupService.updateGroupById(homeId, groupId, jsonGroup);
+        JsonGroup result = groupService.updateGroupById(homeId, groupId, jsonGroup, image);
 
         return Response.ok(result).build();
     }

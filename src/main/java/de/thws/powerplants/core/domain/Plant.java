@@ -3,13 +3,13 @@ package de.thws.powerplants.core.domain;
 import java.util.List;
 import java.util.UUID;
 
-public class Plant {
+public class Plant implements ImageHolder {
 
     private UUID id;
     private String publicName;
     private String scientificName;
     private String description;
-    private String pictureUrl;
+    private String imageId;
     private PlantMetadata metadata;
 
     private Group group;
@@ -50,12 +50,14 @@ public class Plant {
         this.description = description;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    @Override
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    @Override
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
     public PlantMetadata getMetadata() {
