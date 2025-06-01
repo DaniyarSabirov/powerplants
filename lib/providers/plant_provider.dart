@@ -82,14 +82,8 @@ class PlantProvider extends ChangeNotifier {
   }
 
   Future<void> updatePlant(Plant plant, File? image) async {
-    if (plant.id == null) {
-      _error = 'Plant ID is null';
-      notifyListeners();
-      throw Exception(_error);
-    }
-
-    if (plant.groupId == null) {
-      _error = 'Group ID is null';
+    if (plant.id == null || plant.groupId == null) {
+      _error = 'Plant ID or Group ID is null';
       notifyListeners();
       throw Exception(_error);
     }
@@ -98,25 +92,23 @@ class PlantProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final index = _plants.indexWhere((p) => p.id == plant.id);
-      if (index == -1) {
-        _error = 'Plant with ID ${plant.id} not found';
-        notifyListeners();
-        throw Exception(_error);
+      final updatedPlant = await _plantService.updatePlant(
+        plant.groupId!,
+        plant.id!,
+        plant,
+        image,
+      );
+
+      final index = _plants.indexWhere((p) => p.id == updatedPlant.id);
+      if (index != -1) {
+        _plants[index] = updatedPlant;
       }
-
-      final updatedPlant = await _plantService.updatePlant(plant.groupId!, plant.id!, plant, image);
-
-      _plants[index] = updatedPlant;
 
       if (_selectedPlant?.id == updatedPlant.id) {
         _selectedPlant = updatedPlant;
       }
 
-      if (image != null) {
-        _tempImage = null;
-      }
-
+      _tempImage = null;
       _error = null;
     } catch (e) {
       _error = 'Failed to update plant: $e';
@@ -157,31 +149,6 @@ class PlantProvider extends ChangeNotifier {
       throw Exception(_error);
     }
 
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      final updatedPlant = await _plantService.updatePlant(
-        _selectedPlant!.groupId,
-        _selectedPlant!.id!,
-        _selectedPlant!,
-        image,
-      );
-
-      final index = _plants.indexWhere((p) => p.id == updatedPlant.id);
-      if (index != -1) {
-        _plants[index] = updatedPlant;
-      }
-
-      _selectedPlant = updatedPlant;
-      _tempImage = null;
-      _error = null;
-    } catch (e) {
-      _error = 'Failed to update image: $e';
-      rethrow;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    await updatePlant(_selectedPlant!, image);
   }
 }
