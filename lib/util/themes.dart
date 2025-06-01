@@ -53,15 +53,15 @@ final ThemeData lightTheme = ThemeData(
     ),
     labelLarge: TextStyle(
       fontSize: 20.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
     ),
     labelMedium: TextStyle(
       fontSize: 16.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.normal,
     ),
     labelSmall: TextStyle(
       fontSize: 14.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.normal,
     ),
     displaySmall: TextStyle(
       fontSize: 10.0,

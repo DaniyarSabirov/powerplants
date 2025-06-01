@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/plant.dart';
 import 'package:frontend/services/api_client.dart';
 import 'package:frontend/services/plant_service.dart';
+import 'package:frontend/widgets/custom_input_widget.dart';
+import 'package:frontend/widgets/custom_label_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -599,96 +601,23 @@ class _AddPlantState extends State<AddPlant> {
                         ),
                       ),
                     ),
-                    Text(
-                      '${AppLocalizations.of(context)?.add_plant_care_schedule_name}*',
-                      style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontSize: 16,
-                      ),
+                    CustomInputWidget(
+                      controller: careRuleNameController,
+                      label: AppLocalizations.of(context)
+                          ?.add_plant_care_schedule_name,
+                      isValid: careRuleNameValid,
+                      hint: AppLocalizations.of(context)!
+                          .add_plant_scientific_name_hint,
+                      isRequired: true,
                     ),
-                    Container(
-                      height: 40,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(bottom: 24, top: 4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceDim,
-                        border: !careRuleNameValid
-                            ? Border.all(
-                                strokeAlign: BorderSide.strokeAlignOutside,
-                                width: 2,
-                                color: Colors.red.shade200,
-                              )
-                            : Border.all(width: 0, color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        child: TextField(
-                          controller: careRuleNameController,
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                          decoration: InputDecoration(
-                            isCollapsed: true,
-                            border: InputBorder.none,
-                            hintText: AppLocalizations.of(context)!
-                                .add_plant_scientific_name_hint,
-                            hintStyle: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      '${AppLocalizations.of(context)?.add_plant_care_schedule_instruction}*',
-                      style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontSize: 16,
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      width: double.infinity,
-                      margin: EdgeInsets.only(bottom: 24, top: 4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceDim,
-                        borderRadius: BorderRadius.circular(10),
-                        border: !careRuleInstructionValid
-                            ? Border.all(
-                                strokeAlign: BorderSide.strokeAlignOutside,
-                                width: 2,
-                                color: Colors.red.shade200,
-                              )
-                            : Border.all(width: 0, color: Colors.transparent),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        child: TextField(
-                          controller: careRuleInstructionController,
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            isCollapsed: true,
-                            border: InputBorder.none,
-                            hintText: AppLocalizations.of(context)!
-                                .add_plant_scientific_name_hint,
-                            hintStyle: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
+                    CustomInputWidget(
+                      controller: careRuleInstructionController,
+                      label: AppLocalizations.of(context)
+                          ?.add_plant_care_schedule_instruction,
+                      isValid: careRuleInstructionValid,
+                      hint: AppLocalizations.of(context)!
+                          .add_plant_scientific_name_hint,
+                      isRequired: true,
                     ),
                     StatefulBuilder(
                       builder: (context, setState) {
@@ -697,12 +626,9 @@ class _AddPlantState extends State<AddPlant> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 16,
-                                  ),
+                                CustomLabelWidget(
+                                  label:
+                                      '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                 ),
                                 Container(
                                   height: 40,
@@ -774,12 +700,9 @@ class _AddPlantState extends State<AddPlant> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 16,
-                                  ),
+                                CustomLabelWidget(
+                                  label:
+                                      '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -873,72 +796,23 @@ class _AddPlantState extends State<AddPlant> {
                               ],
                             );
                           case 'Custom':
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  margin: EdgeInsets.only(bottom: 24, top: 4),
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.surfaceDim,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: !careRuleDataValid
-                                        ? Border.all(
-                                            strokeAlign:
-                                                BorderSide.strokeAlignOutside,
-                                            width: 2,
-                                            color: Colors.red.shade200,
-                                          )
-                                        : Border.all(
-                                            width: 0,
-                                            color: Colors.transparent),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 8,
-                                    ),
-                                    child: TextField(
-                                      controller: careRuleDescriptionController,
-                                      maxLength: 255,
-                                      minLines: 1,
-                                      maxLines: null,
-                                      style: TextStyle(
-                                        fontFamily: 'Manrope',
-                                        fontSize: 14,
-                                      ),
-                                      decoration: InputDecoration(
-                                        isCollapsed: true,
-                                        border: InputBorder.none,
-                                        hintText: AppLocalizations.of(context)!
-                                            .add_plant_description_hint,
-                                        hintStyle: TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            return CustomInputWidget(
+                              controller: careRuleDescriptionController,
+                              label: ruleTypes[selectedRuleTypeIndex!].label,
+                              isValid: careRuleDataValid,
+                              hint: AppLocalizations.of(context)!
+                                  .add_plant_description_hint,
+                              isRequired: true,
+                              isTextArea: true,
                             );
                           case 'Water':
                           default:
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${ruleTypes[selectedRuleTypeIndex!].label}*',
-                                  style: TextStyle(
-                                    fontFamily: 'Manrope',
-                                    fontSize: 16,
-                                  ),
+                                CustomLabelWidget(
+                                  label:
+                                      '${ruleTypes[selectedRuleTypeIndex!].label}*',
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1245,94 +1119,19 @@ class _AddPlantState extends State<AddPlant> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${AppLocalizations.of(context)!.add_plant_name}*',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w300,
-          ),
+        CustomInputWidget(
+          controller: plantNameController,
+          label: AppLocalizations.of(context)!.add_plant_name,
+          isValid: plantNameValid,
+          hint: AppLocalizations.of(context)!.add_plant_name_hint,
+          isRequired: true,
         ),
-        Container(
-          height: 40,
-          width: double.infinity,
-          margin: EdgeInsets.only(bottom: 24, top: 4),
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceDim,
-            borderRadius: BorderRadius.circular(10),
-            border: !plantNameValid
-                ? Border.all(
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                    width: 2,
-                    color: Colors.red.shade200,
-                  )
-                : Border.all(width: 0, color: Colors.transparent),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
-            child: TextField(
-              controller: plantNameController,
-              style: TextStyle(
-                fontSize: 14,
-              ),
-              decoration: InputDecoration(
-                isCollapsed: true,
-                border: InputBorder.none,
-                hintText: AppLocalizations.of(context)!.add_plant_name_hint,
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Text(
-          '${AppLocalizations.of(context)!.add_plant_scientific_name}*',
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        Container(
-          height: 40,
-          width: double.infinity,
-          margin: EdgeInsets.only(bottom: 24, top: 4),
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceDim,
-            borderRadius: BorderRadius.circular(10),
-            border: !plantScientificNameValid
-                ? Border.all(
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                    width: 2,
-                    color: Colors.red.shade200,
-                  )
-                : Border.all(width: 0, color: Colors.transparent),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
-            child: TextField(
-              controller: plantScientificNameController,
-              style: TextStyle(
-                fontSize: 14,
-              ),
-              decoration: InputDecoration(
-                isCollapsed: true,
-                border: InputBorder.none,
-                hintText: AppLocalizations.of(
-                  context,
-                )!
-                    .add_plant_scientific_name_hint,
-                hintStyle: TextStyle(
-                  fontFamily: 'Manrope',
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
+        CustomInputWidget(
+          controller: plantScientificNameController,
+          label: AppLocalizations.of(context)!.add_plant_scientific_name,
+          isValid: plantScientificNameValid,
+          hint: AppLocalizations.of(context)!.add_plant_scientific_name_hint,
+          isRequired: true,
         ),
         Text(
           '${AppLocalizations.of(context)!.add_plant_group}*',
@@ -1354,6 +1153,7 @@ class _AddPlantState extends State<AddPlant> {
                   label: Text(
                     groups[index],
                     style: TextStyle(
+                      fontSize: 14,
                       color: isSelected
                           ? colorScheme.onPrimary
                           : colorScheme.secondary,
@@ -1381,44 +1181,12 @@ class _AddPlantState extends State<AddPlant> {
             ),
           ),
         ),
-        Text(
-          AppLocalizations.of(context)!.add_plant_description,
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(bottom: 24, top: 4),
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceDim,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
-            child: TextField(
-              controller: plantDescriptionController,
-              maxLength: 255,
-              minLines: 1,
-              maxLines: null,
-              style: TextStyle(
-                fontFamily: 'Manrope',
-                fontSize: 14,
-              ),
-              decoration: InputDecoration(
-                isCollapsed: true,
-                border: InputBorder.none,
-                hintText:
-                    AppLocalizations.of(context)!.add_plant_description_hint,
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
+        CustomInputWidget(
+          controller: plantDescriptionController,
+          label: AppLocalizations.of(context)!.add_plant_description,
+          hint: AppLocalizations.of(context)!.add_plant_description_hint,
+          isRequired: false,
+          isTextArea: true,
         ),
       ],
     );
