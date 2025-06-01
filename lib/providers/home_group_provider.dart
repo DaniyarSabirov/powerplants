@@ -81,13 +81,20 @@ class HomeGroupProvider extends ChangeNotifier {
         throw Exception(_error);
       }
 
-      await _homeGroupService.updateGroup(group.homeId, group.id!, group, image);
-      _groups[index] = group;
+      final updatedGroup = await _homeGroupService.updateGroup(
+        group.homeId,
+        group.id!,
+        group,
+        image,
+      );
 
-      if (_selectedGroup?.id == group.id) {
-        _selectedGroup = group;
+      _groups[index] = updatedGroup;
+
+      if (_selectedGroup?.id == updatedGroup.id) {
+        _selectedGroup = updatedGroup;
       }
 
+      _tempImage = null;
       notifyListeners();
     });
   }

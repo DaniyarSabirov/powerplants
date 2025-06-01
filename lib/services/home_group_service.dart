@@ -43,7 +43,7 @@ class HomeGroupService {
           'image': await MultipartFile.fromFile(
             image.path,
             filename: image.path.split('/').last,
-            contentType: MediaType('image', 'jpeg'), // or 'image/png'
+            contentType: MediaType('image', 'jpeg'),
           ),
       });
 
@@ -67,7 +67,7 @@ class HomeGroupService {
     }
   }
 
-  Future<void> updateGroup(String homeId, String groupId, HomeGroup group, File? image) async {
+  Future<HomeGroup> updateGroup(String homeId, String groupId, HomeGroup group, File? image) async {
     try {
       final formData = FormData.fromMap({
         'group': MultipartFile.fromString(
@@ -78,7 +78,7 @@ class HomeGroupService {
           'image': await MultipartFile.fromFile(
             image.path,
             filename: image.path.split('/').last,
-            contentType: MediaType('image', 'jpeg'), // or 'image/png'
+            contentType: MediaType('image', 'jpeg'),
           ),
       });
 
@@ -91,7 +91,7 @@ class HomeGroupService {
       );
 
       if (response.statusCode == 200) {
-        return;
+        return HomeGroup.fromJson(response.data);
       } else {
         throw Exception(
           'Failed to update group $groupId, status code: ${response.statusCode}',
