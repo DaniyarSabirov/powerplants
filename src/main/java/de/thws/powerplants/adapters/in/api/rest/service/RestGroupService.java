@@ -12,12 +12,16 @@ import de.thws.powerplants.adapters.in.api.rest.json.JsonGroup;
 import de.thws.powerplants.adapters.in.api.rest.json.JsonMapper;
 import de.thws.powerplants.core.domain.Group;
 import de.thws.powerplants.core.ports.in.GroupServicePortIn;
+import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 
 @ApplicationScoped
 public class RestGroupService {
 
     @Inject
     private GroupServicePortIn groupServicePortIn;
+
+    @Inject
+    private ImageServicePortIn imageServicePortIn;
 
     @Inject
     private JsonMapper jsonMapper;
@@ -27,6 +31,8 @@ public class RestGroupService {
     public JsonGroup createGroup(UUID homeId, JsonGroup jsonGroup, InputStream image) {
 
         Group group = jsonMapper.toGroup(jsonGroup);
+
+        imageServicePortIn.updateImageInHolder(group, image);
 
         Group result = groupServicePortIn.createGroup(homeId, group);
 
@@ -50,6 +56,8 @@ public class RestGroupService {
     public JsonGroup updateGroupById(UUID homeId, UUID groupId, JsonGroup jsonGroup, InputStream image) {
 
         Group group = jsonMapper.toGroup(jsonGroup);
+
+        imageServicePortIn.updateImageInHolder(group, image);
 
         Group result = groupServicePortIn.updateGroupById(homeId, groupId, group);
 

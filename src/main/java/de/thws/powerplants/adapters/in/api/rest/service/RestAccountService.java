@@ -12,12 +12,16 @@ import de.thws.powerplants.adapters.in.api.rest.json.JsonAccount;
 import de.thws.powerplants.adapters.in.api.rest.json.JsonMapper;
 import de.thws.powerplants.core.domain.Account;
 import de.thws.powerplants.core.ports.in.AccountServicePortIn;
+import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 
 @ApplicationScoped
 public class RestAccountService {
 
     @Inject
     private AccountServicePortIn accountServicePortIn;
+
+    @Inject
+    private ImageServicePortIn imageServicePortIn;
 
     @Inject
     private JsonMapper jsonMapper;
@@ -27,6 +31,8 @@ public class RestAccountService {
     public JsonAccount createAccount(JsonAccount jsonAccount, InputStream image) {
 
         Account account = jsonMapper.toAccount(jsonAccount);
+
+        imageServicePortIn.updateImageInHolder(account, image);
 
         Account result = accountServicePortIn.createAccount(account);
 
@@ -50,6 +56,8 @@ public class RestAccountService {
     public JsonAccount updateAccountById(UUID id, JsonAccount jsonAccount, InputStream image) {
 
         Account account = jsonMapper.toAccount(jsonAccount);
+
+        imageServicePortIn.updateImageInHolder(account, image);
 
         Account result = accountServicePortIn.updateAccountById(id, account);
 
