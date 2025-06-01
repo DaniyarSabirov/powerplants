@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:frontend/services/api_client.dart';
+import 'package:http_parser/http_parser.dart';
 import '../models/home_group.dart';
 
 class HomeGroupService {
@@ -27,11 +32,27 @@ class HomeGroupService {
     }
   }
 
-  Future<HomeGroup> createGroup(String homeId, HomeGroup group) async {
+  Future<HomeGroup> createGroup(String homeId, HomeGroup group, File? image) async {
     try {
+      final formData = FormData.fromMap({
+        'group': MultipartFile.fromString(
+          jsonEncode(group.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+        if (image != null)
+          'image': await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'), // or 'image/png'
+          ),
+      });
+
       final response = await _client.post(
-        'homes/$homeId/groups',
-        data: group.toJson(),
+        '/homes/$homeId/groups',
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -46,11 +67,27 @@ class HomeGroupService {
     }
   }
 
-  Future<void> updateGroup(String homeId, String groupId, HomeGroup group) async {
+  Future<void> updateGroup(String homeId, String groupId, HomeGroup group, File? image) async {
     try {
+      final formData = FormData.fromMap({
+        'group': MultipartFile.fromString(
+          jsonEncode(group.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+        if (image != null)
+          'image': await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'), // or 'image/png'
+          ),
+      });
+
       final response = await _client.put(
-        'homes/$homeId/groups/$groupId',
-        data: group.toJson(),
+        '/homes/$homeId/groups/$groupId',
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
 
       if (response.statusCode == 200) {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/home_group.dart';
 import 'package:frontend/services/home_group_service.dart';
@@ -9,10 +11,14 @@ class HomeGroupProvider extends ChangeNotifier {
   String? _error;
   HomeGroup? _selectedGroup;
 
+  // Temporary local image file (for quick update before upload)
+  File? _tempImage;
+
   List<HomeGroup> get groups => _groups;
   bool get isLoading => _isLoading;
   String? get error => _error;
   HomeGroup? get selectedGroup => _selectedGroup;
+  File? get tempImage => _tempImage;
 
   HomeGroupProvider(this._homeGroupService);
 
@@ -45,13 +51,13 @@ class HomeGroupProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addGroup(HomeGroup group) async {
+  Future<void> addGroup(HomeGroup group, File? image) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       await _handleAsync(() async {
-        final newGroup = await _homeGroupService.createGroup(group.homeId, group);
+        final newGroup = await _homeGroupService.createGroup(group.homeId, group, image);
         _groups.add(newGroup);
       });
     } finally {
@@ -60,10 +66,10 @@ class HomeGroupProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateGroup(HomeGroup group) async {
+  Future<void> updateGroup(HomeGroup group, File? image) async {
     await _handleAsync(() async {
       if (group.id == null) {
-        _error = 'GroupID is null';
+        _error = 'Group ID is null';
         notifyListeners();
         throw Exception(_error);
       }
@@ -75,8 +81,13 @@ class HomeGroupProvider extends ChangeNotifier {
         throw Exception(_error);
       }
 
-      await _homeGroupService.updateGroup(group.homeId, group.id!, group);
+      await _homeGroupService.updateGroup(group.homeId, group.id!, group, image);
       _groups[index] = group;
+
+      if (_selectedGroup?.id == group.id) {
+        _selectedGroup = group;
+      }
+
       notifyListeners();
     });
   }
@@ -97,6 +108,11 @@ class HomeGroupProvider extends ChangeNotifier {
       notifyListeners();
       rethrow;
     }
+  }
+
+  void setTempImage(File image) {
+    _tempImage = image;
+    notifyListeners();
   }
 
 //
