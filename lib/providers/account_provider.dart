@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/account.dart';
 import 'package:frontend/services/account_service.dart';
@@ -12,10 +14,14 @@ class AccountProvider extends ChangeNotifier {
   String? _error;
   Account? _selectedAccount;
 
+  // Temporary local avatar file (for quick update before upload)
+  File? _tempAvatar;
+
   List<Account> get accounts => _accounts;
   bool get isLoading => _isLoading;
   String? get error => _error;
   Account? get selectedAccount => _selectedAccount;
+  File? get tempAvatar => _tempAvatar;
 
   AccountProvider(this._accountService);
 
@@ -48,20 +54,6 @@ class AccountProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> loadAccountsByHomeId(String homeId) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      await _handleAsync(() async {
-        _accounts = await _accountService.getAccountsByHomeId(homeId);
-      });
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
   Future<void> loadAccountById(String id) async {
     _isLoading = true;
     notifyListeners();
@@ -76,13 +68,13 @@ class AccountProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addAccount(Account account) async {
+  Future<void> addAccount(Account account, File? image) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       await _handleAsync(() async {
-        final newAccount = await _accountService.createAccount(account);
+        final newAccount = await _accountService.createAccount(account, image);
         _accounts.add(newAccount);
       });
     } finally {
@@ -91,25 +83,40 @@ class AccountProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateAccount(Account account) async {
-    await _handleAsync(() async {
-      final index = _accounts.indexWhere((a) => a.id == account.id);
-      if (index == -1) {
-        _error = 'Account with ID ${account.id} not found in local list';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      if (account.id == null) {
-        _error = 'Account ID is null';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      await _accountService.updateAccount(account.id!, account);
-      _accounts[index] = account;
+  Future<void> updateAccount(Account account, File? image) async {
+    if (account.id == null) {
+      _error = 'Account ID is null';
       notifyListeners();
+      throw Exception(_error);
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await _handleAsync(() async {
+      final updatedAccount = await _accountService.updateAccount(
+        account.id!,
+        account,
+        image,
+      );
+
+      final index = _accounts.indexWhere((a) => a.id == updatedAccount.id);
+      if (index != -1) {
+        _accounts[index] = updatedAccount;
+      }
+
+      if (_selectedAccount?.id == updatedAccount.id) {
+        _selectedAccount = updatedAccount;
+      }
+
+      _tempAvatar = null; // clear temporary avatar
+      _error = null;
     });
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> deleteAccount(String id) async {
@@ -162,5 +169,39 @@ class AccountProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_loggedInAccountKey);
   }
+
+  // Set temporary avatar locally, to show it before actual update
+  void setTempAvatar(File image) {
+    _tempAvatar = image;
+    notifyListeners();
+  }
+
+  Future<void> updateAvatar(File image) async {
+    if (_selectedAccount == null || _selectedAccount!.id == null) {
+      _error = 'No selected account to update avatar';
+      notifyListeners();
+      throw Exception(_error);
+    }
+
+    await updateAccount(_selectedAccount!, image);
+  }
+
+
+//
+// Not implemented on backend
+//
+// Future<void> loadAccountsByHomeId(String homeId) async {
+//   _isLoading = true;
+//   notifyListeners();
+//
+//   try {
+//     await _handleAsync(() async {
+//       _accounts = await _accountService.getAccountsByHomeId(homeId);
+//     });
+//   } finally {
+//     _isLoading = false;
+//     notifyListeners();
+//   }
+// }
 
 }
