@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:frontend/services/api_client.dart';
+import 'package:http_parser/http_parser.dart';
 import '../models/plant.dart';
 
 class PlantService {
@@ -46,16 +51,31 @@ class PlantService {
     }
   }
 
-  Future<Plant> createPlant(Plant plant) async {
+  Future<Plant> createPlant(Plant plant, File? image) async {
     try {
+      final formData = FormData.fromMap({
+        'plant': MultipartFile.fromString(
+          jsonEncode(plant.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+        if (image != null)
+          'image': await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'), // or 'image/png'
+          ),
+      });
+
       final response = await _client.post(
         '/groups/${plant.groupId}/plants',
-        data: plant.toJson(),
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
-        final Map<String, dynamic> json = response.data as Map<String, dynamic>;
-        return Plant.fromJson(json);
+        return Plant.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception(
           'Failed to create plant, status code: ${response.statusCode}',
@@ -66,15 +86,31 @@ class PlantService {
     }
   }
 
-  Future<void> updatePlant(String groupId, String plantId, Plant plant) async {
+  Future<Plant> updatePlant(String groupId, String plantId, Plant plant, File? image) async {
     try {
+      final formData = FormData.fromMap({
+        'plant': MultipartFile.fromString(
+          jsonEncode(plant.toJson()),
+          contentType: MediaType('application', 'json'),
+        ),
+        if (image != null)
+          'image': await MultipartFile.fromFile(
+            image.path,
+            filename: image.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'), // or 'image/png'
+          ),
+      });
+
       final response = await _client.put(
         '/groups/$groupId/plants/$plantId',
-        data: plant.toJson(),
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
       );
 
       if (response.statusCode == 200) {
-        return;
+        return Plant.fromJson(response.data);
       } else {
         throw Exception(
           'Failed to update plant with id $plantId, status code: ${response.statusCode}',
