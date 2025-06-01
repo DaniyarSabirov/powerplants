@@ -94,6 +94,7 @@ class AccountProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      await _handleAsync(() async {
       final updatedAccount = await _accountService.updateAccount(
         account.id!,
         account,
@@ -111,9 +112,7 @@ class AccountProvider extends ChangeNotifier {
 
       _tempAvatar = null; // clear temporary avatar
       _error = null;
-    } catch (e) {
-      _error = 'Failed to update account: $e';
-      rethrow;
+    });
     } finally {
       _isLoading = false;
       notifyListeners();

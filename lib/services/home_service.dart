@@ -61,7 +61,7 @@ class HomeService {
     }
   }
 
-  Future<void> updateHome(String id, Home home) async {
+  Future<Home> updateHome(String id, Home home) async {
     try {
       final response = await _client.put(
         '/homes/$id',
@@ -69,7 +69,7 @@ class HomeService {
       );
 
       if (response.statusCode == 200) {
-        return;
+        return Home.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception(
           'Failed to update home with id $id, status code: ${response.statusCode}',

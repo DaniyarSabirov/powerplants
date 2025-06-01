@@ -75,25 +75,41 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<void> updateHome(Home home) async {
-    await _handleAsync(() async {
-      if (home.id == null) {
-        _error = 'Home ID is null';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      final index = _homes.indexWhere((h) => h.id == home.id);
-      if (index == -1) {
-        _error = 'Home with ID ${home.id} not found in local list';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      await _homeService.updateHome(home.id!, home);
-      _homes[index] = home;
+    if (home.id == null) {
+      _error = 'Home ID is null';
       notifyListeners();
-    });
+      throw Exception(_error);
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await _handleAsync(() async {
+        final index = _homes.indexWhere((h) => h.id == home.id);
+        if (index == -1) {
+          _error = 'Home with ID ${home.id} not found in local list';
+          notifyListeners();
+          throw Exception(_error);
+        }
+
+        final updatedHome = await _homeService.updateHome(home.id!, home);
+
+        _homes[index] = updatedHome;
+
+        if (_selectedHome?.id == updatedHome.id) {
+          _selectedHome = updatedHome;
+        }
+
+        _error = null; // clear error after successful update
+        notifyListeners();
+      });
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
+
 
   Future<void> deleteHome(String homeId) async {
     final index = _homes.indexWhere((h) => h.id == homeId);

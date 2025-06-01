@@ -67,37 +67,45 @@ class HomeGroupProvider extends ChangeNotifier {
   }
 
   Future<void> updateGroup(HomeGroup group, File? image) async {
-    await _handleAsync(() async {
-      if (group.id == null) {
-        _error = 'Group ID is null';
-        notifyListeners();
-        throw Exception(_error);
-      }
+    _isLoading = true;
+    notifyListeners();
 
-      final index = _groups.indexWhere((g) => g.id == group.id);
-      if (index == -1) {
-        _error = 'Group with ID ${group.id} not found in local list';
-        notifyListeners();
-        throw Exception(_error);
-      }
+    try {
+      await _handleAsync(() async {
+        if (group.id == null) {
+          _error = 'Group ID is null';
+          notifyListeners();
+          throw Exception(_error);
+        }
 
-      final updatedGroup = await _homeGroupService.updateGroup(
-        group.homeId,
-        group.id!,
-        group,
-        image,
-      );
+        final index = _groups.indexWhere((g) => g.id == group.id);
+        if (index == -1) {
+          _error = 'Group with ID ${group.id} not found in local list';
+          notifyListeners();
+          throw Exception(_error);
+        }
 
-      _groups[index] = updatedGroup;
+        final updatedGroup = await _homeGroupService.updateGroup(
+          group.homeId,
+          group.id!,
+          group,
+          image,
+        );
 
-      if (_selectedGroup?.id == updatedGroup.id) {
-        _selectedGroup = updatedGroup;
-      }
+        _groups[index] = updatedGroup;
 
-      _tempImage = null;
+        if (_selectedGroup?.id == updatedGroup.id) {
+          _selectedGroup = updatedGroup;
+        }
+
+        _tempImage = null;
+      });
+    } finally {
+      _isLoading = false;
       notifyListeners();
-    });
+    }
   }
+
 
   Future<void> deleteGroup(String homeId, String groupId) async {
     final index = _groups.indexWhere((g) => g.id == groupId);
@@ -120,6 +128,16 @@ class HomeGroupProvider extends ChangeNotifier {
   void setTempImage(File image) {
     _tempImage = image;
     notifyListeners();
+  }
+
+  Future<void> updateImage(File image) async {
+    if (_selectedGroup == null || _selectedGroup!.id == null) {
+      _error = 'No selected account to update avatar';
+      notifyListeners();
+      throw Exception(_error);
+    }
+
+    await updateGroup(_selectedGroup!, image);
   }
 
 //

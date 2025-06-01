@@ -92,27 +92,26 @@ class PlantProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final updatedPlant = await _plantService.updatePlant(
-        plant.groupId!,
-        plant.id!,
-        plant,
-        image,
-      );
+      await _handleAsync(() async {
+        final updatedPlant = await _plantService.updatePlant(
+          plant.groupId!,
+          plant.id!,
+          plant,
+          image,
+        );
 
-      final index = _plants.indexWhere((p) => p.id == updatedPlant.id);
-      if (index != -1) {
-        _plants[index] = updatedPlant;
-      }
+        final index = _plants.indexWhere((p) => p.id == updatedPlant.id);
+        if (index != -1) {
+          _plants[index] = updatedPlant;
+        }
 
-      if (_selectedPlant?.id == updatedPlant.id) {
-        _selectedPlant = updatedPlant;
-      }
+        if (_selectedPlant?.id == updatedPlant.id) {
+          _selectedPlant = updatedPlant;
+        }
 
-      _tempImage = null;
-      _error = null;
-    } catch (e) {
-      _error = 'Failed to update plant: $e';
-      rethrow;
+        _tempImage = null;
+        _error = null;
+      });
     } finally {
       _isLoading = false;
       notifyListeners();
