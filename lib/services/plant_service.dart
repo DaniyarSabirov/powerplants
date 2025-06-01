@@ -110,7 +110,7 @@ class PlantService {
       );
 
       if (response.statusCode == 200) {
-        return Plant.fromJson(response.data);
+        return Plant.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception(
           'Failed to update plant with id $plantId, status code: ${response.statusCode}',

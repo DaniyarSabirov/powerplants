@@ -91,7 +91,7 @@ class HomeGroupService {
       );
 
       if (response.statusCode == 200) {
-        return HomeGroup.fromJson(response.data);
+        return HomeGroup.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception(
           'Failed to update group $groupId, status code: ${response.statusCode}',
