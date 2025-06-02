@@ -152,7 +152,7 @@ class _HomeOverviewState extends State<HomeOverview> {
                                             .copyWith(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .secondary,
+                                                    .primary,
                                                 overflow:
                                                     TextOverflow.ellipsis),
                                       ),
@@ -164,7 +164,7 @@ class _HomeOverviewState extends State<HomeOverview> {
                                               size: 24,
                                               color: Theme.of(context)
                                                   .colorScheme
-                                                  .primary),
+                                                  .secondary),
                                           Row(
                                             spacing: 4,
                                             children: [
@@ -184,7 +184,7 @@ class _HomeOverviewState extends State<HomeOverview> {
                                             colorFilter: ColorFilter.mode(
                                               Theme.of(context)
                                                   .colorScheme
-                                                  .primary,
+                                                  .secondary,
                                               BlendMode.srcIn,
                                             ),
                                           ),
@@ -203,7 +203,7 @@ class _HomeOverviewState extends State<HomeOverview> {
                               ),
                               Container(
                                 width: 100,
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Theme.of(context).colorScheme.primary,
                               )
                             ],
                           ),
