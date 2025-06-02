@@ -265,7 +265,7 @@ class _ProfileState extends State<Profile> {
               ),
               child: Icon(
                 Icons.person_outline_rounded,
-                color: colorScheme.onPrimary,
+                color: colorScheme.onSurface,
                 size: 126,
               ),
             ),

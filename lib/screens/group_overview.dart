@@ -7,24 +7,22 @@ import 'package:frontend/widgets/plant_list_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupOverview extends StatefulWidget {
-  const GroupOverview({super.key});
+  final String groupId;
+  const GroupOverview({super.key, required this.groupId});
 
   @override
   State<GroupOverview> createState() => _GroupOverviewState();
 }
 
-var colorScheme;
-
 class _GroupOverviewState extends State<GroupOverview> {
   List<Plant> plants = [];
   late final PlantService plantService;
-  final groupId = '4c8f6d82-e4c6-4478-92eb-d9342500f006';
 
   @override
   void initState() {
     super.initState();
     plantService = PlantService(ApiClient('http://10.0.2.2:8080/api'));
-    plantService.getPlantsByGroupId(groupId).then((data) {
+    plantService.getPlantsByGroupId(widget.groupId).then((data) {
       setState(() {
         plants = data;
       });
@@ -33,7 +31,6 @@ class _GroupOverviewState extends State<GroupOverview> {
 
   @override
   Widget build(BuildContext context) {
-    colorScheme = ColorScheme.of(context);
     return CustomScaffoldWidget(
       children: [
         Expanded(
@@ -52,19 +49,20 @@ class _GroupOverviewState extends State<GroupOverview> {
                         GestureDetector(
                           onTap: () => {
                             setState(() {
-                              Navigator.of(context).pushNamed('/addplant');
+                              Navigator.of(context).pushNamed('/addplant',
+                                  arguments: widget.groupId);
                             }),
                           },
                           child: Container(
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
-                              color: colorScheme.surface,
+                              color: Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Icon(
                               Icons.add_rounded,
-                              color: colorScheme.onSurface,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ),
@@ -95,7 +93,7 @@ class _GroupOverviewState extends State<GroupOverview> {
                                 onDelete: () => {
                                   setState(() {
                                     plantService
-                                        .deletePlant(groupId, plant.id!)
+                                        .deletePlant(widget.groupId, plant.id!)
                                         .then((value) {
                                       setState(() {
                                         plants.remove(plant);

@@ -44,7 +44,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 24, top: 4),
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceDim,
+                  color: Theme.of(context).colorScheme.surfaceDim,
                   border: !widget.isValid
                       ? Border.all(
                           strokeAlign: BorderSide.strokeAlignOutside,
@@ -75,7 +75,7 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 24, top: 4),
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceDim,
+                  color: Theme.of(context).colorScheme.surfaceDim,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(

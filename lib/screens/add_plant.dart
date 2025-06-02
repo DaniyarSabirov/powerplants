@@ -14,7 +14,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class AddPlant extends StatefulWidget {
-  const AddPlant({super.key});
+  final String groupId;
+  const AddPlant({super.key, required this.groupId});
 
   @override
   State<AddPlant> createState() => _AddPlantState();
@@ -25,15 +26,6 @@ class _AddPlantState extends State<AddPlant> {
   File? imageFile;
   final imagePicker = ImagePicker();
   int? selectedGroupIndex = 0;
-  List<String> _groups = [
-    'Living Room',
-    'Kitchen',
-    'Window plants',
-    'Hanging plants',
-    'Bedroom',
-    'Hallway',
-    'Sensitive plants',
-  ];
   int currentStep = 0;
   final careRules = [];
   final ruleTypes = [
@@ -1427,7 +1419,7 @@ class _AddPlantState extends State<AddPlant> {
     plant = Plant(
       name: plantNameController.text.trim(),
       scientificName: plantScientificNameController.text.trim(),
-      groupId: '4c8f6d82-e4c6-4478-92eb-d9342500f006',
+      groupId: widget.groupId,
       description: plantDescriptionController.text.trim(),
       imageUrl: imageFile?.path,
     );
