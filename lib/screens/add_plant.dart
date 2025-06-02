@@ -578,8 +578,7 @@ class _AddPlantState extends State<AddPlant> {
                       label: AppLocalizations.of(context)
                           ?.add_plant_care_schedule_name,
                       isValid: careRuleNameValid,
-                      hint: AppLocalizations.of(context)!
-                          .add_plant_scientific_name_hint,
+                      hint: 'Enter name...',
                       isRequired: true,
                     ),
                     CustomInputWidget(
@@ -587,8 +586,7 @@ class _AddPlantState extends State<AddPlant> {
                       label: AppLocalizations.of(context)
                           ?.add_plant_care_schedule_instruction,
                       isValid: careRuleInstructionValid,
-                      hint: AppLocalizations.of(context)!
-                          .add_plant_scientific_name_hint,
+                      hint: 'Enter instruction...',
                       isRequired: true,
                     ),
                     StatefulBuilder(
