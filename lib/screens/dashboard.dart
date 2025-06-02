@@ -13,7 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final String homeId;
+  const Dashboard({super.key, required this.homeId});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -22,7 +23,6 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   List<HomeGroup> groups = [];
   late final HomeGroupService groupService;
-  final homeId = '50e14f43-dd4e-412f-864d-78943ea28d91';
 
   final List<double> availableFactors = [1.0, 1.25, 1.5];
   List<double> tileFactors = [];
@@ -189,6 +189,7 @@ class _DashboardState extends State<Dashboard> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Row(
+                              spacing: 4,
                               children: [
                                 Icon(
                                   Icons.add_box_outlined,
@@ -305,13 +306,13 @@ class _DashboardState extends State<Dashboard> {
                           setState(() {
                             if (validateGroupInput()) {
                               final group = HomeGroup(
-                                homeId: homeId,
+                                homeId: widget.homeId,
                                 publicName: groupNameController.text,
                                 description: 'Test',
                               );
                               groupService
                                   .createGroup(
-                                homeId,
+                                widget.homeId,
                                 group,
                                 imageFile,
                               )
@@ -375,7 +376,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void refreshGroupData() {
-    groupService.getGroupsByHomeId(homeId).then((data) {
+    groupService.getGroupsByHomeId(widget.homeId).then((data) {
       setState(() {
         groups = data;
 

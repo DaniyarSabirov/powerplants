@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/home_group.dart';
 import 'package:frontend/models/plant.dart';
+import 'package:frontend/screens/group_overview.dart';
 import 'package:frontend/services/api_client.dart';
 import 'package:frontend/services/home_group_service.dart';
 import 'package:frontend/services/plant_service.dart';
@@ -313,10 +314,7 @@ class _AddPlantState extends State<AddPlant> {
                                     currentStep++;
                                   } else {
                                     sendPlantData().then((e) {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed(
-                                              '/groupoverview',
-                                              arguments: widget.groupId);
+                                      Navigator.of(context).pop();
                                     });
                                   }
                                 });

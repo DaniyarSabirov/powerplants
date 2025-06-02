@@ -37,7 +37,7 @@ final ThemeData lightTheme = ThemeData(
     ),
     headlineSmall: TextStyle(
       fontSize: 24.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w500,
     ),
     bodyLarge: TextStyle(
       fontSize: 18.0,
@@ -49,7 +49,7 @@ final ThemeData lightTheme = ThemeData(
     ),
     bodySmall: TextStyle(
       fontSize: 12.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w200,
     ),
     labelLarge: TextStyle(
       fontSize: 20.0,
@@ -107,7 +107,7 @@ final ThemeData darkTheme = ThemeData(
     ),
     headlineSmall: TextStyle(
       fontSize: 24.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
     ),
     bodyLarge: TextStyle(
       fontSize: 18.0,
@@ -119,7 +119,7 @@ final ThemeData darkTheme = ThemeData(
     ),
     bodySmall: TextStyle(
       fontSize: 12.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
     ),
     labelLarge: TextStyle(
       fontSize: 20.0,
