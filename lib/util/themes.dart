@@ -37,7 +37,7 @@ final ThemeData lightTheme = ThemeData(
     ),
     headlineSmall: TextStyle(
       fontSize: 24.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w500,
     ),
     bodyLarge: TextStyle(
       fontSize: 18.0,
@@ -49,7 +49,7 @@ final ThemeData lightTheme = ThemeData(
     ),
     bodySmall: TextStyle(
       fontSize: 12.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w200,
     ),
     labelLarge: TextStyle(
       fontSize: 20.0,
@@ -73,9 +73,9 @@ final ThemeData lightTheme = ThemeData(
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
-    primary: Color(0xFF626C38),
+    primary: Color(0xFFA6B767),
     onPrimary: Color(0xFFF6F6F6),
-    secondary: Color(0xFFA6B767),
+    secondary: Color(0xFF626C38),
     onSecondary: Color(0xFFF6F6F6),
     tertiary: Color(0xFFC2CDA3),
     onTertiary: Color(0xFFF6F6F6),
@@ -107,7 +107,7 @@ final ThemeData darkTheme = ThemeData(
     ),
     headlineSmall: TextStyle(
       fontSize: 24.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
     ),
     bodyLarge: TextStyle(
       fontSize: 18.0,
@@ -119,7 +119,7 @@ final ThemeData darkTheme = ThemeData(
     ),
     bodySmall: TextStyle(
       fontSize: 12.0,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
     ),
     labelLarge: TextStyle(
       fontSize: 20.0,

@@ -33,7 +33,10 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => const SignIn(),
         '/signup': (context) => const SignUp(),
         '/homeoverview': (context) => const HomeOverview(),
-        '/dashboard': (context) => const Dashboard(),
+        '/dashboard': (context) {
+          final homeId = ModalRoute.of(context)!.settings.arguments as String;
+          return Dashboard(homeId: homeId);
+        },
         '/groupoverview': (context) {
           final groupId = ModalRoute.of(context)!.settings.arguments as String;
           return GroupOverview(groupId: groupId);
@@ -49,7 +52,7 @@ class MyApp extends StatelessWidget {
       },
       // Dark-Variante
       themeMode: ThemeMode.system,
-      home: Dashboard(),
+      home: HomeOverview(),
     );
   }
 }

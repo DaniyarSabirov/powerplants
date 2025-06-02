@@ -50,9 +50,7 @@ class _CustomScaffoldWidgetState extends State<CustomScaffoldWidget> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.of(context).popUntil(
-                              (route) => route.isFirst,
-                            ),
+                            onTap: () => Navigator.of(context).maybePop(),
                             child: Icon(
                               Icons.arrow_back_ios_rounded,
                               color: colorScheme.onSurface,
