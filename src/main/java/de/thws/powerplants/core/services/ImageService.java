@@ -13,9 +13,9 @@ public interface ImageService {
 
     void deleteImageById(UUID imageId);
 
-    default UUID storeImageInHolder(ImageHolder imageHolder, InputStream image) {
+    default void updateImageInHolder(ImageHolder imageHolder, InputStream image) {
 
-        if (imageHolder == null || image == null) {
+        if (imageHolder == null) {
             throw new NullPointerException();
         }
 
@@ -25,11 +25,11 @@ public interface ImageService {
             imageHolder.setImageId(null);
         }
 
-        UUID imageId = UUID.randomUUID();
+        if (image != null) {
+            UUID imageId = UUID.randomUUID();
 
-        createImage(imageId, image);
-        imageHolder.setImageId(imageId.toString());
-
-        return imageId;
+            createImage(imageId, image);
+            imageHolder.setImageId(imageId.toString());
+        }
     }
 }

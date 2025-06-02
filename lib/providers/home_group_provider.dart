@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/home_group.dart';
 import 'package:frontend/services/home_group_service.dart';
@@ -9,10 +11,14 @@ class HomeGroupProvider extends ChangeNotifier {
   String? _error;
   HomeGroup? _selectedGroup;
 
+  // Temporary local image file (for quick update before upload)
+  File? _tempImage;
+
   List<HomeGroup> get groups => _groups;
   bool get isLoading => _isLoading;
   String? get error => _error;
   HomeGroup? get selectedGroup => _selectedGroup;
+  File? get tempImage => _tempImage;
 
   HomeGroupProvider(this._homeGroupService);
 
@@ -45,13 +51,13 @@ class HomeGroupProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addGroup(HomeGroup group) async {
+  Future<void> addGroup(HomeGroup group, File? image) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       await _handleAsync(() async {
-        final newGroup = await _homeGroupService.createGroup(group.homeId, group);
+        final newGroup = await _homeGroupService.createGroup(group.homeId, group, image);
         _groups.add(newGroup);
       });
     } finally {
@@ -60,26 +66,46 @@ class HomeGroupProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateGroup(HomeGroup group) async {
-    await _handleAsync(() async {
-      if (group.id == null) {
-        _error = 'GroupID is null';
-        notifyListeners();
-        throw Exception(_error);
-      }
+  Future<void> updateGroup(HomeGroup group, File? image) async {
+    _isLoading = true;
+    notifyListeners();
 
-      final index = _groups.indexWhere((g) => g.id == group.id);
-      if (index == -1) {
-        _error = 'Group with ID ${group.id} not found in local list';
-        notifyListeners();
-        throw Exception(_error);
-      }
+    try {
+      await _handleAsync(() async {
+        if (group.id == null) {
+          _error = 'Group ID is null';
+          notifyListeners();
+          throw Exception(_error);
+        }
 
-      await _homeGroupService.updateGroup(group.homeId, group.id!, group);
-      _groups[index] = group;
+        final index = _groups.indexWhere((g) => g.id == group.id);
+        if (index == -1) {
+          _error = 'Group with ID ${group.id} not found in local list';
+          notifyListeners();
+          throw Exception(_error);
+        }
+
+        final updatedGroup = await _homeGroupService.updateGroup(
+          group.homeId,
+          group.id!,
+          group,
+          image,
+        );
+
+        _groups[index] = updatedGroup;
+
+        if (_selectedGroup?.id == updatedGroup.id) {
+          _selectedGroup = updatedGroup;
+        }
+
+        _tempImage = null;
+      });
+    } finally {
+      _isLoading = false;
       notifyListeners();
-    });
+    }
   }
+
 
   Future<void> deleteGroup(String homeId, String groupId) async {
     final index = _groups.indexWhere((g) => g.id == groupId);
@@ -97,6 +123,21 @@ class HomeGroupProvider extends ChangeNotifier {
       notifyListeners();
       rethrow;
     }
+  }
+
+  void setTempImage(File image) {
+    _tempImage = image;
+    notifyListeners();
+  }
+
+  Future<void> updateImage(File image) async {
+    if (_selectedGroup == null || _selectedGroup!.id == null) {
+      _error = 'No selected account to update avatar';
+      notifyListeners();
+      throw Exception(_error);
+    }
+
+    await updateGroup(_selectedGroup!, image);
   }
 
 //

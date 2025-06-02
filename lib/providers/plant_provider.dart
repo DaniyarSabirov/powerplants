@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/plant.dart';
 import 'package:frontend/services/plant_service.dart';
@@ -10,10 +12,14 @@ class PlantProvider extends ChangeNotifier {
   String? _error;
   Plant? _selectedPlant;
 
+  // Temporary local image file (for quick update before upload)
+  File? _tempImage;
+
   List<Plant> get plants => _plants;
   bool get isLoading => _isLoading;
   String? get error => _error;
   Plant? get selectedPlant => _selectedPlant;
+  File? get tempImage => _tempImage;
 
   PlantProvider(this._plantService);
 
@@ -60,13 +66,13 @@ class PlantProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addPlant(Plant plant) async {
+  Future<void> addPlant(Plant plant, File? image) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       await _handleAsync(() async {
-        final newPlant = await _plantService.createPlant(plant);
+        final newPlant = await _plantService.createPlant(plant, image);
         _plants.add(newPlant);
       });
     } finally {
@@ -75,29 +81,41 @@ class PlantProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updatePlant(Plant plant) async {
-    await _handleAsync(() async {
-      final index = _plants.indexWhere((p) => p.id == plant.id);
-      if (index == -1) {
-        _error = 'Plant with ID ${plant.id} not found in local list';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      if (plant.id == null) {
-        _error = 'PlantID is null';
-        notifyListeners();
-        throw Exception(_error);
-      }
-
-      final oldPlant = _plants[index];
-      final groupId = oldPlant.groupId;
-      final plantId = plant.id!;
-
-      await _plantService.updatePlant(groupId, plantId, plant);
-      _plants[index] = plant;
+  Future<void> updatePlant(Plant plant, File? image) async {
+    if (plant.id == null || plant.groupId == null) {
+      _error = 'Plant ID or Group ID is null';
       notifyListeners();
-    });
+      throw Exception(_error);
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await _handleAsync(() async {
+        final updatedPlant = await _plantService.updatePlant(
+          plant.groupId!,
+          plant.id!,
+          plant,
+          image,
+        );
+
+        final index = _plants.indexWhere((p) => p.id == updatedPlant.id);
+        if (index != -1) {
+          _plants[index] = updatedPlant;
+        }
+
+        if (_selectedPlant?.id == updatedPlant.id) {
+          _selectedPlant = updatedPlant;
+        }
+
+        _tempImage = null;
+        _error = null;
+      });
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> deletePlant(String groupId, String plantId) async {
@@ -118,4 +136,18 @@ class PlantProvider extends ChangeNotifier {
     }
   }
 
+  void setTempImage(File image) {
+    _tempImage = image;
+    notifyListeners();
+  }
+
+  Future<void> updateImage(File image) async {
+    if (_selectedPlant == null || _selectedPlant!.id == null) {
+      _error = 'No selected plant to update image';
+      notifyListeners();
+      throw Exception(_error);
+    }
+
+    await updatePlant(_selectedPlant!, image);
+  }
 }

@@ -11,6 +11,7 @@ import jakarta.inject.Inject;
 import de.thws.powerplants.adapters.in.api.rest.json.JsonMapper;
 import de.thws.powerplants.adapters.in.api.rest.json.JsonPlant;
 import de.thws.powerplants.core.domain.Plant;
+import de.thws.powerplants.core.ports.in.ImageServicePortIn;
 import de.thws.powerplants.core.ports.in.PlantServicePortIn;
 
 @ApplicationScoped
@@ -20,6 +21,9 @@ public class RestPlantService {
     private PlantServicePortIn plantServicePortIn;
 
     @Inject
+    private ImageServicePortIn imageServicePortIn;
+
+    @Inject
     private JsonMapper jsonMapper;
 
     public RestPlantService() {}
@@ -27,6 +31,8 @@ public class RestPlantService {
     public JsonPlant createPlant(UUID groupId, JsonPlant jsonPlant, InputStream image) {
 
         Plant plant = jsonMapper.toPlant(jsonPlant);
+
+        imageServicePortIn.updateImageInHolder(plant, image);
 
         Plant result = plantServicePortIn.createPlant(groupId, plant);
 
@@ -50,6 +56,8 @@ public class RestPlantService {
     public JsonPlant updatePlantById(UUID groupId, UUID plantId, JsonPlant jsonPlant, InputStream image) {
 
         Plant plant = jsonMapper.toPlant(jsonPlant);
+
+        imageServicePortIn.updateImageInHolder(plant, image);
 
         Plant result = plantServicePortIn.updatePlantById(groupId, plantId, plant);
 
