@@ -110,7 +110,7 @@ class _PlantListWidgetState extends State<PlantListWidget> {
                               height: 150,
                               color: colorScheme.surfaceDim,
                               child: Icon(
-                                Icons.image_not_supported_rounded,
+                                Icons.image_not_supported_outlined,
                                 size: 48,
                                 color: colorScheme.onSurfaceVariant,
                               ),

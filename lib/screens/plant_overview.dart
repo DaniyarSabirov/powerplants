@@ -22,7 +22,6 @@ class _PlantOverviewState extends State<PlantOverview> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = ColorScheme.of(context);
-    final theme = Theme.of(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -32,8 +31,12 @@ class _PlantOverviewState extends State<PlantOverview> {
                 width: double.infinity,
                 height: 550,
                 color: colorScheme.surfaceDim,
-                child: plant.imageUrl == null
-                    ? Icon(Icons.add_a_photo, size: 48, color: Colors.grey)
+                child: plant.imageUrl == null || plant.imageUrl == ''
+                    ? Icon(
+                        Icons.image_not_supported_outlined,
+                        size: 48,
+                        color: colorScheme.onSurfaceVariant,
+                      )
                     : Image.file(File(plant.imageUrl!), fit: BoxFit.cover),
               ),
               Align(

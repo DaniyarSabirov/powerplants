@@ -1,17 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/models/home_group.dart';
 import 'package:frontend/models/plant.dart';
 import 'package:frontend/services/api_client.dart';
+import 'package:frontend/services/home_group_service.dart';
 import 'package:frontend/services/plant_service.dart';
 import 'package:frontend/widgets/custom_input_widget.dart';
 import 'package:frontend/widgets/custom_label_widget.dart';
+import 'package:frontend/widgets/custom_scaffold_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class AddPlant extends StatefulWidget {
-  const AddPlant({super.key});
+  final String groupId;
+  const AddPlant({super.key, required this.groupId});
 
   @override
   State<AddPlant> createState() => _AddPlantState();
@@ -22,15 +26,6 @@ class _AddPlantState extends State<AddPlant> {
   File? imageFile;
   final imagePicker = ImagePicker();
   int? selectedGroupIndex = 0;
-  List<String> groups = [
-    'Living Room',
-    'Kitchen',
-    'Window plants',
-    'Hanging plants',
-    'Bedroom',
-    'Hallway',
-    'Sensitive plants',
-  ];
   int currentStep = 0;
   final careRules = [];
   final ruleTypes = [
@@ -76,10 +71,20 @@ class _AddPlantState extends State<AddPlant> {
   Plant? plant;
   late final PlantService plantService;
 
+  List<HomeGroup> groups = [];
+  late final HomeGroupService groupService;
+  final homeId = '50e14f43-dd4e-412f-864d-78943ea28d91';
+
   @override
   void initState() {
     super.initState();
     plantService = PlantService(ApiClient('http://10.0.2.2:8080/api'));
+    groupService = HomeGroupService(ApiClient('http://10.0.2.2:8080/api'));
+    groupService.getGroupsByHomeId(homeId).then((data) {
+      setState(() {
+        groups = data;
+      });
+    });
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -105,10 +110,11 @@ class _AddPlantState extends State<AddPlant> {
             setState(() => currentStep--),
           },
       },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Stack(
+      child: CustomScaffoldWidget(
+        padding: EdgeInsets.zero,
+        children: [
+          Expanded(
+            child: Stack(
               children: [
                 Container(
                   width: double.infinity,
@@ -141,246 +147,212 @@ class _AddPlantState extends State<AddPlant> {
                         : Container(),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 64),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      width: 400,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceBright,
-                        borderRadius: BorderRadius.circular(15),
+                Positioned(
+                  top: 300,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () => Navigator.of(context).pop(),
-                            child: Icon(
-                              Icons.arrow_back_ios_rounded,
-                              color: colorScheme.onSurface,
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              canvasColor: Colors.transparent,
+                            ),
+                            child: Stepper(
+                              type: StepperType.horizontal,
+                              currentStep: currentStep,
+                              elevation: 0,
+                              margin: EdgeInsets.zero,
+                              controlsBuilder: (BuildContext context,
+                                  ControlsDetails details) {
+                                return SizedBox.shrink();
+                              },
+                              steps: [
+                                Step(
+                                  title: Text(
+                                    AppLocalizations.of(context)!
+                                        .add_plant_plant,
+                                    style: TextStyle(
+                                      color: currentStep >= 0
+                                          ? colorScheme.secondary
+                                          : colorScheme.surfaceDim,
+                                    ),
+                                  ),
+                                  isActive: currentStep >= 0,
+                                  state: 0 < currentStep
+                                      ? StepState.complete
+                                      : 0 == currentStep
+                                          ? StepState.indexed
+                                          : StepState.disabled,
+                                  stepStyle: StepStyle(
+                                    indexStyle: TextStyle(
+                                      color: colorScheme.surface,
+                                    ),
+                                    color: currentStep > -1
+                                        ? colorScheme.secondary
+                                        : colorScheme.surfaceDim,
+                                    border: Border.all(
+                                      color: currentStep > -1
+                                          ? colorScheme.secondary
+                                          : colorScheme.surfaceDim,
+                                      width: 1,
+                                    ),
+                                    connectorColor: currentStep > 0
+                                        ? colorScheme.secondary
+                                        : colorScheme.surfaceDim,
+                                    connectorThickness: 1,
+                                  ),
+                                  content: plantStep(),
+                                ),
+                                Step(
+                                  title: Text(
+                                    AppLocalizations.of(context)!
+                                        .add_plant_care,
+                                    style: TextStyle(
+                                      color: currentStep >= 1
+                                          ? colorScheme.secondary
+                                          : colorScheme.surfaceDim,
+                                    ),
+                                  ),
+                                  isActive: currentStep >= 1,
+                                  state: 1 < currentStep
+                                      ? StepState.complete
+                                      : 1 == currentStep
+                                          ? StepState.indexed
+                                          : StepState.disabled,
+                                  stepStyle: StepStyle(
+                                    indexStyle: TextStyle(
+                                      color: colorScheme.surface,
+                                    ),
+                                    color: currentStep > 0
+                                        ? colorScheme.secondary
+                                        : colorScheme.surfaceDim,
+                                    border: Border.all(
+                                      color: currentStep > 0
+                                          ? colorScheme.secondary
+                                          : colorScheme.surfaceDim,
+                                      width: 1,
+                                    ),
+                                    connectorColor: currentStep > 1
+                                        ? colorScheme.secondary
+                                        : colorScheme.surfaceDim,
+                                    connectorThickness: 1,
+                                  ),
+                                  content: scheduleStep(),
+                                ),
+                                Step(
+                                  title: Text(
+                                    AppLocalizations.of(context)!
+                                        .add_plant_confirm,
+                                    style: TextStyle(
+                                      color: currentStep >= 2
+                                          ? colorScheme.secondary
+                                          : colorScheme.surfaceDim,
+                                    ),
+                                  ),
+                                  isActive: currentStep >= 2,
+                                  state: 2 < currentStep
+                                      ? StepState.complete
+                                      : 2 == currentStep
+                                          ? StepState.indexed
+                                          : StepState.disabled,
+                                  stepStyle: StepStyle(
+                                    indexStyle: TextStyle(
+                                      color: colorScheme.surface,
+                                    ),
+                                    color: currentStep > 1
+                                        ? colorScheme.secondary
+                                        : colorScheme.surfaceDim,
+                                    border: Border.all(
+                                      color: currentStep > 1
+                                          ? colorScheme.secondary
+                                          : colorScheme.surfaceDim,
+                                      width: 1,
+                                    ),
+                                    connectorColor: currentStep > 2
+                                        ? colorScheme.secondary
+                                        : colorScheme.surfaceDim,
+                                    connectorThickness: 1,
+                                  ),
+                                  content: confirmStep(),
+                                ),
+                              ],
                             ),
                           ),
-                          Container(
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: colorScheme.secondary,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Icon(
-                              Icons.person_outline_rounded,
-                              color: colorScheme.onPrimary,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (!validatePlantData()) {
+                                    if (currentStep == 1) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Please add at least one care rule.'),
+                                        ),
+                                      );
+                                    }
+                                    return;
+                                  }
+
+                                  if (currentStep < 2) {
+                                    currentStep++;
+                                  } else {
+                                    sendPlantData().then((e) {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                              '/groupoverview',
+                                              arguments: widget.groupId);
+                                    });
+                                  }
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(top: 8, bottom: 36),
+                                width: 350,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    currentStep == 0
+                                        ? AppLocalizations.of(context)!
+                                            .add_plant_care_schedule
+                                        : AppLocalizations.of(context)!.save,
+                                    style: TextStyle(
+                                      color: colorScheme.onPrimary,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-            Positioned(
-              top: 300,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          canvasColor: Colors.transparent,
-                        ),
-                        child: Stepper(
-                          type: StepperType.horizontal,
-                          currentStep: currentStep,
-                          elevation: 0,
-                          margin: EdgeInsets.zero,
-                          controlsBuilder:
-                              (BuildContext context, ControlsDetails details) {
-                            return SizedBox.shrink();
-                          },
-                          steps: [
-                            Step(
-                              title: Text(
-                                AppLocalizations.of(context)!.add_plant_plant,
-                                style: TextStyle(
-                                  color: currentStep >= 0
-                                      ? colorScheme.secondary
-                                      : colorScheme.surfaceDim,
-                                ),
-                              ),
-                              isActive: currentStep >= 0,
-                              state: 0 < currentStep
-                                  ? StepState.complete
-                                  : 0 == currentStep
-                                      ? StepState.indexed
-                                      : StepState.disabled,
-                              stepStyle: StepStyle(
-                                indexStyle: TextStyle(
-                                  color: colorScheme.surface,
-                                ),
-                                color: currentStep > -1
-                                    ? colorScheme.secondary
-                                    : colorScheme.surfaceDim,
-                                border: Border.all(
-                                  color: currentStep > -1
-                                      ? colorScheme.secondary
-                                      : colorScheme.surfaceDim,
-                                  width: 1,
-                                ),
-                                connectorColor: currentStep > 0
-                                    ? colorScheme.secondary
-                                    : colorScheme.surfaceDim,
-                                connectorThickness: 1,
-                              ),
-                              content: plantStep(),
-                            ),
-                            Step(
-                              title: Text(
-                                AppLocalizations.of(context)!.add_plant_care,
-                                style: TextStyle(
-                                  color: currentStep >= 1
-                                      ? colorScheme.secondary
-                                      : colorScheme.surfaceDim,
-                                ),
-                              ),
-                              isActive: currentStep >= 1,
-                              state: 1 < currentStep
-                                  ? StepState.complete
-                                  : 1 == currentStep
-                                      ? StepState.indexed
-                                      : StepState.disabled,
-                              stepStyle: StepStyle(
-                                indexStyle: TextStyle(
-                                  color: colorScheme.surface,
-                                ),
-                                color: currentStep > 0
-                                    ? colorScheme.secondary
-                                    : colorScheme.surfaceDim,
-                                border: Border.all(
-                                  color: currentStep > 0
-                                      ? colorScheme.secondary
-                                      : colorScheme.surfaceDim,
-                                  width: 1,
-                                ),
-                                connectorColor: currentStep > 1
-                                    ? colorScheme.secondary
-                                    : colorScheme.surfaceDim,
-                                connectorThickness: 1,
-                              ),
-                              content: scheduleStep(),
-                            ),
-                            Step(
-                              title: Text(
-                                AppLocalizations.of(context)!.add_plant_confirm,
-                                style: TextStyle(
-                                  color: currentStep >= 2
-                                      ? colorScheme.secondary
-                                      : colorScheme.surfaceDim,
-                                ),
-                              ),
-                              isActive: currentStep >= 2,
-                              state: 2 < currentStep
-                                  ? StepState.complete
-                                  : 2 == currentStep
-                                      ? StepState.indexed
-                                      : StepState.disabled,
-                              stepStyle: StepStyle(
-                                indexStyle: TextStyle(
-                                  color: colorScheme.surface,
-                                ),
-                                color: currentStep > 1
-                                    ? colorScheme.secondary
-                                    : colorScheme.surfaceDim,
-                                border: Border.all(
-                                  color: currentStep > 1
-                                      ? colorScheme.secondary
-                                      : colorScheme.surfaceDim,
-                                  width: 1,
-                                ),
-                                connectorColor: currentStep > 2
-                                    ? colorScheme.secondary
-                                    : colorScheme.surfaceDim,
-                                connectorThickness: 1,
-                              ),
-                              content: confirmStep(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (!validatePlantData()) {
-                                if (currentStep == 1) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Please add at least one care rule.'),
-                                    ),
-                                  );
-                                }
-                                return;
-                              }
-
-                              if (currentStep < 2) {
-                                currentStep++;
-                              } else {
-                                sendPlantData().then((e) {
-                                  Navigator.of(context)
-                                      .pushReplacementNamed('/groupoverview');
-                                });
-                              }
-                            });
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(top: 8, bottom: 36),
-                            width: 350,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Center(
-                              child: Text(
-                                currentStep == 0
-                                    ? AppLocalizations.of(context)!
-                                        .add_plant_care_schedule
-                                    : AppLocalizations.of(context)!.save,
-                                style: TextStyle(
-                                  color: colorScheme.onPrimary,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -606,8 +578,7 @@ class _AddPlantState extends State<AddPlant> {
                       label: AppLocalizations.of(context)
                           ?.add_plant_care_schedule_name,
                       isValid: careRuleNameValid,
-                      hint: AppLocalizations.of(context)!
-                          .add_plant_scientific_name_hint,
+                      hint: 'Enter name...',
                       isRequired: true,
                     ),
                     CustomInputWidget(
@@ -615,8 +586,7 @@ class _AddPlantState extends State<AddPlant> {
                       label: AppLocalizations.of(context)
                           ?.add_plant_care_schedule_instruction,
                       isValid: careRuleInstructionValid,
-                      hint: AppLocalizations.of(context)!
-                          .add_plant_scientific_name_hint,
+                      hint: 'Enter instruction...',
                       isRequired: true,
                     ),
                     StatefulBuilder(
@@ -1151,7 +1121,7 @@ class _AddPlantState extends State<AddPlant> {
                 final isSelected = selectedGroupIndex == index;
                 return ChoiceChip(
                   label: Text(
-                    groups[index],
+                    groups[index].publicName,
                     style: TextStyle(
                       fontSize: 14,
                       color: isSelected
@@ -1278,13 +1248,15 @@ class _AddPlantState extends State<AddPlant> {
             ),
             Expanded(
               child: Center(
-                child: Text(
-                  groups[selectedGroupIndex!],
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 16,
-                  ),
-                ),
+                child: (groups.isNotEmpty && selectedGroupIndex != null)
+                    ? Text(
+                        groups[selectedGroupIndex!].publicName,
+                        style: TextStyle(
+                          fontFamily: 'Manrope',
+                          fontSize: 16,
+                        ),
+                      )
+                    : Center(child: CircularProgressIndicator()),
               ),
             ),
           ],
@@ -1446,11 +1418,11 @@ class _AddPlantState extends State<AddPlant> {
     plant = Plant(
       name: plantNameController.text.trim(),
       scientificName: plantScientificNameController.text.trim(),
-      groupId: '4c8f6d82-e4c6-4478-92eb-d9342500f006',
+      groupId: groups[selectedGroupIndex!].id!,
       description: plantDescriptionController.text.trim(),
       imageUrl: imageFile?.path,
     );
 
-    await plantService.createPlant(plant!);
+    await plantService.createPlant(plant!, imageFile);
   }
 }

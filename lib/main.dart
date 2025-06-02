@@ -34,16 +34,22 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUp(),
         '/homeoverview': (context) => const HomeOverview(),
         '/dashboard': (context) => const Dashboard(),
-        '/groupoverview': (context) => const GroupOverview(),
+        '/groupoverview': (context) {
+          final groupId = ModalRoute.of(context)!.settings.arguments as String;
+          return GroupOverview(groupId: groupId);
+        },
         '/plantoverview': (context) => const PlantOverview(),
         '/taskoverview': (context) => const TaskOverview(),
         '/profile': (context) => const Profile(),
         '/homeactivityhistory': (context) => const HomeActivityHistory(),
-        '/addplant': (context) => const AddPlant(),
+        '/addplant': (context) {
+          final groupId = ModalRoute.of(context)!.settings.arguments as String;
+          return AddPlant(groupId: groupId);
+        },
       },
       // Dark-Variante
       themeMode: ThemeMode.system,
-      home: GroupOverview(),
+      home: Dashboard(),
     );
   }
 }

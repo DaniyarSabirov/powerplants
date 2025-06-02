@@ -15,7 +15,6 @@ class CustomLabelWidget extends StatefulWidget {
 class _CustomLabelWidgetState extends State<CustomLabelWidget> {
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
     final theme = Theme.of(context);
 
     return Text(
