@@ -36,7 +36,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                     ? Icon(
                         Icons.image_not_supported_outlined,
                         size: 48,
-                        color: Colors.grey,
+                        color: colorScheme.onSurfaceVariant,
                       )
                     : Image.file(File(plant.imageUrl!), fit: BoxFit.cover),
               ),

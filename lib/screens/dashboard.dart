@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:frontend/widgets/custom_input_widget.dart';
 import 'package:frontend/widgets/custom_label_widget.dart';
 import 'package:frontend/widgets/custom_scaffold_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -25,20 +27,31 @@ class _DashboardState extends State<Dashboard> {
   final List<double> availableFactors = [1.0, 1.25, 1.5];
   List<double> tileFactors = [];
 
+  bool isGroupNameValid = true;
+  bool isGroupDescriptionValid = true;
+  final TextEditingController groupNameController = TextEditingController();
+  final TextEditingController groupDescriptionController =
+      TextEditingController();
+
+  File? imageFile;
+  final imagePicker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final picked = await imagePicker.pickImage(
+      source: source,
+      maxWidth: 800,
+      imageQuality: 80,
+    );
+    if (picked != null) {
+      setState(() => imageFile = File(picked.path));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     groupService = HomeGroupService(ApiClient('http://10.0.2.2:8080/api'));
-    groupService.getGroupsByHomeId(homeId).then((data) {
-      setState(() {
-        groups = data;
-
-        tileFactors = List<double>.generate(
-          groups.length,
-          (i) => availableFactors[Random().nextInt(availableFactors.length)],
-        );
-      });
-    });
+    refreshGroupData();
   }
 
   @override
@@ -80,9 +93,18 @@ class _DashboardState extends State<Dashboard> {
                                     fit: BoxFit.cover,
                                   )
                                 : Container(
-                                    color: Colors
-                                        .primaries[i % Colors.primaries.length]
-                                        .shade700,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .surfaceDim,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.image_not_supported_outlined,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                        size: 48,
+                                      ),
+                                    ),
                                   ),
                             Align(
                               alignment: Alignment.bottomCenter,
@@ -145,8 +167,12 @@ class _DashboardState extends State<Dashboard> {
                       horizontal: 12.0,
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Text(
+                          'Groups',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
                         GestureDetector(
                           onTap: () => {
                             setState(() {
@@ -165,11 +191,14 @@ class _DashboardState extends State<Dashboard> {
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.add_rounded,
+                                  Icons.add_box_outlined,
                                   color:
                                       Theme.of(context).colorScheme.onSurface,
                                 ),
-                                Text('Add Group'),
+                                Text(
+                                  'Create a new group',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
                               ],
                             ),
                           ),
@@ -177,22 +206,27 @@ class _DashboardState extends State<Dashboard> {
                       ],
                     ),
                   ),
-                  SingleChildScrollView(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: leftColumnChildren,
-                          ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 24.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: leftColumnChildren,
+                              ),
+                            ),
+                            SizedBox(width: spacing),
+                            Expanded(
+                              child: Column(
+                                children: rightColumnChildren,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: spacing),
-                        Expanded(
-                          child: Column(
-                            children: rightColumnChildren,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -205,83 +239,151 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void showAddDialog() {
-    bool isGroupNameValid = true;
-    final TextEditingController groupNameController = TextEditingController();
-
     showModalBottomSheet(
       context: context,
       backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomInputWidget(
-                label: 'Group name',
-                hint: 'Enter group name...',
-                isRequired: true,
-                isValid: isGroupNameValid,
-                controller: groupNameController,
-              ),
-              CustomLabelWidget(
-                label: 'Upload an Image',
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: GestureDetector(
-                  child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Theme.of(context).colorScheme.surfaceDim,
-                    ),
-                    child: Icon(
-                      Icons.add_a_photo_rounded,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      size: 32,
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomInputWidget(
+                    label: 'Group name',
+                    hint: 'Enter group name...',
+                    isRequired: true,
+                    isValid: isGroupNameValid,
+                    controller: groupNameController,
+                  ),
+                  CustomInputWidget(
+                    label: 'Group description',
+                    hint: 'Enter description...',
+                    isRequired: true,
+                    isValid: isGroupDescriptionValid,
+                    controller: groupDescriptionController,
+                  ),
+                  CustomLabelWidget(
+                    label: 'Upload an Image',
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(
+                          () {
+                            _pickImage(ImageSource.gallery);
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Theme.of(context).colorScheme.surfaceDim,
+                        ),
+                        child: imageFile == null
+                            ? Icon(
+                                Icons.add_a_photo_rounded,
+                                color: Theme.of(context).colorScheme.onSurface,
+                                size: 32,
+                              )
+                            : Image.file(imageFile!, fit: BoxFit.cover),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {});
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 8, bottom: 36),
-                      width: 350,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.save,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (validateGroupInput()) {
+                              final group = HomeGroup(
+                                homeId: homeId,
+                                publicName: groupNameController.text,
+                                description: 'Test',
+                              );
+                              groupService
+                                  .createGroup(
+                                homeId,
+                                group,
+                                imageFile,
+                              )
+                                  .then(
+                                (value) {
+                                  imageFile = null;
+                                  refreshGroupData();
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(top: 8, bottom: 36),
+                          width: 350,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.save,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
+  }
+
+  bool validateGroupInput() {
+    if (groupNameController.text != '') {
+      isGroupNameValid = true;
+    } else {
+      isGroupNameValid = false;
+    }
+
+    if (groupDescriptionController.text != '') {
+      isGroupDescriptionValid = true;
+    } else {
+      isGroupDescriptionValid = false;
+    }
+
+    return isGroupNameValid && isGroupDescriptionValid;
+  }
+
+  void refreshGroupData() {
+    groupService.getGroupsByHomeId(homeId).then((data) {
+      setState(() {
+        groups = data;
+
+        tileFactors = List<double>.generate(
+          groups.length,
+          (i) => availableFactors[Random().nextInt(availableFactors.length)],
+        );
+      });
+    });
   }
 }
