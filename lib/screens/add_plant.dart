@@ -315,7 +315,8 @@ class _AddPlantState extends State<AddPlant> {
                                     sendPlantData().then((e) {
                                       Navigator.of(context)
                                           .pushReplacementNamed(
-                                              '/groupoverview');
+                                              '/groupoverview',
+                                              arguments: widget.groupId);
                                     });
                                   }
                                 });
@@ -1419,11 +1420,11 @@ class _AddPlantState extends State<AddPlant> {
     plant = Plant(
       name: plantNameController.text.trim(),
       scientificName: plantScientificNameController.text.trim(),
-      groupId: widget.groupId,
+      groupId: groups[selectedGroupIndex!].id!,
       description: plantDescriptionController.text.trim(),
       imageUrl: imageFile?.path,
     );
 
-    await plantService.createPlant(plant!);
+    await plantService.createPlant(plant!, imageFile);
   }
 }
