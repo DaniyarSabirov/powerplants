@@ -34,8 +34,8 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.network(
-            'https://images.unsplash.com/photo-1497250681960-ef046c08a56e?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          Image.asset(
+            'assets/images/profile_background.jpg',
             height: 250,
             width: double.infinity,
             fit: BoxFit.cover,
