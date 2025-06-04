@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.UUID;
 
 import de.thws.powerplants.adapters.in.api.rest.json.JsonHome;
+import de.thws.powerplants.test.S3MockTestResource;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.MethodOrderer;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @QuarkusTest
+@QuarkusTestResource(S3MockTestResource.class)
 @TestHTTPEndpoint(HomeResource.class)
 class HomeResourceTest {
 

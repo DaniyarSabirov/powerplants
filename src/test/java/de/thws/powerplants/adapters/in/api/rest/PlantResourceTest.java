@@ -15,6 +15,8 @@ import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaGroup;
 import de.thws.powerplants.adapters.out.persistence.jpa.entities.JpaHome;
 import de.thws.powerplants.adapters.out.persistence.jpa.repositories.JpaGroupRepository;
 import de.thws.powerplants.core.ports.in.ImageServicePortIn;
+import de.thws.powerplants.test.S3MockTestResource;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.*;
@@ -22,6 +24,7 @@ import org.junit.jupiter.api.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @QuarkusTest
+@QuarkusTestResource(S3MockTestResource.class)
 @TestHTTPEndpoint(PlantResource.class)
 class PlantResourceTest {
 
