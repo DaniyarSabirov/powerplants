@@ -1,0 +1,11 @@
+stages:
+  - build
+
+java-maven-build:
+  stage: build
+  image: 'openjdk:21'
+  script:
+    - ./mvnw clean install
+  rules:
+    - changes:
+        - src/**
